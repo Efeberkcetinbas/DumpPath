@@ -11,6 +11,13 @@ public class GameManager : MonoBehaviour
 
     //Level Progress
 
+    [Header("Temp Requirements")]
+    [SerializeField] private int totalReq;
+
+    [SerializeField] private GameObject upImage;
+    [SerializeField] private GameObject downImage;
+    [SerializeField] private GameObject leftImage;
+    [SerializeField] private GameObject rightImage;
 
     [Header("Game Ending")]
     public GameObject successPanel;
@@ -22,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Open/Close")]
     [SerializeField] private GameObject[] open_close;
+    
     //Boss Ball
 
     private WaitForSeconds waitForSeconds;
@@ -35,9 +43,43 @@ public class GameManager : MonoBehaviour
 
     private void Start() 
     {
-        waitForSeconds=new WaitForSeconds(2);
+        waitForSeconds=new WaitForSeconds(1);
+        UpdateRequirement();
     }
     
+    private void UpdateRequirement()
+    {
+        gameData.ReqUp=FindObjectOfType<LevelRequirement>().localReqUp;
+        gameData.ReqDown=FindObjectOfType<LevelRequirement>().localReqDown;
+        gameData.ReqLeft=FindObjectOfType<LevelRequirement>().localReqLeft;
+        gameData.ReqRight=FindObjectOfType<LevelRequirement>().localReqRight;
+
+
+        gameData.tempUp=gameData.ReqUp;
+        gameData.tempDown=gameData.ReqDown;
+        gameData.tempRight=gameData.ReqRight;
+        gameData.tempLeft=gameData.ReqLeft;
+        totalReq=gameData.tempUp+gameData.tempRight+gameData.tempLeft+gameData.tempDown;
+        EventManager.Broadcast(GameEvent.OnUIRequirementUpdate);
+        CheckZeroCondition();
+
+
+    }
+
+
+    private void CheckZeroCondition()
+    {
+        if(gameData.ReqUp==0) StartCoroutine(CloseImage(upImage));
+        if(gameData.ReqDown==0) StartCoroutine(CloseImage(downImage));
+        if(gameData.ReqRight==0) StartCoroutine(CloseImage(rightImage));
+        if(gameData.ReqLeft==0) StartCoroutine(CloseImage(leftImage));
+    }
+
+    private IEnumerator CloseImage(GameObject gameObject)
+    {
+        yield return waitForSeconds;
+        gameObject.transform.DOScale(Vector3.zero,0.25f).OnComplete(()=>gameObject.SetActive(false));
+    }
     
     
 
@@ -45,14 +87,17 @@ public class GameManager : MonoBehaviour
     {
         EventManager.AddHandler(GameEvent.OnNextLevel,OnNextLevel);
         EventManager.AddHandler(GameEvent.OnRestartLevel,OnRestartLevel);
+        EventManager.AddHandler(GameEvent.OnPlayerMove,CheckZeroCondition);
     }
 
     private void OnDisable()
     {
         EventManager.RemoveHandler(GameEvent.OnNextLevel,OnNextLevel);
         EventManager.RemoveHandler(GameEvent.OnRestartLevel,OnRestartLevel);
+        EventManager.RemoveHandler(GameEvent.OnPlayerMove,CheckZeroCondition);
     }
-   
+    
+    
 
     private void OnRestartLevel()
     {
@@ -85,7 +130,7 @@ public class GameManager : MonoBehaviour
     private void OnNextLevel()
     {
         ClearData();
-        EventManager.Broadcast(GameEvent.OnUIRequirementUpdate);
+        UpdateRequirement();
     }
 
     
@@ -96,6 +141,11 @@ public class GameManager : MonoBehaviour
         gameData.isGameEnd=true;
         gameData.ProgressNumber=0;
         gameData.levelProgressNumber=0;
+        
+        playerData.UpMove=0;
+        playerData.DownMove=0;
+        playerData.LeftMove=0;
+        playerData.RightMove=0;
     }
 
 

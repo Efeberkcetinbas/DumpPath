@@ -14,4 +14,16 @@ public class GameData : ScriptableObject
     public int levelProgressNumber;
 
     public bool isGameEnd=false;
+
+    //Directions
+    public int ReqUp;
+    public int ReqDown;
+    public int ReqLeft;
+    public int ReqRight;
+
+    //Temp
+    public int tempUp;
+    public int tempDown;
+    public int tempRight;
+    public int tempLeft;
 }

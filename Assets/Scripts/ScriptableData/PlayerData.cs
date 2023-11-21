@@ -8,4 +8,11 @@ public class PlayerData : ScriptableObject
 {
     public bool playerCanMove=true;
     
+
+    //Direction
+    public int UpMove;
+    public int DownMove;
+    public int LeftMove;
+    public int RightMove;
+
 }

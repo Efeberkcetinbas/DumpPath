@@ -24,6 +24,7 @@ public class CameraManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnNextLevel,OnNextLevel);
         EventManager.AddHandler(GameEvent.OnShopOpen,OnShopOpen);
         EventManager.AddHandler(GameEvent.OnShopClose,OnShopClose);
+        EventManager.AddHandler(GameEvent.OnGround,OnGround);
     }
 
     private void OnDisable() 
@@ -31,6 +32,7 @@ public class CameraManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnNextLevel,OnNextLevel);
         EventManager.RemoveHandler(GameEvent.OnShopOpen,OnShopOpen);
         EventManager.RemoveHandler(GameEvent.OnShopClose,OnShopClose);
+        EventManager.RemoveHandler(GameEvent.OnGround,OnGround);
     }
 
    
@@ -47,12 +49,13 @@ public class CameraManager : MonoBehaviour
     
 
 
+
     private void OnNextLevel()
     {
         ChangeFieldOfView(80,5);
     }
 
-    private void OnStep()
+    private void OnGround()
     {
         Noise(amplitudeGain,frequencyGain,shakeTime);
     }

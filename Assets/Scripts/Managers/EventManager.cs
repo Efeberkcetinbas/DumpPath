@@ -6,6 +6,14 @@ public enum GameEvent
 {
     //Player
     OnTargetHit,
+    OnPlayerUp,
+    OnPlayerDown,
+    OnPlayerLeft,
+    OnPlayerRight,
+    OnPlayerMove,
+
+    //Environment
+    OnGround,
     
     //UI Management
     OnUIRequirementUpdate,
