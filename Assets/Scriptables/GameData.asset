@@ -17,10 +17,10 @@ MonoBehaviour:
   LevelNumberIndex: 0
   ProgressNumber: 0
   levelProgressNumber: 0
-  isGameEnd: 0
-  ReqUp: 6
-  ReqDown: 1
-  ReqLeft: 1
+  isGameEnd: 1
+  ReqUp: 3
+  ReqDown: 0
+  ReqLeft: 2
   ReqRight: 0
   tempUp: 6
   tempDown: 1
