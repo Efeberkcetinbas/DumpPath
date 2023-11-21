@@ -9,6 +9,9 @@ public class GameData : ScriptableObject
 
     public int score;
     public int increaseScore;
+    public int LevelNumberIndex;
+    public int ProgressNumber;
+    public int levelProgressNumber;
 
     public bool isGameEnd=false;
 }

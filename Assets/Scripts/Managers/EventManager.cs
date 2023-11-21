@@ -6,13 +6,26 @@ public enum GameEvent
 {
     //Player
     OnTargetHit,
+    
+    //UI Management
+    OnUIRequirementUpdate,
 
+
+    //Panel Management
+    OnShopOpen,
+    OnShopClose,
+
+    //Level Management
+    OnLoadNextLevel,
+    OnNextLevel,
+    OnRestartLevel,
 
     //Game Management
     OnIncreaseScore,
+    
+    OnGameStart,
     OnUIUpdate,
     OnUIGameOver,
-    OnNextLevel,
     OnGameOver
 }
 public class EventManager
@@ -42,6 +55,30 @@ public class EventManager
     {
         if(eventTable[gameEvent]!=null)
             eventTable[gameEvent]();
+    }
+
+
+    //ID
+
+    public static void AddIdHandler(GameEvent gameIdEvent,Action<int> actionId)
+    {
+        if(!IdEventTable.ContainsKey(gameIdEvent))
+            IdEventTable[gameIdEvent]=actionId;
+        else IdEventTable[gameIdEvent]+=actionId;
+    }
+
+    public static void RemoveIdHandler(GameEvent gameIdEvent,Action<int> actionId)
+    {
+        if(IdEventTable[gameIdEvent]!=null)
+            IdEventTable[gameIdEvent]-=actionId;
+        if(IdEventTable[gameIdEvent]==null)
+            IdEventTable.Remove(gameIdEvent);
+    }
+
+    public static void BroadcastId(GameEvent gameIdEvent,int id)
+    {
+        if(IdEventTable[gameIdEvent]!=null)
+            IdEventTable[gameIdEvent](id);
     }
     
 }

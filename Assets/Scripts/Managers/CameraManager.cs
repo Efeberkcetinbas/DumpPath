@@ -6,91 +6,103 @@ using Cinemachine;
 
 public class CameraManager : MonoBehaviour
 {
-    public Camera mainCamera;
-
     public CinemachineVirtualCamera cm;
-    public Transform cmCamera;
-
-    Vector3 cameraInitialPosition;
 
     [Header("Shake Control")]
-    public float shakeMagnitude = 0.05f;
-    public float shakeTime = 0.5f;
+    [SerializeField] private float shakeTime = 0.5f;
+    [SerializeField] private float amplitudeGain=1;
+    [SerializeField] private float frequencyGain=1;
+    [SerializeField] private float newFieldOfView;
+    [SerializeField] private float oldFieldOfView;
+    private CinemachineBasicMultiChannelPerlin noise;
+
+    
+    
 
     private void OnEnable() 
     {
-        EventManager.AddHandler(GameEvent.OnTargetHit,OnHit);
-        EventManager.AddHandler(GameEvent.OnGameOver,GameOver);
+        EventManager.AddHandler(GameEvent.OnNextLevel,OnNextLevel);
+        EventManager.AddHandler(GameEvent.OnShopOpen,OnShopOpen);
+        EventManager.AddHandler(GameEvent.OnShopClose,OnShopClose);
     }
 
-    private void OnDisable()
+    private void OnDisable() 
     {
-        EventManager.RemoveHandler(GameEvent.OnTargetHit,OnHit);
-        EventManager.RemoveHandler(GameEvent.OnGameOver,GameOver);
+        EventManager.RemoveHandler(GameEvent.OnNextLevel,OnNextLevel);
+        EventManager.RemoveHandler(GameEvent.OnShopOpen,OnShopOpen);
+        EventManager.RemoveHandler(GameEvent.OnShopClose,OnShopClose);
     }
 
-    void OnHit()
+   
+
+    private void OnShopOpen()
     {
-        //ShakeIt();
-        ChangeFieldOfView(82,0.1f);
+        ChangePriority(8);
+    }
+
+    private void OnShopClose()
+    {
+        ChangePriority(11);
+    }
+    
+
+
+    private void OnNextLevel()
+    {
+        ChangeFieldOfView(80,5);
+    }
+
+    private void OnStep()
+    {
+        Noise(amplitudeGain,frequencyGain,shakeTime);
     }
 
     
 
-    
+    private void Start() 
+    {
+        noise=cm.GetComponentInChildren<CinemachineBasicMultiChannelPerlin>();
+        if(noise == null)
+            Debug.LogError("No MultiChannelPerlin on the virtual camera.", this);
+        else
+            Debug.Log($"Noise Component: {noise}");
 
-    
+    }
+
+    private void Noise(float amplitudeGain,float frequencyGain,float shakeTime) 
+    {
+        noise.m_AmplitudeGain = amplitudeGain;
+        noise.m_FrequencyGain = frequencyGain;
+        StartCoroutine(ResetNoise(shakeTime));    
+    }
+
+    private IEnumerator ResetNoise(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        noise.m_AmplitudeGain = 0;
+        noise.m_FrequencyGain = 0;    
+    }
     public void ChangeFieldOfView(float fieldOfView, float duration = 1)
-    {
-        DOTween.To(() => cm.m_Lens.FieldOfView, x => cm.m_Lens.FieldOfView = x, fieldOfView, duration).OnComplete(()=>{
-            ResetFieldOfView(85,0.1f);
-        });
-    }
-
-    private void ResetFieldOfView(float fieldOfView, float duration = 1)
     {
         DOTween.To(() => cm.m_Lens.FieldOfView, x => cm.m_Lens.FieldOfView = x, fieldOfView, duration);
     }
-   
-    public void ResetCamera()
-    {
-        cm.m_Priority = 1;
-    }
 
-    void GameOver()
+    
+
+    public void ChangeFieldOfViewHit(float newFieldOfView, float oldFieldOfView, float duration = 1)
     {
-        DOTween.To(() => mainCamera.fieldOfView, x => mainCamera.fieldOfView = x, 60, 0.5f).OnComplete(()=>
-        {
-            EventManager.Broadcast(GameEvent.OnUIGameOver);
+        DOTween.To(() => cm.m_Lens.FieldOfView, x => cm.m_Lens.FieldOfView = x, newFieldOfView, duration).OnComplete(()=>{
+            DOTween.To(() => cm.m_Lens.FieldOfView, x => cm.m_Lens.FieldOfView = x, oldFieldOfView, duration);
         });
-        
     }
 
-
-    #region CameraShaker
-
-    private void ShakeIt()
+    public void ChangeFollow(Transform Ball)
     {
-        cameraInitialPosition = mainCamera.transform.position;
-        InvokeRepeating("StartCameraShaking", 0f, 0.005f);
-        Invoke("StopCameraShaking", shakeTime);
-
+        cm.m_Follow=Ball;
     }
 
-    private void StartCameraShaking()
+    private void ChangePriority(int val)
     {
-        float cameraShakingOffsetX = Random.value * shakeMagnitude * 2 - shakeMagnitude;
-        float cameraShakingOffsetY = Random.value * shakeMagnitude * 2 - shakeMagnitude;
-        Vector3 cameraIntermediatePosition = mainCamera.transform.position;
-        cameraIntermediatePosition.x += cameraShakingOffsetX;
-        cameraIntermediatePosition.y += cameraShakingOffsetY;
-        mainCamera.transform.position = cameraIntermediatePosition;
+        cm.m_Priority=val;
     }
-
-    private void StopCameraShaking()
-    {
-        CancelInvoke("StartCameraShaking");
-        mainCamera.transform.position = cameraInitialPosition;
-    }
-    #endregion    
 }
