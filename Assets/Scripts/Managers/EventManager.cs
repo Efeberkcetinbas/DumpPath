@@ -12,8 +12,13 @@ public enum GameEvent
     OnPlayerRight,
     OnPlayerMove,
 
+    //Special Powers
+
     //Environment
     OnGround,
+    OnOpenButton,
+    OnCloseButton,
+    OnBridgeOpen,
     
     //UI Management
     OnUIRequirementUpdate,

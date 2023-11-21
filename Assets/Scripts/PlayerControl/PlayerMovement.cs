@@ -61,10 +61,10 @@ public class PlayerMovement : MonoBehaviour
                         {
                             RotateYAxis(90);
                             //Rotate
-                            //JumpXAxis(+1f,-360,0.5f);
+                            JumpXAxis(+1f,-360,0.5f);
                             playerData.RightMove++;
                             gameData.ReqRight--;
-                            GoXAxis(+1);
+                            //GoXAxis(+1);
                             EventManager.Broadcast(GameEvent.OnPlayerRight);
                             EventManager.Broadcast(GameEvent.OnPlayerMove);
                         }
@@ -73,10 +73,10 @@ public class PlayerMovement : MonoBehaviour
                     {
                         if(gameData.ReqLeft>0)
                         {
-                            //JumpXAxis(-1f,360,0.5f);
+                            JumpXAxis(-1f,360,0.5f);
                             playerData.LeftMove++;
                             gameData.ReqLeft--;
-                            GoXAxis(-1);
+                            //GoXAxis(-1);
                             RotateYAxis(-90);
                             EventManager.Broadcast(GameEvent.OnPlayerLeft);
                             EventManager.Broadcast(GameEvent.OnPlayerMove);
@@ -91,10 +91,10 @@ public class PlayerMovement : MonoBehaviour
                     {
                         if(gameData.ReqUp>0)
                         {
-                            //JumpZAxis(+1f,360,0.5f);
+                            JumpZAxis(+1f,360,0.5f);
                             playerData.UpMove++;
                             gameData.ReqUp--;
-                            GoZAxis(+1);
+                            //GoZAxis(+1);
                             RotateYAxis(0);
                             EventManager.Broadcast(GameEvent.OnPlayerUp);
                             EventManager.Broadcast(GameEvent.OnPlayerMove);
@@ -105,10 +105,10 @@ public class PlayerMovement : MonoBehaviour
                     {
                         if(gameData.ReqDown>0)
                         {
-                            //JumpZAxis(-1f,-360,0.5f);
+                            JumpZAxis(-1f,-360,0.5f);
                             playerData.DownMove++;
                             gameData.ReqDown--;
-                            GoZAxis(-1);
+                            //GoZAxis(-1);
                             RotateYAxis(180);
                             EventManager.Broadcast(GameEvent.OnPlayerDown);
                             EventManager.Broadcast(GameEvent.OnPlayerMove);

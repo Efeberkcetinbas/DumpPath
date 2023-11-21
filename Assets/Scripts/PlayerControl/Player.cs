@@ -6,8 +6,8 @@ using TMPro;
 
 public class Player : MonoBehaviour
 {
-    
-    [SerializeField] private GameObject increaseScorePrefab;
+
+    /*[SerializeField] private GameObject increaseScorePrefab;
     [SerializeField] private Transform pointPos;
 
     [Header("Data's")]
@@ -24,5 +24,5 @@ public class Player : MonoBehaviour
         coin.transform.GetChild(0).GetComponent<TextMeshPro>().text=" + " + gameData.increaseScore.ToString();
         coin.transform.GetChild(0).GetComponent<TextMeshPro>().DOFade(0,1.5f).OnComplete(()=>coin.transform.GetChild(0).gameObject.SetActive(false));
         Destroy(coin,2);
-    }
+    }*/
 }

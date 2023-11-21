@@ -46,8 +46,6 @@ public class CameraManager : MonoBehaviour
     {
         ChangePriority(11);
     }
-    
-
 
 
     private void OnNextLevel()
