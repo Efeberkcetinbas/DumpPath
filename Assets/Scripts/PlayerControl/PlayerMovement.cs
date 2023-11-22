@@ -16,6 +16,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform metalHelmet;
     [SerializeField] private float y,oldy;
 
+
+    //Rolling
+    private bool isMoving=false;
+
     private void Start() 
     {
         dragDistance=Screen.height*15/100;
@@ -59,9 +63,11 @@ public class PlayerMovement : MonoBehaviour
                     {
                         if(gameData.ReqRight>0)
                         {
-                            RotateYAxis(90);
+                            //RotateYAxis(90);
                             //Rotate
-                            JumpXAxis(+1f,-360,0.5f);
+                            //JumpXAxis(+1f,-360,0.5f);
+                            
+                            StartCoroutine(Roll(Vector3.right));
                             playerData.RightMove++;
                             gameData.ReqRight--;
                             //GoXAxis(+1);
@@ -73,11 +79,12 @@ public class PlayerMovement : MonoBehaviour
                     {
                         if(gameData.ReqLeft>0)
                         {
-                            JumpXAxis(-1f,360,0.5f);
+                            //JumpXAxis(-1f,360,0.5f);
+                            StartCoroutine(Roll(Vector3.left));
                             playerData.LeftMove++;
                             gameData.ReqLeft--;
                             //GoXAxis(-1);
-                            RotateYAxis(-90);
+                            //RotateYAxis(-90);
                             EventManager.Broadcast(GameEvent.OnPlayerLeft);
                             EventManager.Broadcast(GameEvent.OnPlayerMove);
                         }
@@ -91,11 +98,12 @@ public class PlayerMovement : MonoBehaviour
                     {
                         if(gameData.ReqUp>0)
                         {
-                            JumpZAxis(+1f,360,0.5f);
+                            //JumpZAxis(+1f,360,0.5f);
+                            StartCoroutine(Roll(Vector3.forward));
                             playerData.UpMove++;
                             gameData.ReqUp--;
                             //GoZAxis(+1);
-                            RotateYAxis(0);
+                            //RotateYAxis(0);
                             EventManager.Broadcast(GameEvent.OnPlayerUp);
                             EventManager.Broadcast(GameEvent.OnPlayerMove);
                         }
@@ -105,11 +113,12 @@ public class PlayerMovement : MonoBehaviour
                     {
                         if(gameData.ReqDown>0)
                         {
-                            JumpZAxis(-1f,-360,0.5f);
+                            //JumpZAxis(-1f,-360,0.5f);
+                            StartCoroutine(Roll(Vector3.back));
                             playerData.DownMove++;
                             gameData.ReqDown--;
                             //GoZAxis(-1);
-                            RotateYAxis(180);
+                            //RotateYAxis(180);
                             EventManager.Broadcast(GameEvent.OnPlayerDown);
                             EventManager.Broadcast(GameEvent.OnPlayerMove);
                         }
@@ -123,6 +132,26 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
+    #region Rolling
+
+    private IEnumerator Roll(Vector3 direction)
+    {   
+        isMoving=true;
+        float remainingAngle=90;
+        Vector3 rotationCenter=transform.position+direction/2 + Vector3.down/2;
+        Vector3 rotationAxis=Vector3.Cross(Vector3.up,direction);
+
+        while(remainingAngle>0)
+        {
+            float rotationAngle=Mathf.Min(Time.deltaTime*300,remainingAngle);
+            transform.RotateAround(rotationCenter,rotationAxis,rotationAngle);
+            remainingAngle-=rotationAngle;
+            yield return null;
+        }
+        isMoving=false;
+    }
+    #endregion
 
     private void OnNextLevel()
     {
