@@ -33,7 +33,7 @@ public enum GameEvent
     OnShopClose,
 
     //Level Management
-    OnLoadNextLevel,
+    OnOpenSuccess,
     OnNextLevel,
     OnRestartLevel,
 

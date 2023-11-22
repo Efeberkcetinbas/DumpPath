@@ -42,6 +42,8 @@ public class PortalControl : Obstacleable
         player.transform.DOLocalMoveY(y,1);
         Debug.Log("NEW LEVEL");
         //OPEN SUCCESS ENDING EVENT
+        //HAVAI FISEKLER OLUR ONSUCCESSOPENDAN ONCE ONSUCCESS EVENT FIRLAT KAMERA HAREKETI VE PARTICLE ICIN
+        EventManager.Broadcast(GameEvent.OnOpenSuccess);
     }
 
 

@@ -27,7 +27,7 @@ public class GroundTrigger : Obstacleable
             exitParticle.Play();
             meshRenderer.material.DOFade(1,1f);
             meshRenderer.material.DOColor(Color.green,1);
-            groundGameObject.DOPunchScale(Vector3.one,0.25f,10,1f);
+            //groundGameObject.DOPunchScale(Vector3.one,0.25f,5,0.5f);
             EventManager.Broadcast(GameEvent.OnGround);
             if(canGetPoint)
             {

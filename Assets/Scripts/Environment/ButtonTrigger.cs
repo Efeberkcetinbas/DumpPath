@@ -13,6 +13,7 @@ public class ButtonTrigger : Obstacleable
 
     [SerializeField] private bool isUp=false;
     [SerializeField] private ParticleSystem particle;
+    [SerializeField] private Transform button;
 
     private float oldScale;
 
@@ -32,10 +33,10 @@ public class ButtonTrigger : Obstacleable
 
     internal override void DoAction(TriggerControl player)
     {
-            EventManager.BroadcastId(GameEvent.OnOpenButton,id);
-            meshRenderer.material=greenMat;
-            particle.Play();
-            transform.DOScaleY(oldScale/1.5f,0.5f);
+        EventManager.BroadcastId(GameEvent.OnOpenButton,id);
+        meshRenderer.material=greenMat;
+        particle.Play();
+        button.DOScaleY(oldScale * 0.5f,0.5f);
     }
 
     internal override void StopAction(TriggerControl player)
@@ -45,7 +46,7 @@ public class ButtonTrigger : Obstacleable
             EventManager.BroadcastId(GameEvent.OnCloseButton,id);
             meshRenderer.material=redMat;
             particle.Play();
-            transform.DOScaleY(oldScale,0.5f);
+            button.DOScaleY(oldScale,0.5f);
         }
     }
 }

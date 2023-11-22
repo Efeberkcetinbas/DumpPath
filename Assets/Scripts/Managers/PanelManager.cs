@@ -14,12 +14,6 @@ public class PanelManager : MonoBehaviour
 
     [SerializeField] private GameData gameData;
 
-    public GameObject UICanvas;
-
-
-
-    //Insert Coin
-    [SerializeField] private RectTransform coinImage;
 
     private void OnEnable() 
     {
@@ -42,19 +36,17 @@ public class PanelManager : MonoBehaviour
     
     public void StartGame() 
     {
-        coinImage.DOAnchorPosY(0,1f).OnComplete(()=>coinImage.transform.DORotate(new Vector3(0,90,0), 1f).OnComplete(()=>{
+        //Gecikmeli olsun isGameEndFalse
+        StartPanel.transform.DOScale(Vector3.zero,0.5f).OnComplete(()=>{
             gameData.isGameEnd=false;
             StartPanel.gameObject.SetActive(false);
+        });
+        
             //UICanvas.SetActive(true);
-            EventManager.Broadcast(GameEvent.OnGameStart);
-
-        }));
+        //EventManager.Broadcast(GameEvent.OnGameStart);
     }
 
-    private void OnBossActive()
-    {
-        UICanvas.SetActive(false);
-    }
+    
 
     private void OnRestartLevel()
     {
@@ -63,8 +55,9 @@ public class PanelManager : MonoBehaviour
 
     private void OnNextLevel()
     {
+
         StartPanel.gameObject.SetActive(true);
-        coinImage.DOAnchorPosY(-200,0.2f).OnComplete(()=>coinImage.transform.DORotate(new Vector3(0,0,0), 0.2f));
+        StartPanel.transform.localScale=Vector3.one;
         StartPanel.DOAnchorPos(Vector2.zero,0.1f);
         StartCoroutine(Blink(Fade.gameObject,Fade));
     }

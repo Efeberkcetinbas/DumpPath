@@ -47,7 +47,6 @@ public class GameManager : MonoBehaviour
     {
         waitForSeconds=new WaitForSeconds(1);
         UpdateRequirement();
-        UpdatePositionOfDirections();
         UpdatePlayerPosition();
     }
     
@@ -112,6 +111,7 @@ public class GameManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnRestartLevel,OnRestartLevel);
         EventManager.AddHandler(GameEvent.OnPlayerMove,CheckZeroCondition);
         EventManager.AddHandler(GameEvent.OnPlayerMove,OnPlayerMove);
+        EventManager.AddHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
     }
 
     private void OnDisable()
@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnRestartLevel,OnRestartLevel);
         EventManager.RemoveHandler(GameEvent.OnPlayerMove,CheckZeroCondition);
         EventManager.RemoveHandler(GameEvent.OnPlayerMove,OnPlayerMove);
+        EventManager.RemoveHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
     }
     
     
@@ -139,7 +140,10 @@ public class GameManager : MonoBehaviour
     }
    
 
-  
+    private void OnOpenSuccess()
+    {
+        successPanel.SetActive(true);
+    }
 
     
 
@@ -157,7 +161,7 @@ public class GameManager : MonoBehaviour
         ClearData();
         //Startda da kullaniyorum. Starter Pack Methoduna Al
         UpdateRequirement();
-        UpdatePositionOfDirections();
+        //UpdatePositionOfDirections();
         UpdatePlayerPosition();
     }
 
@@ -169,11 +173,20 @@ public class GameManager : MonoBehaviour
         gameData.isGameEnd=true;
         gameData.ProgressNumber=0;
         gameData.levelProgressNumber=0;
+
+        for (int i = 0; i < directionImages.Count; i++)
+        {
+            directionImages[i].gameObject.SetActive(true);
+            directionImages[i].localScale=Vector3.one;
+        }
         
         playerData.UpMove=0;
         playerData.DownMove=0;
         playerData.LeftMove=0;
         playerData.RightMove=0;
+
+        successPanel.SetActive(false);
+        failPanel.SetActive(false);
     }
 
 

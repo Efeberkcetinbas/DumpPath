@@ -22,7 +22,7 @@ MonoBehaviour:
   ReqDown: 0
   ReqLeft: 0
   ReqRight: 0
-  tempUp: 1
-  tempDown: 1
-  tempRight: 0
-  tempLeft: 4
+  tempUp: 2
+  tempDown: 0
+  tempRight: 2
+  tempLeft: 3

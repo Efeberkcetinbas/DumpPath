@@ -17,8 +17,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float y,oldy;
 
 
-    //Rolling
-    private bool isMoving=false;
 
     private void Start() 
     {
@@ -137,7 +135,6 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator Roll(Vector3 direction)
     {   
-        isMoving=true;
         float remainingAngle=90;
         Vector3 rotationCenter=transform.position+direction/2 + Vector3.down/2;
         Vector3 rotationAxis=Vector3.Cross(Vector3.up,direction);
@@ -149,7 +146,6 @@ public class PlayerMovement : MonoBehaviour
             remainingAngle-=rotationAngle;
             yield return null;
         }
-        isMoving=false;
     }
     #endregion
 

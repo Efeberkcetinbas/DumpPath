@@ -71,6 +71,10 @@ public class UIManager : MonoBehaviour
     private void OnNextLevel()
     {
         levelText.SetText("LEVEL " + (gameData.LevelNumberIndex+1).ToString());
+        upProgressBar.fillAmount=0;
+        downProgressBar.fillAmount=0;
+        leftProgressBar.fillAmount=0;
+        rightProgressBar.fillAmount=0;
     }
 
     private void OnUIRequirementUpdate()
@@ -110,6 +114,7 @@ public class UIManager : MonoBehaviour
         rightProgressBar.DOFillAmount(val,0.25f);
         rightText.SetText((gameData.ReqRight).ToString());
     }
+
 
     #endregion
    
