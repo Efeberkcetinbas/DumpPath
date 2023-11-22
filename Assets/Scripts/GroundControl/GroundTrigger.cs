@@ -5,6 +5,7 @@ using DG.Tweening;
 public class GroundTrigger : Obstacleable
 {
     public GroundData groundData;
+    public GameData gameData;
     
 
     public GroundTrigger()
@@ -20,7 +21,7 @@ public class GroundTrigger : Obstacleable
 
     internal override void DoAction(TriggerControl player)
     {
-        if(canEnter)
+        if(canEnter && !gameData.isGameEnd)
         {
             Debug.Log("HIT");
             exitParticle.Play();

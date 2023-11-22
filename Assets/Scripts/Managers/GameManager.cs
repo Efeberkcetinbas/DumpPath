@@ -9,16 +9,18 @@ public class GameManager : MonoBehaviour
     public GameData gameData;
     public PlayerData playerData;
 
+    [Header("Player")]
+    [SerializeField] private Transform player;
     //Level Progress
 
     [Header("Temp Requirements")]
     [SerializeField] private int totalReq;
-
     [SerializeField] private GameObject upImage;
     [SerializeField] private GameObject downImage;
     [SerializeField] private GameObject leftImage;
     [SerializeField] private GameObject rightImage;
-
+    [SerializeField] private List<Transform> directionImages=new List<Transform>();
+    
     [Header("Game Ending")]
     public GameObject successPanel;
 
@@ -45,6 +47,8 @@ public class GameManager : MonoBehaviour
     {
         waitForSeconds=new WaitForSeconds(1);
         UpdateRequirement();
+        UpdatePositionOfDirections();
+        UpdatePlayerPosition();
     }
     
     private void UpdateRequirement()
@@ -62,8 +66,27 @@ public class GameManager : MonoBehaviour
         totalReq=gameData.tempUp+gameData.tempRight+gameData.tempLeft+gameData.tempDown;
         EventManager.Broadcast(GameEvent.OnUIRequirementUpdate);
         CheckZeroCondition();
+    }
 
 
+
+    private void UpdatePositionOfDirections()
+    {
+        directionImages.Shuffle(directionImages.Count);
+    }
+
+    private void UpdatePlayerPosition()
+    {
+        player.position=FindObjectOfType<LevelPlayerPosition>().position;
+    }
+
+    private void OnPlayerMove()
+    {
+        totalReq--;
+        if(totalReq==0)
+        {
+            EventManager.Broadcast(GameEvent.OnPortalOpen);
+        }
     }
 
 
@@ -71,8 +94,8 @@ public class GameManager : MonoBehaviour
     {
         if(gameData.ReqUp==0) StartCoroutine(CloseImage(upImage));
         if(gameData.ReqDown==0) StartCoroutine(CloseImage(downImage));
-        if(gameData.ReqRight==0) StartCoroutine(CloseImage(rightImage));
         if(gameData.ReqLeft==0) StartCoroutine(CloseImage(leftImage));
+        if(gameData.ReqRight==0) StartCoroutine(CloseImage(rightImage));
     }
 
     private IEnumerator CloseImage(GameObject gameObject)
@@ -88,6 +111,7 @@ public class GameManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnNextLevel,OnNextLevel);
         EventManager.AddHandler(GameEvent.OnRestartLevel,OnRestartLevel);
         EventManager.AddHandler(GameEvent.OnPlayerMove,CheckZeroCondition);
+        EventManager.AddHandler(GameEvent.OnPlayerMove,OnPlayerMove);
     }
 
     private void OnDisable()
@@ -95,6 +119,7 @@ public class GameManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnNextLevel,OnNextLevel);
         EventManager.RemoveHandler(GameEvent.OnRestartLevel,OnRestartLevel);
         EventManager.RemoveHandler(GameEvent.OnPlayerMove,CheckZeroCondition);
+        EventManager.RemoveHandler(GameEvent.OnPlayerMove,OnPlayerMove);
     }
     
     
@@ -130,7 +155,10 @@ public class GameManager : MonoBehaviour
     private void OnNextLevel()
     {
         ClearData();
+        //Startda da kullaniyorum. Starter Pack Methoduna Al
         UpdateRequirement();
+        UpdatePositionOfDirections();
+        UpdatePlayerPosition();
     }
 
     

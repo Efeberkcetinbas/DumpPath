@@ -19,6 +19,10 @@ public enum GameEvent
     OnOpenButton,
     OnCloseButton,
     OnBridgeOpen,
+
+    //Game End
+    OnPortalOpen,
+    OnCageOpen,
     
     //UI Management
     OnUIRequirementUpdate,

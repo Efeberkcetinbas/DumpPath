@@ -5,7 +5,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public AudioClip GameLoop,BuffMusic;
-    public AudioClip HitSound1,HitSound2,GameOverSound,BridgeSound;
+    public AudioClip GameOverSound,BridgeSound,CageSound;
 
     AudioSource musicSource,effectSource;
 
@@ -22,25 +22,18 @@ public class AudioManager : MonoBehaviour
 
     private void OnEnable() 
     {
-        EventManager.AddHandler(GameEvent.OnTargetHit,OnHit);
         EventManager.AddHandler(GameEvent.OnGameOver,OnGameOver);
         EventManager.AddHandler(GameEvent.OnBridgeOpen,OnBridgeOpen);
+        EventManager.AddHandler(GameEvent.OnCageOpen,OnCageOpen);
     }
     private void OnDisable() 
     {
-        EventManager.RemoveHandler(GameEvent.OnTargetHit,OnHit);
         EventManager.RemoveHandler(GameEvent.OnGameOver,OnGameOver);
         EventManager.RemoveHandler(GameEvent.OnBridgeOpen,OnBridgeOpen);
+        EventManager.RemoveHandler(GameEvent.OnCageOpen,OnCageOpen);
     }
 
-    void OnHit()
-    {
-        hit=!hit;
-        if(hit)
-            effectSource.PlayOneShot(HitSound1);
-        else
-            effectSource.PlayOneShot(HitSound2);
-    }
+    
 
     void OnGameOver()
     {
@@ -49,7 +42,12 @@ public class AudioManager : MonoBehaviour
 
     private void OnBridgeOpen()
     {
+        effectSource.PlayOneShot(BridgeSound);
+    }
 
+    private void OnCageOpen()
+    {
+        effectSource.PlayOneShot(CageSound);
     }
 
 }

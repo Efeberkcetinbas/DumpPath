@@ -4927,6 +4927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundData: {fileID: 11400000, guid: d7d4729fe14cd584487f927fdc6c3504, type: 2}
+  gameData: {fileID: 11400000, guid: 4ac1b175be4181544a12ccfe463175f7, type: 2}
   exitParticle: {fileID: 840900416207329578}
   meshRenderer: {fileID: 6049074556046701809}
   groundGameObject: {fileID: 6049074556046701810}
@@ -4992,7 +4993,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e11820def211aac499d1bcf50c3e3f8a, type: 2}
+  - {fileID: 2100000, guid: 2c509c79f8e33264aa41f0e0beeaa491, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
