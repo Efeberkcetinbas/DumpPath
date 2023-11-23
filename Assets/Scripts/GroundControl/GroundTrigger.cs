@@ -14,10 +14,14 @@ public class GroundTrigger : Obstacleable
     }
     [SerializeField] private ParticleSystem exitParticle;
     [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private List<Material> materials=new List<Material>();
+    List<Material> myMaterials;
     [SerializeField] private Transform groundGameObject;
 
     [SerializeField] private bool canEnter;
     private bool canGetPoint=true;
+
+    
 
     internal override void DoAction(TriggerControl player)
     {
@@ -25,9 +29,14 @@ public class GroundTrigger : Obstacleable
         {
             Debug.Log("HIT");
             exitParticle.Play();
-            meshRenderer.material.DOFade(1,1f);
-            meshRenderer.material.DOColor(Color.green,1);
-            //groundGameObject.DOPunchScale(Vector3.one,0.25f,5,0.5f);
+            for (int i = 0; i < materials.Count; i++)
+            {
+                meshRenderer.materials[i].DOFade(1,1f);
+                meshRenderer.materials[i].DOColor(Color.green,1);
+            }
+            
+            //Tween Atayipta da dene
+            groundGameObject.DOScaleY(0.8f,0.25f).OnComplete(()=>groundGameObject.DOScaleY(1,0.25f));
             EventManager.Broadcast(GameEvent.OnGround);
             if(canGetPoint)
             {
@@ -38,8 +47,12 @@ public class GroundTrigger : Obstacleable
         }
         else
         {
-            meshRenderer.material.DOFade(1,1f);
-            meshRenderer.material.DOColor(Color.red,1);
+            for (int i = 0; i < materials.Count; i++)
+            {
+                meshRenderer.materials[i].DOFade(1,1f);
+                meshRenderer.materials[i].DOColor(Color.red,1);    
+            }
+            
             //EventManager.Broadcast(GameEvent.OnGameOver);
         }
     }

@@ -5015,6 +5015,9 @@ MonoBehaviour:
   gameData: {fileID: 11400000, guid: 4ac1b175be4181544a12ccfe463175f7, type: 2}
   exitParticle: {fileID: 840900416207329578}
   meshRenderer: {fileID: 3706437471458594824}
+  materials:
+  - {fileID: -6126091556477775235, guid: 7852f815f3fee8045bc4839f45a10a71, type: 3}
+  - {fileID: -9117483709511198939, guid: 7852f815f3fee8045bc4839f45a10a71, type: 3}
   groundGameObject: {fileID: 2532366467230559079}
   canEnter: 1
 --- !u!1 &6049074556046701813
