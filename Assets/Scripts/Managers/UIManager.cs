@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour
 {
     [Header("Text's")]
     [SerializeField] private TextMeshProUGUI score;
+    [SerializeField] private TextMeshProUGUI failScore;
+    [SerializeField] private TextMeshProUGUI successScore;
+
    
     [SerializeField] private TextMeshProUGUI levelText;
     
@@ -43,6 +46,7 @@ public class UIManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnPlayerRight,OnPlayerRight);
         EventManager.AddHandler(GameEvent.OnPlayerUp,OnPlayerUp);
         EventManager.AddHandler(GameEvent.OnPlayerDown,OnPlayerDown);
+        EventManager.AddHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
     }
     private void OnDisable()
     {
@@ -53,13 +57,12 @@ public class UIManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnPlayerRight,OnPlayerRight);
         EventManager.RemoveHandler(GameEvent.OnPlayerUp,OnPlayerUp);
         EventManager.RemoveHandler(GameEvent.OnPlayerDown,OnPlayerDown);
+        EventManager.RemoveHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
     }
 
     private void Start() 
     {
         OnNextLevel();
-        /*OnNextLevel();
-        OnUIUpdate();*/
     }
     
     private void OnUIUpdate()
@@ -83,6 +86,11 @@ public class UIManager : MonoBehaviour
         downText.SetText((gameData.ReqDown).ToString());
         leftText.SetText((gameData.ReqLeft).ToString());
         rightText.SetText((gameData.ReqRight).ToString());
+    }
+
+    private void OnOpenSuccess()
+    {
+        successScore.SetText("+ " +  (gameData.score+gameData.increaseScore).ToString());
     }
 
 

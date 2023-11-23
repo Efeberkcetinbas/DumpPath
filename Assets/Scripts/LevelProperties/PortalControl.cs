@@ -43,7 +43,7 @@ public class PortalControl : Obstacleable
         Debug.Log("NEW LEVEL");
         //OPEN SUCCESS ENDING EVENT
         //HAVAI FISEKLER OLUR ONSUCCESSOPENDAN ONCE ONSUCCESS EVENT FIRLAT KAMERA HAREKETI VE PARTICLE ICIN
-        EventManager.Broadcast(GameEvent.OnOpenSuccess);
+        EventManager.Broadcast(GameEvent.OnSuccess);
     }
 
 

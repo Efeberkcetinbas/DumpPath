@@ -21,8 +21,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject rightImage;
     [SerializeField] private List<Transform> directionImages=new List<Transform>();
     
-    [Header("Game Ending")]
-    public GameObject successPanel;
 
     //Bir Canvas‘ı gizlemek için SetActive(false) yerine enabled=false‘u tercih edin
     public GameObject failPanel;
@@ -48,6 +46,25 @@ public class GameManager : MonoBehaviour
         waitForSeconds=new WaitForSeconds(1);
         UpdateRequirement();
         UpdatePlayerPosition();
+    }
+
+
+    private void OnEnable()
+    {
+        EventManager.AddHandler(GameEvent.OnNextLevel,OnNextLevel);
+        EventManager.AddHandler(GameEvent.OnRestartLevel,OnRestartLevel);
+        EventManager.AddHandler(GameEvent.OnPlayerMove,CheckZeroCondition);
+        EventManager.AddHandler(GameEvent.OnPlayerMove,OnPlayerMove);
+        EventManager.AddHandler(GameEvent.OnSuccess,OnSuccess);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.RemoveHandler(GameEvent.OnNextLevel,OnNextLevel);
+        EventManager.RemoveHandler(GameEvent.OnRestartLevel,OnRestartLevel);
+        EventManager.RemoveHandler(GameEvent.OnPlayerMove,CheckZeroCondition);
+        EventManager.RemoveHandler(GameEvent.OnPlayerMove,OnPlayerMove);
+        EventManager.RemoveHandler(GameEvent.OnSuccess,OnSuccess);
     }
     
     private void UpdateRequirement()
@@ -104,24 +121,17 @@ public class GameManager : MonoBehaviour
     }
     
     
-
-    private void OnEnable()
+    private void OnSuccess()
     {
-        EventManager.AddHandler(GameEvent.OnNextLevel,OnNextLevel);
-        EventManager.AddHandler(GameEvent.OnRestartLevel,OnRestartLevel);
-        EventManager.AddHandler(GameEvent.OnPlayerMove,CheckZeroCondition);
-        EventManager.AddHandler(GameEvent.OnPlayerMove,OnPlayerMove);
-        EventManager.AddHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
+        StartCoroutine(OpenSuccessPanel());
     }
 
-    private void OnDisable()
+    private IEnumerator OpenSuccessPanel()
     {
-        EventManager.RemoveHandler(GameEvent.OnNextLevel,OnNextLevel);
-        EventManager.RemoveHandler(GameEvent.OnRestartLevel,OnRestartLevel);
-        EventManager.RemoveHandler(GameEvent.OnPlayerMove,CheckZeroCondition);
-        EventManager.RemoveHandler(GameEvent.OnPlayerMove,OnPlayerMove);
-        EventManager.RemoveHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
+        yield return waitForSeconds;
+        EventManager.Broadcast(GameEvent.OnOpenSuccess);
     }
+    
     
     
 
@@ -133,29 +143,12 @@ public class GameManager : MonoBehaviour
     }
   
 
-    private IEnumerator OpenFailPanel()
-    {
-        yield return waitForSeconds;
-        OnGameOver();
-    }
-   
-
-    private void OnOpenSuccess()
-    {
-        successPanel.SetActive(true);
-    }
+    
 
     
 
 
 
-    void OnGameOver()
-    {
-        failPanel.SetActive(true);
-        failPanel.transform.DOScale(Vector3.one,1f).SetEase(ease);
-        playerData.playerCanMove=false;
-        gameData.isGameEnd=true;
-    }
     private void OnNextLevel()
     {
         ClearData();
@@ -185,7 +178,6 @@ public class GameManager : MonoBehaviour
         playerData.LeftMove=0;
         playerData.RightMove=0;
 
-        successPanel.SetActive(false);
         failPanel.SetActive(false);
     }
 

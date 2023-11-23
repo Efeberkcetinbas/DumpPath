@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   score: 0
-  increaseScore: 0
+  increaseScore: 10
   LevelNumberIndex: 0
   ProgressNumber: 0
   levelProgressNumber: 0
@@ -24,5 +24,5 @@ MonoBehaviour:
   ReqRight: 0
   tempUp: 2
   tempDown: 0
-  tempRight: 2
-  tempLeft: 3
+  tempRight: 0
+  tempLeft: 1
