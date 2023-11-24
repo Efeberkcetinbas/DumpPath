@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6407905733916077036, guid: ea9ece9fc3f3d3f4ea774f46a1866c7f, type: 3}
+  - {fileID: 2100000, guid: ed0ab6eeda8775b4cba70cbae76f5332, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -250,8 +250,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 1
-  greenMat: {fileID: 2100000, guid: 11f4cd7516661214090022c23b90b537, type: 2}
-  redMat: {fileID: 2100000, guid: d039561a0d242784196a9f282d2d2c08, type: 2}
+  greenMat: {fileID: 2100000, guid: 5bc09c4b4b1d31a439f086c2843ce8c6, type: 2}
+  redMat: {fileID: 2100000, guid: 401e3d00f9a512f459ae73da211459e4, type: 2}
   isUp: 0
   particle: {fileID: 6402593481881073632}
   button: {fileID: 5132307086719275683}

@@ -23,6 +23,8 @@ public enum GameEvent
     OnOpenButton,
     OnCloseButton,
     OnBridgeOpen,
+    OnBombActive,
+    OnBombExplode,
 
     //Game End
     OnPortalOpen,

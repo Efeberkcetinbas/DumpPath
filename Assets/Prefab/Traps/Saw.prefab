@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2274610486615508501}
   - component: {fileID: 4068436454052229853}
   - component: {fileID: 4068436454052229852}
+  - component: {fileID: 875804353}
   m_Layer: 0
   m_Name: saw
   m_TagString: Untagged
@@ -110,6 +111,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a29d92d17a574cd4f86543fd16ea3a20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &875804353
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329315138336663488}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: efee6a23158bd1344a9a7cbf0647ef19, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3826138058013587683
 GameObject:
   m_ObjectHideFlags: 0
@@ -4844,6 +4865,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6182341764809457439}
+  - component: {fileID: 95683835}
   m_Layer: 0
   m_Name: Saw
   m_TagString: Untagged
@@ -4868,3 +4890,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &95683835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6182341764809457438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45ce2fdfbe8a9bc42b702b3aa6052d04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUpDown: 0
+  isLeftRight: 1
+  isJumper: 0
+  x: 5
+  oldx: 2
+  y: 0
+  oldy: 0
+  z: 0
+  oldz: 0
+  duration: 3
+  ease: 22
+  block: {fileID: 6182341764809457439}

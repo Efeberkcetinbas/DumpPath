@@ -26,6 +26,7 @@ public class CameraManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnShopClose,OnShopClose);
         EventManager.AddHandler(GameEvent.OnGround,OnGround);
         EventManager.AddHandler(GameEvent.OnSuccess,OnSuccess);
+        EventManager.AddHandler(GameEvent.OnBombExplode,OnBombExplode);
     }
 
     private void OnDisable() 
@@ -35,6 +36,7 @@ public class CameraManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnShopClose,OnShopClose);
         EventManager.RemoveHandler(GameEvent.OnGround,OnGround);
         EventManager.RemoveHandler(GameEvent.OnSuccess,OnSuccess);
+        EventManager.RemoveHandler(GameEvent.OnBombExplode,OnBombExplode);
     }
 
    
@@ -63,6 +65,11 @@ public class CameraManager : MonoBehaviour
     private void OnSuccess()
     {
         ChangeFieldOfView(newFieldOfView,2);
+    }
+
+    private void OnBombExplode()
+    {
+        Noise(3,3,1);
     }
     
 
