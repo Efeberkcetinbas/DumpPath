@@ -28,6 +28,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image rightProgressBar;
 
 
+    private WaitForSeconds waitForSeconds;
 
 
 
@@ -36,6 +37,8 @@ public class UIManager : MonoBehaviour
     [Header("Data's")]
     public GameData gameData;
     public PlayerData playerData;
+
+
 
     private void OnEnable()
     {
@@ -47,6 +50,7 @@ public class UIManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnPlayerUp,OnPlayerUp);
         EventManager.AddHandler(GameEvent.OnPlayerDown,OnPlayerDown);
         EventManager.AddHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
+        EventManager.AddHandler(GameEvent.OnDirectionUpdate,OnDirectionUpdate);
     }
     private void OnDisable()
     {
@@ -58,10 +62,12 @@ public class UIManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnPlayerUp,OnPlayerUp);
         EventManager.RemoveHandler(GameEvent.OnPlayerDown,OnPlayerDown);
         EventManager.RemoveHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
+        EventManager.RemoveHandler(GameEvent.OnDirectionUpdate,OnDirectionUpdate);
     }
 
     private void Start() 
     {
+        waitForSeconds=new WaitForSeconds(1);
         OnNextLevel();
     }
     
@@ -121,6 +127,20 @@ public class UIManager : MonoBehaviour
         float val=(float)playerData.RightMove/gameData.tempRight;
         rightProgressBar.DOFillAmount(val,0.25f);
         rightText.SetText((gameData.ReqRight).ToString());
+    }
+
+    private void OnDirectionUpdate()
+    {
+        StartCoroutine(ResetProgressBar());
+    }
+
+    private IEnumerator ResetProgressBar()
+    {
+        yield return waitForSeconds;
+        upProgressBar.DOFillAmount(0,0.1f);
+        downProgressBar.DOFillAmount(0,0.1f);
+        leftProgressBar.DOFillAmount(0,0.1f);
+        rightProgressBar.DOFillAmount(0,0.1f);
     }
 
 

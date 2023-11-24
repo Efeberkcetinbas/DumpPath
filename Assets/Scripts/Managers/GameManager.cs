@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     //Boss Ball
 
     private WaitForSeconds waitForSeconds;
+    private WaitForSeconds waitDirectionForSeconds;
 
 
     private void Awake() 
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
     private void Start() 
     {
         waitForSeconds=new WaitForSeconds(1);
+        waitDirectionForSeconds=new WaitForSeconds(2);
         UpdateRequirement();
         UpdatePlayerPosition();
     }
@@ -56,6 +58,7 @@ public class GameManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnPlayerMove,CheckZeroCondition);
         EventManager.AddHandler(GameEvent.OnPlayerMove,OnPlayerMove);
         EventManager.AddHandler(GameEvent.OnSuccess,OnSuccess);
+        EventManager.AddHandler(GameEvent.OnUpdateReqDirection,OnUpdateReqDirection);
     }
 
     private void OnDisable()
@@ -65,6 +68,7 @@ public class GameManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnPlayerMove,CheckZeroCondition);
         EventManager.RemoveHandler(GameEvent.OnPlayerMove,OnPlayerMove);
         EventManager.RemoveHandler(GameEvent.OnSuccess,OnSuccess);
+        EventManager.RemoveHandler(GameEvent.OnUpdateReqDirection,OnUpdateReqDirection);
     }
     
     private void UpdateRequirement()
@@ -82,6 +86,27 @@ public class GameManager : MonoBehaviour
         totalReq=gameData.tempUp+gameData.tempRight+gameData.tempLeft+gameData.tempDown;
         EventManager.Broadcast(GameEvent.OnUIRequirementUpdate);
         CheckZeroCondition();
+    }
+
+    private void OnUpdateReqDirection()
+    {
+        StartCoroutine(StartNewReq());
+    }
+
+    private IEnumerator StartNewReq()
+    {
+        yield return waitDirectionForSeconds;
+        UpdateRequirement();
+
+        for (int i = 0; i < directionImages.Count; i++)
+        {
+            directionImages[i].gameObject.SetActive(true);
+            directionImages[i].DOScale(Vector3.one,0.2f);
+        }
+        playerData.UpMove=0;
+        playerData.DownMove=0;
+        playerData.LeftMove=0;
+        playerData.RightMove=0;
     }
 
 

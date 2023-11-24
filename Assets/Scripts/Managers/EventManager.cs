@@ -14,6 +14,10 @@ public enum GameEvent
 
     //Special Powers
 
+    //Order
+    OnDirectionUpdate,
+    OnUpdateReqDirection,
+
     //Environment
     OnGround,
     OnOpenButton,
