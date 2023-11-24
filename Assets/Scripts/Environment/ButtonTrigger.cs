@@ -2,28 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Unity.Mathematics;
 
 public class ButtonTrigger : Obstacleable
 {
     public int id;
 
-    private MeshRenderer meshRenderer;
 
-    [SerializeField] private Material greenMat,redMat;
 
     [SerializeField] private bool isUp=false;
     [SerializeField] private ParticleSystem particle;
     [SerializeField] private Transform button;
 
-    private float oldScale;
+    [SerializeField] private float newX,oldX,duration;
 
-
-
-    private void Start() 
-    {
-        meshRenderer=GetComponent<MeshRenderer>();
-        oldScale=transform.localScale.y;
-    }
 
     public ButtonTrigger()
     {
@@ -34,9 +26,8 @@ public class ButtonTrigger : Obstacleable
     internal override void DoAction(TriggerControl player)
     {
         EventManager.BroadcastId(GameEvent.OnOpenButton,id);
-        meshRenderer.material=greenMat;
+        button.DOLocalRotate(new Vector3(newX,-90,0),duration);
         particle.Play();
-        button.DOScaleY(oldScale * 0.5f,0.5f);
     }
 
     internal override void StopAction(TriggerControl player)
@@ -44,9 +35,8 @@ public class ButtonTrigger : Obstacleable
         if(isUp)
         {
             EventManager.BroadcastId(GameEvent.OnCloseButton,id);
-            meshRenderer.material=redMat;
+            button.DOLocalRotate(new Vector3(oldX,-90,0),duration);
             particle.Play();
-            button.DOScaleY(oldScale,0.5f);
         }
     }
 }
