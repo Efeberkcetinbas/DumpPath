@@ -8,4 +8,6 @@ public class LevelRequirement : MonoBehaviour
     public int localReqDown;
     public int localReqLeft;
     public int localReqRight;
+
+    
 }

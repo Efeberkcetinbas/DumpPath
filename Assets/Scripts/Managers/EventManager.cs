@@ -37,6 +37,8 @@ public enum GameEvent
     //Panel Management
     OnShopOpen,
     OnShopClose,
+    OnUpdateLetterDirectionText,
+    OnDisableLetter,
 
     //Level Management
     OnSuccess,

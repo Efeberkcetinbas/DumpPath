@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI downText;
     [SerializeField] private TextMeshProUGUI leftText;
     [SerializeField] private TextMeshProUGUI rightText;
+    [SerializeField] private TextMeshProUGUI directionLetterText;
 
     [Header("Image's")]
     [SerializeField] private Image upProgressBar;
@@ -51,6 +52,7 @@ public class UIManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnPlayerDown,OnPlayerDown);
         EventManager.AddHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
         EventManager.AddHandler(GameEvent.OnDirectionUpdate,OnDirectionUpdate);
+        EventManager.AddHandler(GameEvent.OnUpdateLetterDirectionText,OnUpdateLetterDirectionText);
     }
     private void OnDisable()
     {
@@ -63,6 +65,7 @@ public class UIManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnPlayerDown,OnPlayerDown);
         EventManager.RemoveHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
         EventManager.RemoveHandler(GameEvent.OnDirectionUpdate,OnDirectionUpdate);
+        EventManager.RemoveHandler(GameEvent.OnUpdateLetterDirectionText,OnUpdateLetterDirectionText);
     }
 
     private void Start() 
@@ -84,6 +87,11 @@ public class UIManager : MonoBehaviour
         downProgressBar.fillAmount=0;
         leftProgressBar.fillAmount=0;
         rightProgressBar.fillAmount=0;
+    }
+
+    private void OnUpdateLetterDirectionText()
+    {
+        directionLetterText.SetText(gameData.LetterText);
     }
 
     private void OnUIRequirementUpdate()

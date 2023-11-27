@@ -14,6 +14,7 @@ public class GameData : ScriptableObject
     public int levelProgressNumber;
 
     public bool isGameEnd=false;
+    public bool isTextLevel=false;
 
     //Directions
     public int ReqUp;
@@ -26,4 +27,7 @@ public class GameData : ScriptableObject
     public int tempDown;
     public int tempRight;
     public int tempLeft;
+
+    //Text
+    public string LetterText;
 }

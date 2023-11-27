@@ -8,11 +8,19 @@ public class PanelManager : MonoBehaviour
     [SerializeField] private RectTransform StartPanel,DirectionPanel,StorePanel,SuccessPanel,FailPanel;
 
     [SerializeField] private GameObject[] sceneUI;
+    [SerializeField] private GameObject directionText;
     [SerializeField] private Image Fade;
 
     [SerializeField] private float StartX,StartY,DirectionX,DirectionY,StoreX,StoreY,SuccessX,SuccessY,FailX,FailY,duration;
 
     [SerializeField] private GameData gameData;
+    [Header("Success List")]
+    [SerializeField] private Ease ease;
+    [SerializeField] private List<Transform> successElements=new List<Transform>();
+
+    //Waitforseconds
+    private WaitForSeconds waitForSeconds1;
+    private WaitForSeconds waitForSeconds2;
 
 
     private void OnEnable() 
@@ -20,6 +28,7 @@ public class PanelManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnNextLevel,OnNextLevel);
         EventManager.AddHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.AddHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
+        EventManager.AddHandler(GameEvent.OnDisableLetter,OnDisableLetter);
     }
 
 
@@ -28,6 +37,7 @@ public class PanelManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnNextLevel,OnNextLevel);
         EventManager.RemoveHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.RemoveHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
+        EventManager.RemoveHandler(GameEvent.OnDisableLetter,OnDisableLetter);
     }
 
     private void Start() 
@@ -37,6 +47,9 @@ public class PanelManager : MonoBehaviour
         {
             sceneUI[i].SetActive(false);
         }
+
+        waitForSeconds1=new WaitForSeconds(2);
+        waitForSeconds2=new WaitForSeconds(.5f);
     }
 
     private void OnSuccess()
@@ -44,7 +57,11 @@ public class PanelManager : MonoBehaviour
         DirectionPanel.DOAnchorPos(new Vector2(0,500),duration);
     }
 
-    
+    private void OnDisableLetter()
+    {
+        directionText.SetActive(false);
+    }
+
     
     
     public void StartGame() 
@@ -60,6 +77,10 @@ public class PanelManager : MonoBehaviour
         });
         DirectionPanel.gameObject.SetActive(true);
         DirectionPanel.DOAnchorPos(new Vector2(0,-500),duration);
+
+    
+        if(gameData.isTextLevel)
+            directionText.SetActive(true);
     }
 
     
@@ -71,7 +92,15 @@ public class PanelManager : MonoBehaviour
 
     private void OnNextLevel()
     {
-        SuccessPanel.DOAnchorPos(new Vector2(2500,0),0.1f).OnComplete(()=>SuccessPanel.gameObject.SetActive(false));
+         SuccessPanel.DOAnchorPos(new Vector2(2500,0),0.1f).OnComplete(()=>{
+            for (int i = 0; i < successElements.Count; i++)
+            {
+                successElements[i].transform.localScale=Vector3.zero;
+                
+            }
+            SuccessPanel.gameObject.SetActive(false);
+         });
+        
         StartPanel.gameObject.SetActive(true);
         StartPanel.transform.localScale=Vector3.one;
         StartPanel.DOAnchorPos(Vector2.zero,0.1f).OnComplete(()=>EventManager.Broadcast(GameEvent.OnIncreaseScore));
@@ -86,8 +115,13 @@ public class PanelManager : MonoBehaviour
 
     private void OnOpenSuccess()
     {
+        //Here Goes Some Improvements
+        if(gameData.isTextLevel)
+            directionText.SetActive(false);
         SuccessPanel.gameObject.SetActive(true);
-        SuccessPanel.DOAnchorPos(Vector2.zero,0.2f).SetEase(Ease.InOutCubic);
+        SuccessPanel.DOAnchorPos(Vector2.zero,0.2f).SetEase(Ease.InOutCubic).OnComplete(()=>{
+            StartCoroutine(ItemsAnimation());
+        });
     }
   
 
@@ -97,9 +131,23 @@ public class PanelManager : MonoBehaviour
         gameObject.SetActive(true);
         image.color=new Color(0,0,0,1);
         image.DOFade(0,2f);
-        yield return new WaitForSeconds(2f);
+        yield return waitForSeconds1;
         gameObject.SetActive(false);
 
+    }
+
+    private IEnumerator ItemsAnimation()
+    {
+        for (int i = 0; i < successElements.Count; i++)
+        {
+            successElements[i].transform.localScale=Vector3.zero;
+        }
+
+        for (int i = 0; i < successElements.Count; i++)
+        {
+            successElements[i].transform.DOScale(1f,1f).SetEase(ease);
+            yield return waitForSeconds2;
+        }
     }
 
   
