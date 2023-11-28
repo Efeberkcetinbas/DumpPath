@@ -40,7 +40,9 @@ public enum GameEvent
 
     //Panel Management
     OnShopOpen,
+    OnShopCharacterSelected,
     OnShopClose,
+    OnCharacterChange,
     OnUpdateLetterDirectionText,
     OnDisableLetter,
 

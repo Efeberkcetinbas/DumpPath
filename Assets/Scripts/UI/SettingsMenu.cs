@@ -36,6 +36,11 @@ public class SettingsMenu : MonoBehaviour
     int itemsCount ;
 
     void Start () {
+        
+    }
+
+    void OnEnable()
+    {
         //add all the items to the menuItems array
         itemsCount = transform.childCount - 1 ;
         menuItems = new SettingsMenuItem[itemsCount] ;
@@ -105,7 +110,7 @@ public class SettingsMenu : MonoBehaviour
         }
     }
 
-    void OnDestroy () {
+    void OnDisable () {
         //remove click listener to avoid memory leaks
         mainButton.onClick.RemoveListener (ToggleMenu) ;
     }

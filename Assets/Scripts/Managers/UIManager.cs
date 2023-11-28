@@ -11,7 +11,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI score;
     [SerializeField] private TextMeshProUGUI failScore;
     [SerializeField] private TextMeshProUGUI successScore;
+    [SerializeField] private TextMeshProUGUI shoppingScore;
     [SerializeField] private TextMeshProUGUI priceText;
+
 
    
     [SerializeField] private TextMeshProUGUI levelText;
@@ -54,6 +56,8 @@ public class UIManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
         EventManager.AddHandler(GameEvent.OnDirectionUpdate,OnDirectionUpdate);
         EventManager.AddHandler(GameEvent.OnUpdateLetterDirectionText,OnUpdateLetterDirectionText);
+        EventManager.AddHandler(GameEvent.OnShopCharacterSelected,OnShopBallSelected);
+        EventManager.AddHandler(GameEvent.OnShopOpen,OnShopBallSelected);
     }
     private void OnDisable()
     {
@@ -67,6 +71,8 @@ public class UIManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
         EventManager.RemoveHandler(GameEvent.OnDirectionUpdate,OnDirectionUpdate);
         EventManager.RemoveHandler(GameEvent.OnUpdateLetterDirectionText,OnUpdateLetterDirectionText);
+        EventManager.RemoveHandler(GameEvent.OnShopCharacterSelected,OnShopBallSelected);
+        EventManager.RemoveHandler(GameEvent.OnShopOpen,OnShopBallSelected);
     }
 
     private void Start() 
@@ -107,6 +113,11 @@ public class UIManager : MonoBehaviour
     private void OnOpenSuccess()
     {
         successScore.SetText("+ " +  (gameData.score+gameData.increaseScore).ToString());
+    }
+
+    private void OnShopBallSelected()
+    {
+        shoppingScore.SetText(gameData.score.ToString());
     }
 
 

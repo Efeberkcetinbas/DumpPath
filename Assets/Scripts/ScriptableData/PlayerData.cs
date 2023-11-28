@@ -15,4 +15,6 @@ public class PlayerData : ScriptableObject
     public float LeftMove;
     public float RightMove;
 
+    public int selectedIndex;
+
 }

@@ -11,12 +11,15 @@ public class Player : MonoBehaviour
     [SerializeField] private ParticleSystem leftParticle;
     [SerializeField] private ParticleSystem rightParticle;
 
+    [SerializeField] private PlayerData playerData;
+
     private void OnEnable() 
     {
         EventManager.AddHandler(GameEvent.OnPlayerUp,OnPlayerUp);
         EventManager.AddHandler(GameEvent.OnPlayerDown,OnPlayerDown);
         EventManager.AddHandler(GameEvent.OnPlayerLeft,OnPlayerLeft);
         EventManager.AddHandler(GameEvent.OnPlayerRight,OnPlayerRight);
+        EventManager.AddHandler(GameEvent.OnCharacterChange,OnCharacterChange);
         
     }
 
@@ -26,6 +29,7 @@ public class Player : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnPlayerDown,OnPlayerDown);
         EventManager.RemoveHandler(GameEvent.OnPlayerLeft,OnPlayerLeft);
         EventManager.RemoveHandler(GameEvent.OnPlayerRight,OnPlayerRight);
+        EventManager.RemoveHandler(GameEvent.OnCharacterChange,OnCharacterChange);
     }
 
 
@@ -47,6 +51,11 @@ public class Player : MonoBehaviour
     private void OnPlayerDown()
     {
         downParticle.Play();
+    }
+
+    private void OnCharacterChange()
+    {
+        Debug.Log("CHARACTER: " + playerData.selectedIndex);
     }
 
     

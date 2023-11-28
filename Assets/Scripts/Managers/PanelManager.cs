@@ -157,7 +157,7 @@ public class PanelManager : MonoBehaviour
         //EventManager.Broadcast(GameEvent.OnButtonClicked);
         StartPanel.DOAnchorPos(new Vector2(StartX,StartY),duration).OnComplete(()=>StartPanel.gameObject.SetActive(false));
         StorePanel.gameObject.SetActive(true);
-        StorePanel.DOAnchorPos(new Vector2(0,300),duration);
+        StorePanel.DOAnchorPos(new Vector2(0,750),duration);
         EventManager.Broadcast(GameEvent.OnShopOpen);
     }
 
