@@ -24,28 +24,45 @@ public class GroundTrigger : Obstacleable
 
     internal override void DoAction(TriggerControl player)
     {
-        if(canEnter && !gameData.isGameEnd && !gameData.isUndo)
+        if(!gameData.isGameEnd)
         {
-            exitParticle.Play();
-            for (int i = 0; i < materials.Count; i++)
+            if(canEnter && !gameData.isUndo)
             {
-                meshRenderer.materials[i].DOFade(1,1f);
-                meshRenderer.materials[i].DOColor(Color.green,1);
+                exitParticle.Play();
+                for (int i = 0; i < materials.Count; i++)
+                {
+                    meshRenderer.materials[i].DOFade(1,1f);
+                    meshRenderer.materials[i].DOColor(Color.green,1);
+                }
+                
+                //Tween Atayipta da dene
+                groundGameObject.DOScaleY(0.8f,0.25f).OnComplete(()=>groundGameObject.DOScaleY(1,0.25f));
+                EventManager.Broadcast(GameEvent.OnGround);
+                canEnter=false;
             }
-            
-            //Tween Atayipta da dene
-            groundGameObject.DOScaleY(0.8f,0.25f).OnComplete(()=>groundGameObject.DOScaleY(1,0.25f));
-            EventManager.Broadcast(GameEvent.OnGround);
-        }
-        else
-        {
-            for (int i = 0; i < materials.Count; i++)
+            else
             {
-                meshRenderer.materials[i].DOFade(1,1f);
-                meshRenderer.materials[i].DOColor(Color.red,1);    
+                if(gameData.isUndo)
+                {
+                    for (int i = 0; i < materials.Count; i++)
+                    {
+                        meshRenderer.materials[i].DOFade(1,1f);
+                        meshRenderer.materials[i].DOColor(Color.blue,1);
+                        canEnter=true;    
+                    }
+                //EventManager.Broadcast(GameEvent.OnGameOver);
+                }
+                else
+                {
+                    for (int i = 0; i < materials.Count; i++)
+                    {
+                        meshRenderer.materials[i].DOFade(1,1f);
+                        meshRenderer.materials[i].DOColor(Color.red,1);
+                    }
+                    Debug.Log("GAME IS END");
+
+                }
             }
-            
-            //EventManager.Broadcast(GameEvent.OnGameOver);
         }
 
 
@@ -54,6 +71,17 @@ public class GroundTrigger : Obstacleable
     //Root.DOLocalRotate(new Vector3(0, 360, 0), .2f, RotateMode.FastBeyond360).SetRelative(true).SetEase(Ease.Linear);
     internal override void StopAction(TriggerControl player)
     {
+        if(gameData.isUndo)
+        {
+            for (int i = 0; i < materials.Count; i++)
+            {
+                meshRenderer.materials[i].DOFade(1,1f);
+                meshRenderer.materials[i].DOColor(Color.blue,1);
+                canEnter=true;    
+            }
+        }
+        
+
         //ruzgar efekti
         //exitParticle.Play();
         /*if(playerData.playerUp) transform.DOLocalRotate(new Vector3(360,0,0),.5f,RotateMode.FastBeyond360).SetRelative(true).SetEase(Ease.Linear);
