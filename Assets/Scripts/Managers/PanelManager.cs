@@ -73,7 +73,7 @@ public class PanelManager : MonoBehaviour
                 sceneUI[i].SetActive(true);
             }
             gameData.isGameEnd=false;
-            StartPanel.gameObject.SetActive(false);
+            //StartPanel.gameObject.SetActive(false);
         });
         DirectionPanel.gameObject.SetActive(true);
         DirectionPanel.DOAnchorPos(new Vector2(0,-500),duration);

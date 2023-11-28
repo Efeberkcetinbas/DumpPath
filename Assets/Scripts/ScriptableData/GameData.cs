@@ -12,9 +12,11 @@ public class GameData : ScriptableObject
     public int LevelNumberIndex;
     public int ProgressNumber;
     public int levelProgressNumber;
+    public int undoPrice;
 
     public bool isGameEnd=false;
     public bool isTextLevel=false;
+    public bool isUndo=false;
 
     //Directions
     public float ReqUp;

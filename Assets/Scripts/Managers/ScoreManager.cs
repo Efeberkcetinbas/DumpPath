@@ -9,16 +9,23 @@ public class ScoreManager : MonoBehaviour
     private void OnEnable()
     {
         EventManager.AddHandler(GameEvent.OnIncreaseScore, OnIncreaseScore);
+        EventManager.AddHandler(GameEvent.OnDecreaseScore,OnDecreaseScore);
     }
 
     private void OnDisable()
     {
         EventManager.RemoveHandler(GameEvent.OnIncreaseScore, OnIncreaseScore);
+        EventManager.RemoveHandler(GameEvent.OnDecreaseScore,OnDecreaseScore);
     }
-    void OnIncreaseScore()
+    private void OnIncreaseScore()
     {
         //gameData.score += 50;
         DOTween.To(GetScore,ChangeScore,gameData.score+gameData.increaseScore,1f).OnUpdate(UpdateUI);
+    }
+
+    private void OnDecreaseScore()
+    {
+        DOTween.To(GetScore,ChangeScore,gameData.score-gameData.undoPrice,1f).OnUpdate(UpdateUI);
     }
 
     private int GetScore()

@@ -23,7 +23,8 @@ public class InputManager : MonoBehaviour
     [SerializeField] private float y,oldy;
     
     [SerializeField] private Button undo;
-
+    //Touch Y Axis
+    [SerializeField] private float screenPercentageToExclude = 20f;
     
 
     private void OnEnable()
@@ -40,6 +41,7 @@ public class InputManager : MonoBehaviour
     private void Start() 
     {
         dragDistance=Screen.height*15/100;
+        Debug.Log(Screen.height);
         
     }
 
@@ -52,8 +54,9 @@ public class InputManager : MonoBehaviour
 
     public void UndoMove()
     {
-        Debug.Log("UNDO");
         character.UndoCommand();
+        //gameData.score-=gameData.undoPrice;
+        EventManager.Broadcast(GameEvent.OnDecreaseScore);
     }
 
     private void Update()
@@ -80,82 +83,85 @@ public class InputManager : MonoBehaviour
             else if(touch.phase==TouchPhase.Ended)
             {
                 lastPosition=touch.position;
-
-                if(Mathf.Abs(lastPosition.x-firstPosition.x)>Mathf.Abs(lastPosition.y-firstPosition.y))
+                Vector2 swipeDirection=lastPosition-firstPosition;
+                if(firstPosition.y < (Screen.height * (1 - screenPercentageToExclude / 100)))
                 {
-                    if(lastPosition.x>firstPosition.x)
+                    Debug.Log("SWIPE");
+                    if(Mathf.Abs(lastPosition.x-firstPosition.x)>Mathf.Abs(lastPosition.y-firstPosition.y))
                     {
-                        if(gameData.ReqRight>0)
+                        if(lastPosition.x>firstPosition.x)
                         {
-                            //RotateYAxis(90);
-                            //Rotate
-                            //JumpXAxis(+1f,-360,0.5f);
+                            if(gameData.ReqRight>0)
+                            {
+                                //RotateYAxis(90);
+                                //Rotate
+                                //JumpXAxis(+1f,-360,0.5f);
+                                
+                                StartCoroutine(Roll(Vector3.right));
+                                playerData.RightMove++;
+                                gameData.ReqRight--;
+                                SendMoveCommand(Vector3.right);
+                                //GoXAxis(+1);
+                                EventManager.Broadcast(GameEvent.OnPlayerRight);
+                                EventManager.Broadcast(GameEvent.OnPlayerMove);
+                            }
+                        }
+                        else
+                        {
+                            if(gameData.ReqLeft>0)
+                            {
+                                //JumpXAxis(-1f,360,0.5f);
+                                StartCoroutine(Roll(Vector3.left));
+                                playerData.LeftMove++;
+                                gameData.ReqLeft--;
+                                SendMoveCommand(Vector3.left);
+                                //GoXAxis(-1);
+                                //RotateYAxis(-90);
+                                EventManager.Broadcast(GameEvent.OnPlayerLeft);
+                                EventManager.Broadcast(GameEvent.OnPlayerMove);
+                            }
                             
-                            StartCoroutine(Roll(Vector3.right));
-                            playerData.RightMove++;
-                            gameData.ReqRight--;
-                            SendMoveCommand(Vector3.right);
-                            //GoXAxis(+1);
-                            EventManager.Broadcast(GameEvent.OnPlayerRight);
-                            EventManager.Broadcast(GameEvent.OnPlayerMove);
                         }
                     }
+
                     else
                     {
-                        if(gameData.ReqLeft>0)
+                        if(lastPosition.y>firstPosition.y)
                         {
-                            //JumpXAxis(-1f,360,0.5f);
-                            StartCoroutine(Roll(Vector3.left));
-                            playerData.LeftMove++;
-                            gameData.ReqLeft--;
-                            SendMoveCommand(Vector3.left);
-                            //GoXAxis(-1);
-                            //RotateYAxis(-90);
-                            EventManager.Broadcast(GameEvent.OnPlayerLeft);
-                            EventManager.Broadcast(GameEvent.OnPlayerMove);
+                            if(gameData.ReqUp>0)
+                            {
+                                //JumpZAxis(+1f,360,0.5f);
+                                StartCoroutine(Roll(Vector3.forward));
+                                playerData.UpMove++;
+                                gameData.ReqUp--;
+                                SendMoveCommand(Vector3.forward);
+                                //GoZAxis(+1);
+                                //RotateYAxis(0);
+                                EventManager.Broadcast(GameEvent.OnPlayerUp);
+                                EventManager.Broadcast(GameEvent.OnPlayerMove);
+                            }
+                            
                         }
-                        
+                        else
+                        {
+                            if(gameData.ReqDown>0)
+                            {
+                                //JumpZAxis(-1f,-360,0.5f);
+                                StartCoroutine(Roll(Vector3.back));
+                                playerData.DownMove++;
+                                gameData.ReqDown--;
+                                SendMoveCommand(Vector3.back);
+                                //GoZAxis(-1);
+                                //RotateYAxis(180);
+                                EventManager.Broadcast(GameEvent.OnPlayerDown);
+                                EventManager.Broadcast(GameEvent.OnPlayerMove);
+                            }
+                            
+
+                        }
                     }
                 }
 
-                else
-                {
-                    if(lastPosition.y>firstPosition.y)
-                    {
-                        if(gameData.ReqUp>0)
-                        {
-                            //JumpZAxis(+1f,360,0.5f);
-                            StartCoroutine(Roll(Vector3.forward));
-                            playerData.UpMove++;
-                            gameData.ReqUp--;
-                            SendMoveCommand(Vector3.forward);
-                            //GoZAxis(+1);
-                            //RotateYAxis(0);
-                            EventManager.Broadcast(GameEvent.OnPlayerUp);
-                            EventManager.Broadcast(GameEvent.OnPlayerMove);
-                        }
-                        
-                    }
-                    else
-                    {
-                        if(gameData.ReqDown>0)
-                        {
-                            //JumpZAxis(-1f,-360,0.5f);
-                            StartCoroutine(Roll(Vector3.back));
-                            playerData.DownMove++;
-                            gameData.ReqDown--;
-                            SendMoveCommand(Vector3.back);
-                            //GoZAxis(-1);
-                            //RotateYAxis(180);
-                            EventManager.Broadcast(GameEvent.OnPlayerDown);
-                            EventManager.Broadcast(GameEvent.OnPlayerMove);
-                        }
-                        
-
-                    }
-                }
-
-                //playerData.playerCanMove=false;
 
             }
         }
@@ -175,6 +181,7 @@ public class InputManager : MonoBehaviour
 
     private IEnumerator Roll(Vector3 direction)
     {   
+        gameData.isUndo=false;
         float remainingAngle=90;
         Vector3 rotationCenter=character.transform.position+direction/2 + Vector3.down/2;
         Vector3 rotationAxis=Vector3.Cross(Vector3.up,direction);

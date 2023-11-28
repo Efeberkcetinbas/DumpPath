@@ -14,17 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 0
   increaseScore: 10
-  LevelNumberIndex: 0
+  LevelNumberIndex: 5
   ProgressNumber: 0
   levelProgressNumber: 0
-  isGameEnd: 1
+  undoPrice: 5
+  isGameEnd: 0
   isTextLevel: 0
+  isUndo: 0
   ReqUp: 0
-  ReqDown: 2
+  ReqDown: 0
   ReqLeft: 0
-  ReqRight: 2
+  ReqRight: 0
   tempUp: 0
   tempDown: 2
   tempRight: 2
   tempLeft: 0
+  totalReq: 0
   LetterText: SE

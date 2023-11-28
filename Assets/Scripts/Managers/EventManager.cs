@@ -52,6 +52,7 @@ public enum GameEvent
 
     //Game Management
     OnIncreaseScore,
+    OnDecreaseScore,
     
     OnGameStart,
     OnUIUpdate,

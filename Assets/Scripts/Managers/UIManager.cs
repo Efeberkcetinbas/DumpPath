@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI score;
     [SerializeField] private TextMeshProUGUI failScore;
     [SerializeField] private TextMeshProUGUI successScore;
+    [SerializeField] private TextMeshProUGUI priceText;
 
    
     [SerializeField] private TextMeshProUGUI levelText;
@@ -100,6 +101,7 @@ public class UIManager : MonoBehaviour
         downText.SetText((gameData.ReqDown).ToString());
         leftText.SetText((gameData.ReqLeft).ToString());
         rightText.SetText((gameData.ReqRight).ToString());
+        priceText.SetText(gameData.undoPrice.ToString());
     }
 
     private void OnOpenSuccess()

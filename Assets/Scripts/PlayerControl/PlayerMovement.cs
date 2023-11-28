@@ -76,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         EventManager.Broadcast(GameEvent.OnUndo);
+        gameData.isUndo=true;
 
     }
 

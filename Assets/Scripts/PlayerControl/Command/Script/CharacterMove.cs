@@ -55,6 +55,7 @@ public class CharacterMove : MonoBehaviour
 
         if (index < commandList.Count)
         {
+            Debug.Log("UNDO");
             index++;
             commandList[index - 1].Execute();
         }

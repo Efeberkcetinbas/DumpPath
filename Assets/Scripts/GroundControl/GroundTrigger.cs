@@ -19,15 +19,13 @@ public class GroundTrigger : Obstacleable
     [SerializeField] private Transform groundGameObject;
 
     [SerializeField] private bool canEnter;
-    private bool canGetPoint=true;
 
     
 
     internal override void DoAction(TriggerControl player)
     {
-        if(canEnter && !gameData.isGameEnd)
+        if(canEnter && !gameData.isGameEnd && !gameData.isUndo)
         {
-            Debug.Log("HIT");
             exitParticle.Play();
             for (int i = 0; i < materials.Count; i++)
             {
@@ -38,12 +36,6 @@ public class GroundTrigger : Obstacleable
             //Tween Atayipta da dene
             groundGameObject.DOScaleY(0.8f,0.25f).OnComplete(()=>groundGameObject.DOScaleY(1,0.25f));
             EventManager.Broadcast(GameEvent.OnGround);
-            if(canGetPoint)
-            {
-                groundData.tempPathNumber++;
-                //EventManager.Broadcast(GameEvent.OnIncreaseScore);
-                canGetPoint=false;
-            }
         }
         else
         {
@@ -55,6 +47,8 @@ public class GroundTrigger : Obstacleable
             
             //EventManager.Broadcast(GameEvent.OnGameOver);
         }
+
+
     }
 
     //Root.DOLocalRotate(new Vector3(0, 360, 0), .2f, RotateMode.FastBeyond360).SetRelative(true).SetEase(Ease.Linear);

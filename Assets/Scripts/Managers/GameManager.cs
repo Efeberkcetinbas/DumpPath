@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
         waitDirectionForSeconds=new WaitForSeconds(2);
         UpdateRequirement();
         UpdatePlayerPosition();
+        EventManager.Broadcast(GameEvent.OnIncreaseScore);
     }
 
 
