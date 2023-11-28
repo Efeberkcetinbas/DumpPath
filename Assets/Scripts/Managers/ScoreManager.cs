@@ -20,12 +20,12 @@ public class ScoreManager : MonoBehaviour
     private void OnIncreaseScore()
     {
         //gameData.score += 50;
-        DOTween.To(GetScore,ChangeScore,gameData.score+gameData.increaseScore,1f).OnUpdate(UpdateUI);
+        DOTween.To(GetScore,ChangeScore,gameData.score+gameData.increaseScore,.25f).OnUpdate(UpdateUI);
     }
 
     private void OnDecreaseScore()
     {
-        DOTween.To(GetScore,ChangeScore,gameData.score-gameData.undoPrice,1f).OnUpdate(UpdateUI);
+        DOTween.To(GetScore,ChangeScore,gameData.score-gameData.undoPrice,.25f).OnUpdate(UpdateUI);
     }
 
     private int GetScore()
