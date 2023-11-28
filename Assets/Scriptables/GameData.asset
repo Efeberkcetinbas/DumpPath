@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e14db6eb11dc14d4a9aadc380891c5fd, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  score: 140
+  score: 0
   increaseScore: 10
   LevelNumberIndex: 0
   ProgressNumber: 0
   levelProgressNumber: 0
   isGameEnd: 1
   isTextLevel: 0
-  ReqUp: 2
-  ReqDown: 0
-  ReqLeft: 3
+  ReqUp: 0
+  ReqDown: 2
+  ReqLeft: 0
   ReqRight: 2
-  tempUp: 2
-  tempDown: 0
+  tempUp: 0
+  tempDown: 2
   tempRight: 2
-  tempLeft: 3
+  tempLeft: 0
+  LetterText: SE

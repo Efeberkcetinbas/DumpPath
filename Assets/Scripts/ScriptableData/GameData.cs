@@ -17,16 +17,17 @@ public class GameData : ScriptableObject
     public bool isTextLevel=false;
 
     //Directions
-    public int ReqUp;
-    public int ReqDown;
-    public int ReqLeft;
-    public int ReqRight;
+    public float ReqUp;
+    public float ReqDown;
+    public float ReqLeft;
+    public float ReqRight;
 
     //Temp
-    public int tempUp;
-    public int tempDown;
-    public int tempRight;
-    public int tempLeft;
+    public float tempUp;
+    public float tempDown;
+    public float tempRight;
+    public float tempLeft;
+    public float totalReq;
 
     //Text
     public string LetterText;

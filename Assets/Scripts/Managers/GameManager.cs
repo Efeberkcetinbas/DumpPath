@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     //Level Progress
 
     [Header("Temp Requirements")]
-    [SerializeField] private int totalReq;
     [SerializeField] private GameObject upImage;
     [SerializeField] private GameObject downImage;
     [SerializeField] private GameObject leftImage;
@@ -59,6 +58,7 @@ public class GameManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnPlayerMove,OnPlayerMove);
         EventManager.AddHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.AddHandler(GameEvent.OnUpdateReqDirection,OnUpdateReqDirection);
+        EventManager.AddHandler(GameEvent.OnUndo,OnUndo);
     }
 
     private void OnDisable()
@@ -69,6 +69,13 @@ public class GameManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnPlayerMove,OnPlayerMove);
         EventManager.RemoveHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.RemoveHandler(GameEvent.OnUpdateReqDirection,OnUpdateReqDirection);
+        EventManager.RemoveHandler(GameEvent.OnUndo,OnUndo);
+    }
+
+    private void OnUndo()
+    {
+        CheckOneCondition();
+        EventManager.Broadcast(GameEvent.OnUIRequirementUpdate);
     }
     
     private void UpdateRequirement()
@@ -83,7 +90,7 @@ public class GameManager : MonoBehaviour
         gameData.tempDown=gameData.ReqDown;
         gameData.tempRight=gameData.ReqRight;
         gameData.tempLeft=gameData.ReqLeft;
-        totalReq=gameData.tempUp+gameData.tempRight+gameData.tempLeft+gameData.tempDown;
+        gameData.totalReq=gameData.tempUp+gameData.tempRight+gameData.tempLeft+gameData.tempDown;
         EventManager.Broadcast(GameEvent.OnUIRequirementUpdate);
         CheckZeroCondition();
     }
@@ -123,26 +130,40 @@ public class GameManager : MonoBehaviour
 
     private void OnPlayerMove()
     {
-        totalReq--;
-        if(totalReq==0)
+        gameData.totalReq--;
+        if(gameData.totalReq==0)
         {
             EventManager.Broadcast(GameEvent.OnPortalOpen);
         }
     }
 
+    private void CheckOneCondition()
+    {
+        if(gameData.ReqUp>0) StartCoroutine(ImageActivity(upImage,true,false,Vector3.one));
+        if(gameData.ReqDown>0) StartCoroutine(ImageActivity(downImage,true,false,Vector3.one));
+        if(gameData.ReqLeft>0) StartCoroutine(ImageActivity(leftImage,true,false,Vector3.one));
+        if(gameData.ReqRight>0) StartCoroutine(ImageActivity(rightImage,true,false,Vector3.one));
+    }
 
     private void CheckZeroCondition()
     {
-        if(gameData.ReqUp==0) StartCoroutine(CloseImage(upImage));
-        if(gameData.ReqDown==0) StartCoroutine(CloseImage(downImage));
-        if(gameData.ReqLeft==0) StartCoroutine(CloseImage(leftImage));
-        if(gameData.ReqRight==0) StartCoroutine(CloseImage(rightImage));
+        if(gameData.ReqUp==0) StartCoroutine(ImageActivity(upImage,false,true,Vector3.zero));
+        if(gameData.ReqDown==0) StartCoroutine(ImageActivity(downImage,false,true,Vector3.zero));
+        if(gameData.ReqLeft==0) StartCoroutine(ImageActivity(leftImage,false,true,Vector3.zero));
+        if(gameData.ReqRight==0) StartCoroutine(ImageActivity(rightImage,false,true,Vector3.zero));
     }
 
-    private IEnumerator CloseImage(GameObject gameObject)
+    private IEnumerator ImageActivity(GameObject gameObject,bool val,bool zero,Vector3 scale)
     {
         yield return waitForSeconds;
-        gameObject.transform.DOScale(Vector3.zero,0.25f).OnComplete(()=>gameObject.SetActive(false));
+        if(zero)
+            gameObject.transform.DOScale(scale,0.25f).OnComplete(()=>gameObject.SetActive(val));
+        else
+        {
+            gameObject.SetActive(true);
+            gameObject.transform.DOScale(scale,0.25f);
+        }
+            
     }
     
     

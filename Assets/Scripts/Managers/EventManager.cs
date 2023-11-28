@@ -32,6 +32,10 @@ public enum GameEvent
     
     //UI Management
     OnUIRequirementUpdate,
+    OnUndoBegin,
+    OnUndoEnd,
+    OnUndo,
+
 
 
     //Panel Management

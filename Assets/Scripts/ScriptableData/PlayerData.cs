@@ -10,9 +10,9 @@ public class PlayerData : ScriptableObject
     
 
     //Direction
-    public int UpMove;
-    public int DownMove;
-    public int LeftMove;
-    public int RightMove;
+    public float UpMove;
+    public float DownMove;
+    public float LeftMove;
+    public float RightMove;
 
 }
