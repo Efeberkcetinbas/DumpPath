@@ -14,7 +14,6 @@ public class GroundTrigger : Obstacleable
     }
     [SerializeField] private ParticleSystem exitParticle;
     [SerializeField] private MeshRenderer meshRenderer;
-    [SerializeField] private List<Material> materials=new List<Material>();
     [SerializeField] private Transform groundGameObject;
     [SerializeField] private Color firstColor;
 
@@ -40,14 +39,11 @@ public class GroundTrigger : Obstacleable
             if(canEnter && !gameData.isUndo)
             {
                 exitParticle.Play();
-                for (int i = 0; i < materials.Count; i++)
-                {
-                    meshRenderer.materials[i].DOFade(1,1f);
-                    meshRenderer.materials[i].DOColor(Color.green,1);
-                }
+                meshRenderer.material.DOFade(1,1);
+                meshRenderer.material.DOColor(Color.green,1);
                 
                 //Tween Atayipta da dene
-                groundGameObject.DOScaleY(0.8f,0.25f).OnComplete(()=>groundGameObject.DOScaleY(1,0.25f));
+                groundGameObject.DOScaleY(0.3f,0.25f).OnComplete(()=>groundGameObject.DOScaleY(0.5f,0.25f));
                 EventManager.Broadcast(GameEvent.OnGround);
                 canEnter=false;
             }
@@ -55,21 +51,15 @@ public class GroundTrigger : Obstacleable
             {
                 if(gameData.isUndo)
                 {
-                    for (int i = 0; i < materials.Count; i++)
-                    {
-                        meshRenderer.materials[i].DOFade(1,1f);
-                        meshRenderer.materials[i].DOColor(Color.blue,1);
-                        canEnter=true;    
-                    }
+                    meshRenderer.material.DOFade(1,1);
+                    meshRenderer.material.DOColor(Color.blue,1);
+                    canEnter=true;
                 //EventManager.Broadcast(GameEvent.OnGameOver);
                 }
                 else
                 {
-                    for (int i = 0; i < materials.Count; i++)
-                    {
-                        meshRenderer.materials[i].DOFade(1,1f);
-                        meshRenderer.materials[i].DOColor(Color.red,1);
-                    }
+                    meshRenderer.material.DOFade(1,1);
+                    meshRenderer.material.DOColor(Color.red,1);
                     Debug.Log("GAME IS END");
 
                 }
@@ -84,12 +74,9 @@ public class GroundTrigger : Obstacleable
     {
         if(gameData.isUndo)
         {
-            for (int i = 0; i < materials.Count; i++)
-            {
-                meshRenderer.materials[i].DOFade(1,1f);
-                meshRenderer.materials[i].DOColor(Color.blue,1);
-                canEnter=true;    
-            }
+            meshRenderer.material.DOFade(1,1);
+            meshRenderer.material.DOColor(Color.blue,1);
+            canEnter=true;
         }
         
 
@@ -103,12 +90,9 @@ public class GroundTrigger : Obstacleable
 
     private void OnFalseMove()
     {
-        for (int i = 0; i < materials.Count; i++)
-        {
-            meshRenderer.materials[i].DOFade(1,1);
-            meshRenderer.materials[i].DOColor(firstColor,1);
-            canEnter=true;
-        }
+        meshRenderer.material.DOFade(1,1);
+        meshRenderer.material.DOColor(firstColor,1);
+        canEnter=true;
     }
     
 }
