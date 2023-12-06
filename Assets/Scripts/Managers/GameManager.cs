@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject rightImage;
     [SerializeField] private List<Transform> directionImages=new List<Transform>();
     
+    [SerializeField] private Transform directionPanel;
+    
 
     //Bir Canvas‘ı gizlemek için SetActive(false) yerine enabled=false‘u tercih edin
     public GameObject failPanel;
@@ -45,6 +47,7 @@ public class GameManager : MonoBehaviour
     {
         waitForSeconds=new WaitForSeconds(1);
         waitDirectionForSeconds=new WaitForSeconds(2);
+        UpdatePositionOfDirections();
         UpdateRequirement();
         UpdatePlayerPosition();
         EventManager.Broadcast(GameEvent.OnIncreaseScore);
@@ -123,7 +126,18 @@ public class GameManager : MonoBehaviour
 
     private void UpdatePositionOfDirections()
     {
+        //directionImages.Shuffle(directionImages.Count);
+        ShuffleParentsAndChangeChildOrder();
+    }
+
+    void ShuffleParentsAndChangeChildOrder()
+    {
         directionImages.Shuffle(directionImages.Count);
+        int child=directionPanel.childCount;
+        for (int i = 0; i < child; i++)
+        {
+            directionImages[i].SetSiblingIndex(i);
+        }
     }
 
     private void UpdatePlayerPosition()
@@ -213,6 +227,7 @@ public class GameManager : MonoBehaviour
         ClearData();
         //Startda da kullaniyorum. Starter Pack Methoduna Al
         UpdateRequirement();
+        UpdatePositionOfDirections();
         //UpdatePositionOfDirections();
         UpdatePlayerPosition();
     }

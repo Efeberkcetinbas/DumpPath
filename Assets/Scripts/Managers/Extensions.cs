@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class Extensions
@@ -8,7 +9,7 @@ public static class Extensions
     {
         for (int i = 0; i < shuffleAccuracy; i++)
         {
-            int randomIndex=Random.Range(1,array.Length);
+            int randomIndex=Random.Range(0,array.Length);
 
             T temp=array[randomIndex];
             array[randomIndex]=array[0];
@@ -16,12 +17,13 @@ public static class Extensions
 
         }
     }
+    //Fisher-Yates Shuffle
 
     public static void Shuffle<T>(this List<T> list,int shuffleAccuracy)
     {
         for (int i = 0; i < shuffleAccuracy; i++)
         {
-            int randomIndex=Random.Range(1,list.Count);
+            int randomIndex=Random.Range(0,list.Count);
 
             T temp=list[randomIndex];
             list[randomIndex]=list[0];
@@ -29,4 +31,6 @@ public static class Extensions
 
         }
     }
+
+    
 }
