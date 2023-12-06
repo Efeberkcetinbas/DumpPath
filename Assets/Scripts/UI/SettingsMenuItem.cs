@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SettingsMenuItem : MonoBehaviour
 {
-    [HideInInspector] public Image img ;
+   [HideInInspector] public Image img ;
    [HideInInspector] public RectTransform rectTrans ;
 
    //SettingsMenu reference

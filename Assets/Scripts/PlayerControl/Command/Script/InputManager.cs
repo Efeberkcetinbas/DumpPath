@@ -105,6 +105,12 @@ public class InputManager : MonoBehaviour
                                 EventManager.Broadcast(GameEvent.OnPlayerRight);
                                 EventManager.Broadcast(GameEvent.OnPlayerMove);
                             }
+
+                            else
+                            {
+                                Debug.Log("RESTART");
+
+                            }
                         }
                         else
                         {
@@ -119,6 +125,12 @@ public class InputManager : MonoBehaviour
                                 //RotateYAxis(-90);
                                 EventManager.Broadcast(GameEvent.OnPlayerLeft);
                                 EventManager.Broadcast(GameEvent.OnPlayerMove);
+                            }
+
+                            else
+                            {
+                                Debug.Log("RESTART");
+
                             }
                             
                         }
@@ -140,6 +152,12 @@ public class InputManager : MonoBehaviour
                                 EventManager.Broadcast(GameEvent.OnPlayerUp);
                                 EventManager.Broadcast(GameEvent.OnPlayerMove);
                             }
+
+                            else
+                            {
+                                Debug.Log("RESTART");
+
+                            }
                             
                         }
                         else
@@ -155,6 +173,12 @@ public class InputManager : MonoBehaviour
                                 //RotateYAxis(180);
                                 EventManager.Broadcast(GameEvent.OnPlayerDown);
                                 EventManager.Broadcast(GameEvent.OnPlayerMove);
+                            }
+
+                            else
+                            {
+                                Debug.Log("RESTART");
+
                             }
                             
 
