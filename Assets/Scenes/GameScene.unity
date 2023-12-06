@@ -4286,11 +4286,8 @@ MonoBehaviour:
   uiCommandList: {fileID: 0}
   playerData: {fileID: 11400000, guid: 32896bd60588ce9489e9c956859f575c, type: 2}
   gameData: {fileID: 11400000, guid: 4ac1b175be4181544a12ccfe463175f7, type: 2}
-  metalHelmet: {fileID: 730090827318081959}
-  y: 2
-  oldy: 0
-  undo: {fileID: 0}
   screenPercentageToExclude: 45
+  movementType: 0
 --- !u!1001 &386552826
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6851,6 +6848,7 @@ MonoBehaviour:
   SuccessSound: {fileID: 8300000, guid: 3830029b89ea7a04992156c6adbc327c, type: 3}
   SirenSound: {fileID: 8300000, guid: b73ecfd8bd7bd4a42ac03c29b0238d5c, type: 3}
   BombSound: {fileID: 8300000, guid: 063a1630e398b82418500a684007adf8, type: 3}
+  JumpSound: {fileID: 0}
 --- !u!1 &580876335
 GameObject:
   m_ObjectHideFlags: 0
@@ -31443,11 +31441,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f40c380b03a934e42943868117d5f580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &730090827318081959 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 730090827739664151, guid: 86f076489dc117b43a19c0e3ed3132d8, type: 3}
-  m_PrefabInstance: {fileID: 730090827318081954}
-  m_PrefabAsset: {fileID: 0}
 --- !u!23 &787445165003082543
 MeshRenderer:
   m_ObjectHideFlags: 0

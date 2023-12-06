@@ -11,6 +11,7 @@ public enum GameEvent
     OnPlayerLeft,
     OnPlayerRight,
     OnPlayerMove,
+    OnMovementTypeChange,
 
     //Special Powers
 
@@ -25,6 +26,7 @@ public enum GameEvent
     OnBridgeOpen,
     OnBombActive,
     OnBombExplode,
+    OnJump,
 
     //Game End
     OnPortalOpen,

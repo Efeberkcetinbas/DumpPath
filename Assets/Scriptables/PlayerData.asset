@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   playerCanMove: 1
+  movementType: 0
   UpMove: 0
   DownMove: 0
-  LeftMove: 0
+  LeftMove: 1
   RightMove: 0
+  selectedIndex: 0

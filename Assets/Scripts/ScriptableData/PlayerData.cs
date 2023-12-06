@@ -8,7 +8,7 @@ public class PlayerData : ScriptableObject
 {
     public bool playerCanMove=true;
     
-
+    public MovementType movementType;
     //Direction
     public float UpMove;
     public float DownMove;

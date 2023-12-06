@@ -5,7 +5,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public AudioClip GameLoop,BuffMusic;
-    public AudioClip GameOverSound,BridgeSound,CageSound,MoveSound,SuccessSound,SirenSound,BombSound;
+    public AudioClip GameOverSound,BridgeSound,CageSound,MoveSound,SuccessSound,SirenSound,BombSound,JumpSound;
 
     AudioSource musicSource,effectSource;
 
@@ -29,6 +29,7 @@ public class AudioManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnCageOpen,OnCageOpen);
         EventManager.AddHandler(GameEvent.OnPlayerMove,OnPlayerMove);
         EventManager.AddHandler(GameEvent.OnSuccess,OnSuccess);
+        EventManager.AddHandler(GameEvent.OnJump,OnJump);
     }
     private void OnDisable() 
     {
@@ -39,6 +40,7 @@ public class AudioManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnCageOpen,OnCageOpen);
         EventManager.RemoveHandler(GameEvent.OnPlayerMove,OnPlayerMove);
         EventManager.RemoveHandler(GameEvent.OnSuccess,OnSuccess);
+        EventManager.RemoveHandler(GameEvent.OnJump,OnJump);
     }
 
     
@@ -71,6 +73,11 @@ public class AudioManager : MonoBehaviour
     private void OnBombExplode()
     {
         effectSource.PlayOneShot(BombSound);
+    }
+
+    private void OnJump()
+    {
+        effectSource.PlayOneShot(JumpSound);
     }
 
     private void OnSuccess()

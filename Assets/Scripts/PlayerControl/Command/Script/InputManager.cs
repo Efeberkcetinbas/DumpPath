@@ -4,13 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
+public enum MovementType
+{
+    Roll,
+    Dash,
+    Jump,
+}
 public class InputManager : MonoBehaviour
 {
     
     [SerializeField] private CharacterMove character;
-    
     [SerializeField] private UICommandList uiCommandList;
-
     private Vector3 firstPosition;
     private Vector3 lastPosition;
 
@@ -19,12 +23,10 @@ public class InputManager : MonoBehaviour
     public PlayerData playerData;
     public GameData gameData;
 
-    [SerializeField] private Transform metalHelmet;
-    [SerializeField] private float y,oldy;
-    
-    [SerializeField] private Button undo;
     //Touch Y Axis
     [SerializeField] private float screenPercentageToExclude = 20f;
+
+    [SerializeField] private MovementType movementType;
     
 
     private void OnEnable()
@@ -42,7 +44,15 @@ public class InputManager : MonoBehaviour
     {
         dragDistance=Screen.height*15/100;
         Debug.Log(Screen.height);
+
+        //Denemelik
+        OnMovementTypeChange();
         
+    }
+
+    private void OnMovementTypeChange()
+    {
+        movementType=playerData.movementType;
     }
 
     private void SendMoveCommand(Transform objectToMove, Vector3 direction, float distance)
@@ -96,8 +106,21 @@ public class InputManager : MonoBehaviour
                                 //RotateYAxis(90);
                                 //Rotate
                                 //JumpXAxis(+1f,-360,0.5f);
+                                switch(movementType)
+                                {
+                                    case MovementType.Roll:
+                                        StartCoroutine(Roll(Vector3.right));
+                                        break;
+                                    case MovementType.Dash:
+                                        GoXAxis(Vector3.right,1);
+                                        break;
+                                    case MovementType.Jump:
+                                        RotateYAxis(90);
+                                        JumpXAxis(Vector3.right,-360,0.5f,+1);
+                                        break;
+                                }
                                 
-                                StartCoroutine(Roll(Vector3.right));
+                                //StartCoroutine(Roll(Vector3.right));
                                 playerData.RightMove++;
                                 gameData.ReqRight--;
                                 SendMoveCommand(Vector3.right);
@@ -116,8 +139,21 @@ public class InputManager : MonoBehaviour
                         {
                             if(gameData.ReqLeft>0)
                             {
+                                switch(movementType)
+                                {
+                                    case MovementType.Roll:
+                                        StartCoroutine(Roll(Vector3.left));
+                                        break;
+                                    case MovementType.Dash:
+                                        GoXAxis(Vector3.left,-1);
+                                        break;
+                                    case MovementType.Jump:
+                                        RotateYAxis(-90);
+                                        JumpXAxis(Vector3.left,360,0.5f,-1);
+                                        break;
+                                }
                                 //JumpXAxis(-1f,360,0.5f);
-                                StartCoroutine(Roll(Vector3.left));
+                                //StartCoroutine(Roll(Vector3.left));
                                 playerData.LeftMove++;
                                 gameData.ReqLeft--;
                                 SendMoveCommand(Vector3.left);
@@ -142,8 +178,21 @@ public class InputManager : MonoBehaviour
                         {
                             if(gameData.ReqUp>0)
                             {
+                                switch(movementType)
+                                {
+                                    case MovementType.Roll:
+                                        StartCoroutine(Roll(Vector3.forward));
+                                        break;
+                                    case MovementType.Dash:
+                                        GoZAxis(Vector3.forward,1);
+                                        break;
+                                    case MovementType.Jump:
+                                        RotateYAxis(0);
+                                        JumpZAxis(Vector3.forward,360,0.5f,+1);
+                                        break;
+                                }
                                 //JumpZAxis(+1f,360,0.5f);
-                                StartCoroutine(Roll(Vector3.forward));
+                                //StartCoroutine(Roll(Vector3.forward));
                                 playerData.UpMove++;
                                 gameData.ReqUp--;
                                 SendMoveCommand(Vector3.forward);
@@ -164,8 +213,21 @@ public class InputManager : MonoBehaviour
                         {
                             if(gameData.ReqDown>0)
                             {
+                                switch(movementType)
+                                {
+                                    case MovementType.Roll:
+                                        StartCoroutine(Roll(Vector3.back));
+                                        break;
+                                    case MovementType.Dash:
+                                        GoZAxis(Vector3.back,-1);
+                                        break;
+                                    case MovementType.Jump:
+                                        RotateYAxis(180);
+                                        JumpZAxis(Vector3.back,-360,0.5f,-1);
+                                        break;
+                                }
                                 //JumpZAxis(-1f,-360,0.5f);
-                                StartCoroutine(Roll(Vector3.back));
+                                //StartCoroutine(Roll(Vector3.back));
                                 playerData.DownMove++;
                                 gameData.ReqDown--;
                                 SendMoveCommand(Vector3.back);
@@ -209,12 +271,15 @@ public class InputManager : MonoBehaviour
         float remainingAngle=90;
         Vector3 rotationCenter=character.transform.position+direction/2 + Vector3.down/2;
         Vector3 rotationAxis=Vector3.Cross(Vector3.up,direction);
+        playerData.playerCanMove=false;
+
 
         while(remainingAngle>0)
         {
             float rotationAngle=Mathf.Min(Time.deltaTime*300,remainingAngle);
             character.transform.RotateAround(rotationCenter,rotationAxis,rotationAngle);
             remainingAngle-=rotationAngle;
+            playerData.playerCanMove=true;
             yield return null;
         }
     }
@@ -222,57 +287,54 @@ public class InputManager : MonoBehaviour
 
     
 
-    private IEnumerator JumpToFalse()
-    {
-        yield return new WaitForSeconds(.1f);
-        /*if(!gameManager.isGameEnd)
-            gameManager.canPlayerJump=true;*/
-    }
+    
 
     #region Move
-    private void GoXAxis(float direction)
+    private void GoXAxis(Vector3 direction, float amount)
     {
-        var currentPosLeft=transform.position.x;
-        character.transform.DOMoveX(currentPosLeft+direction,0.25f).OnComplete(()=>{
-            StartCoroutine(JumpToFalse());
+        var currentPos=character.transform.position;
+        Debug.Log("CURRENT POS " + currentPos);
+        playerData.playerCanMove=false;
+        Debug.Log("DIRECTION X " + direction.x);
+        character.transform.DOMove(new Vector3(currentPos.x+direction.x + amount,currentPos.y,currentPos.z),0.2f).OnComplete(()=>{
+            playerData.playerCanMove=true;
         });
     }
 
-    private void GoZAxis(float direction)
+    private void GoZAxis(Vector3 direction, float amount)
     {
-        var currentPosUp=transform.position.z;
-        character.transform.DOMoveZ(currentPosUp+direction,0.25f).OnComplete(()=>{
-            StartCoroutine(JumpToFalse());
+        var currentPos=character.transform.position;
+        playerData.playerCanMove=false;
+        character.transform.DOMove(new Vector3(currentPos.x,currentPos.y,currentPos.z+direction.z + amount),0.2f).OnComplete(()=>{
+            playerData.playerCanMove=true;
         });
     }
 
     #endregion
 
     #region Jump
-    private void JumpXAxis(float direction,float rot,float duration)
+    private void JumpXAxis(Vector3 direction,float rot,float duration, float amount)
     {
         var currentPos=character.transform.position;
         //rotasyon istersen acarsin
         //transform.DORotate(new Vector3(0,0,rot),1f, RotateMode.FastBeyond360);
-        character.transform.DOScale(Vector3.one/1.5f,duration);
-        metalHelmet.DOLocalMoveY(y,duration/2).OnComplete(()=>metalHelmet.DOLocalMoveY(oldy,duration/2));
-        metalHelmet.DORotate(new Vector3(0,360,0),1f, RotateMode.FastBeyond360);
-        character.transform.DOJump(new Vector3(currentPos.x+direction,currentPos.y,currentPos.z),1,1,duration).OnComplete(()=>{
-            character.transform.DOScale(Vector3.one,0.25f);
-            StartCoroutine(JumpToFalse());
+        //character.transform.DOScale(Vector3.one/1.5f,duration);
+        playerData.playerCanMove=false;
+        character.transform.DOJump(new Vector3(currentPos.x+direction.x + amount,currentPos.y,currentPos.z),1,1,duration).OnComplete(()=>{
+            //character.transform.DOScale(Vector3.one,0.25f);
+            playerData.playerCanMove=true;
         });
     }
 
-    private void JumpZAxis(float direction,float rot,float duration)
+    private void JumpZAxis(Vector3 direction,float rot,float duration, float amount)
     {
         var currentPos=character.transform.position;
         //transform.DORotate(new Vector3(rot,0,0),1f, RotateMode.FastBeyond360);
-        character.transform.DOScale(Vector3.one/1.5f,duration);
-        metalHelmet.DOLocalMoveY(y,duration/2).OnComplete(()=>metalHelmet.DOLocalMoveY(oldy,duration/2));
-        metalHelmet.DORotate(new Vector3(0,360,0),1f, RotateMode.FastBeyond360);
-        character.transform.DOJump(new Vector3(currentPos.x,currentPos.y,currentPos.z + direction),1,1,duration).OnComplete(()=>{
-            character.transform.DOScale(Vector3.one,0.25f);
-            StartCoroutine(JumpToFalse());
+        //character.transform.DOScale(Vector3.one/1.5f,duration);
+        playerData.playerCanMove=false;
+        character.transform.DOJump(new Vector3(currentPos.x,currentPos.y,currentPos.z + direction.z + amount),1,1,duration).OnComplete(()=>{
+            //character.transform.DOScale(Vector3.one,0.25f);
+            playerData.playerCanMove=true;
         });
     }
     #endregion

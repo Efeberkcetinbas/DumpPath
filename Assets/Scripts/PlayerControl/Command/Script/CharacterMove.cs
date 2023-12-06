@@ -22,6 +22,18 @@ public class CharacterMove : MonoBehaviour
     }
     #endregion
 
+    private void OnEnable() 
+    {
+        EventManager.AddHandler(GameEvent.OnFalseMove,OnFalseMove);
+        
+    }
+
+    private void OnDisable() 
+    {
+        EventManager.RemoveHandler(GameEvent.OnFalseMove,OnFalseMove);
+
+    }
+
     public void AddCommand(Move command)
     {
         if (index < commandList.Count)
@@ -46,6 +58,12 @@ public class CharacterMove : MonoBehaviour
             EventManager.Broadcast(GameEvent.OnUndoEnd);
         }
         UpdateLine();
+    }
+
+    private void OnFalseMove()
+    {
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!! ERRORRRRRRRRR !!!!!!!!!!!!!!!!!!!!!!
+        //commandList.Clear();
     }
 
     public void RedoCommand()

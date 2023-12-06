@@ -29,6 +29,7 @@ public class CameraManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.AddHandler(GameEvent.OnBombExplode,OnBombExplode);
         EventManager.AddHandler(GameEvent.OnCameraChange,OnCameraChange);
+        EventManager.AddHandler(GameEvent.OnJump,OnJump);
     }
 
     private void OnDisable() 
@@ -40,6 +41,7 @@ public class CameraManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.RemoveHandler(GameEvent.OnBombExplode,OnBombExplode);
         EventManager.RemoveHandler(GameEvent.OnCameraChange,OnCameraChange);
+        EventManager.RemoveHandler(GameEvent.OnJump,OnJump);
     }
 
    
@@ -74,6 +76,11 @@ public class CameraManager : MonoBehaviour
     private void OnBombExplode()
     {
         Noise(3,3,1);
+    }
+
+    private void OnJump()
+    {
+        ChangeFieldOfViewHit(newFieldOfView,oldFieldOfView,0.25f);
     }
 
     private void OnCameraChange()
