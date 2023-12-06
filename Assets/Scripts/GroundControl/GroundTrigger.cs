@@ -15,11 +15,22 @@ public class GroundTrigger : Obstacleable
     [SerializeField] private ParticleSystem exitParticle;
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private List<Material> materials=new List<Material>();
-    List<Material> myMaterials;
     [SerializeField] private Transform groundGameObject;
+    [SerializeField] private Color firstColor;
 
     [SerializeField] private bool canEnter;
 
+    private void OnEnable() 
+    {
+        EventManager.AddHandler(GameEvent.OnFalseMove,OnFalseMove);
+        
+    }
+
+    private void OnDisable() 
+    {
+        EventManager.RemoveHandler(GameEvent.OnFalseMove,OnFalseMove);
+        
+    }
     
 
     internal override void DoAction(TriggerControl player)
@@ -88,6 +99,16 @@ public class GroundTrigger : Obstacleable
         if(playerData.playerDown) transform.DOLocalRotate(new Vector3(-360,0,0),.5f,RotateMode.FastBeyond360).SetRelative(true).SetEase(Ease.Linear);
         if(playerData.playerLeft) transform.DOLocalRotate(new Vector3(0,0,360),.5f,RotateMode.FastBeyond360).SetRelative(true).SetEase(Ease.Linear);
         if(playerData.playerRight) transform.DOLocalRotate(new Vector3(0,0,-360),.5f,RotateMode.FastBeyond360).SetRelative(true).SetEase(Ease.Linear);*/
+    }
+
+    private void OnFalseMove()
+    {
+        for (int i = 0; i < materials.Count; i++)
+        {
+            meshRenderer.materials[i].DOFade(1,1);
+            meshRenderer.materials[i].DOColor(firstColor,1);
+            canEnter=true;
+        }
     }
     
 }

@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.AddHandler(GameEvent.OnUpdateReqDirection,OnUpdateReqDirection);
         EventManager.AddHandler(GameEvent.OnUndo,OnUndo);
+        EventManager.AddHandler(GameEvent.OnFalseMove,OnFalseMove);
     }
 
     private void OnDisable()
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.RemoveHandler(GameEvent.OnUpdateReqDirection,OnUpdateReqDirection);
         EventManager.RemoveHandler(GameEvent.OnUndo,OnUndo);
+        EventManager.RemoveHandler(GameEvent.OnFalseMove,OnFalseMove);
     }
 
     private void OnUndo()
@@ -191,7 +193,17 @@ public class GameManager : MonoBehaviour
   
 
     
+    private void OnFalseMove()
+    {
+        playerData.UpMove=0;
+        playerData.DownMove=0;
+        playerData.LeftMove=0;
+        playerData.RightMove=0;
 
+        UpdateRequirement();
+        UpdatePlayerPosition();
+        CheckOneCondition();
+    }
     
 
 

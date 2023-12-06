@@ -53,15 +53,13 @@ public enum GameEvent
     OnSuccess,
     OnOpenSuccess,
     OnNextLevel,
+    OnFalseMove,
     OnRestartLevel,
 
     //Game Management
     OnIncreaseScore,
     OnDecreaseScore,
-    
-    OnGameStart,
     OnUIUpdate,
-    OnUIGameOver,
     OnGameOver
 }
 public class EventManager

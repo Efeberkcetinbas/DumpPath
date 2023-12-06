@@ -108,7 +108,7 @@ public class InputManager : MonoBehaviour
 
                             else
                             {
-                                Debug.Log("RESTART");
+                                EventManager.Broadcast(GameEvent.OnFalseMove);
 
                             }
                         }
@@ -129,7 +129,7 @@ public class InputManager : MonoBehaviour
 
                             else
                             {
-                                Debug.Log("RESTART");
+                                EventManager.Broadcast(GameEvent.OnFalseMove);
 
                             }
                             
@@ -155,7 +155,7 @@ public class InputManager : MonoBehaviour
 
                             else
                             {
-                                Debug.Log("RESTART");
+                                EventManager.Broadcast(GameEvent.OnFalseMove);
 
                             }
                             
@@ -177,7 +177,7 @@ public class InputManager : MonoBehaviour
 
                             else
                             {
-                                Debug.Log("RESTART");
+                                EventManager.Broadcast(GameEvent.OnFalseMove);
 
                             }
                             

@@ -5019,6 +5019,7 @@ MonoBehaviour:
   - {fileID: -6126091556477775235, guid: 7852f815f3fee8045bc4839f45a10a71, type: 3}
   - {fileID: -9117483709511198939, guid: 7852f815f3fee8045bc4839f45a10a71, type: 3}
   groundGameObject: {fileID: 2532366467230559079}
+  firstColor: {r: 0, g: 0, b: 0, a: 1}
   canEnter: 1
 --- !u!1 &6049074556046701813
 GameObject:

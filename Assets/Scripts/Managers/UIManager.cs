@@ -58,6 +58,7 @@ public class UIManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnUpdateLetterDirectionText,OnUpdateLetterDirectionText);
         EventManager.AddHandler(GameEvent.OnShopCharacterSelected,OnShopBallSelected);
         EventManager.AddHandler(GameEvent.OnShopOpen,OnShopBallSelected);
+        EventManager.AddHandler(GameEvent.OnFalseMove,OnFalseMove);
     }
     private void OnDisable()
     {
@@ -73,6 +74,7 @@ public class UIManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnUpdateLetterDirectionText,OnUpdateLetterDirectionText);
         EventManager.RemoveHandler(GameEvent.OnShopCharacterSelected,OnShopBallSelected);
         EventManager.RemoveHandler(GameEvent.OnShopOpen,OnShopBallSelected);
+        EventManager.RemoveHandler(GameEvent.OnFalseMove,OnFalseMove);
     }
 
     private void Start() 
@@ -151,6 +153,11 @@ public class UIManager : MonoBehaviour
     }
 
     private void OnDirectionUpdate()
+    {
+        StartCoroutine(ResetProgressBar());
+    }
+
+    private void OnFalseMove()
     {
         StartCoroutine(ResetProgressBar());
     }
