@@ -13,6 +13,9 @@ public class GameData : ScriptableObject
     public int ProgressNumber;
     public int levelProgressNumber;
     public int undoPrice;
+    public int skyboxIndex;
+    public int backgroundIndex;
+    public int fogColorIndex;
 
     public bool isGameEnd=false;
     public bool isTextLevel=false;

@@ -7,6 +7,7 @@ using Cinemachine;
 public class CameraManager : MonoBehaviour
 {
     public CinemachineVirtualCamera cm;
+    public CinemachineVirtualCamera cm2;
 
     [Header("Shake Control")]
     [SerializeField] private float shakeTime = 0.5f;
@@ -16,7 +17,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private float oldFieldOfView;
     private CinemachineBasicMultiChannelPerlin noise;
 
-    
+    private bool isFirstCam=true;
     
 
     private void OnEnable() 
@@ -27,6 +28,7 @@ public class CameraManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnGround,OnGround);
         EventManager.AddHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.AddHandler(GameEvent.OnBombExplode,OnBombExplode);
+        EventManager.AddHandler(GameEvent.OnCameraChange,OnCameraChange);
     }
 
     private void OnDisable() 
@@ -37,6 +39,7 @@ public class CameraManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnGround,OnGround);
         EventManager.RemoveHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.RemoveHandler(GameEvent.OnBombExplode,OnBombExplode);
+        EventManager.RemoveHandler(GameEvent.OnCameraChange,OnCameraChange);
     }
 
    
@@ -55,6 +58,7 @@ public class CameraManager : MonoBehaviour
     private void OnNextLevel()
     {
         ChangeFieldOfView(oldFieldOfView,2);
+        isFirstCam=true;
     }
 
     private void OnGround()
@@ -70,6 +74,21 @@ public class CameraManager : MonoBehaviour
     private void OnBombExplode()
     {
         Noise(3,3,1);
+    }
+
+    private void OnCameraChange()
+    {
+        if(isFirstCam)
+        {
+            cm2.gameObject.SetActive(true);
+            cm2.m_Follow=FindObjectOfType<PortalControl>().transform;
+        } 
+        else
+        {
+            cm2.gameObject.SetActive(false);            
+        }
+
+        isFirstCam=!isFirstCam;
     }
     
 

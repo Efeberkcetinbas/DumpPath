@@ -36,6 +36,9 @@ public enum GameEvent
     OnUndoEnd,
     OnUndo,
 
+    //Settings Management
+    OnCameraChange,
+
 
 
     //Panel Management

@@ -43,10 +43,7 @@ public class PanelManager : MonoBehaviour
     private void Start() 
     {
         //UICanvas.SetActive(false);
-        for (int i = 0; i < sceneUI.Length; i++)
-        {
-            sceneUI[i].SetActive(false);
-        }
+        SceneUI(false);
 
         waitForSeconds1=new WaitForSeconds(2);
         waitForSeconds2=new WaitForSeconds(.5f);
@@ -68,10 +65,7 @@ public class PanelManager : MonoBehaviour
     {
         //EventManager.Broadcast(GameEvent.OnButtonClicked);
         StartPanel.DOAnchorPos(new Vector2(StartX,StartY),duration).OnComplete(()=>{
-            for (int i = 0; i < sceneUI.Length; i++)
-            {
-                sceneUI[i].SetActive(true);
-            }
+            SceneUI(true);
             gameData.isGameEnd=false;
             //StartPanel.gameObject.SetActive(false);
         });
@@ -113,11 +107,21 @@ public class PanelManager : MonoBehaviour
 
     }
 
+    private void SceneUI(bool val)
+    {
+        for (int i = 0; i < sceneUI.Length; i++)
+        {
+            sceneUI[i].SetActive(val);
+        }
+    }
+
     private void OnOpenSuccess()
     {
         //Here Goes Some Improvements
         if(gameData.isTextLevel)
             directionText.SetActive(false);
+        
+        SceneUI(false);
         SuccessPanel.gameObject.SetActive(true);
         SuccessPanel.DOAnchorPos(Vector2.zero,0.2f).SetEase(Ease.InOutCubic).OnComplete(()=>{
             StartCoroutine(ItemsAnimation());

@@ -102,6 +102,11 @@ public class SettingsMenu : MonoBehaviour
 				//third button
             Debug.Log ("Vibration") ;
             break ;
+         case 3: 
+				//third button
+            Debug.Log ("Camera") ;
+            EventManager.Broadcast(GameEvent.OnCameraChange);
+            break ;
       }
    }
 

@@ -12,9 +12,7 @@ public class LevelEnvironmentGenerator : MonoBehaviour
     [SerializeField] private List<Material> skyboxMaterials=new List<Material>();
     [SerializeField] private List<Color> fogColors=new List<Color>();
 
-    private int skyboxIndex;
-    private int backgroundIndex;
-    private int fogColorIndex;
+    
 
     private void Start() 
     {
@@ -23,9 +21,9 @@ public class LevelEnvironmentGenerator : MonoBehaviour
 
     private void Check()
     {
-        backgroundGameObjects[backgroundIndex].SetActive(true);
-        RenderSettings.skybox=skyboxMaterials[skyboxIndex];
-        RenderSettings.fogColor=fogColors[fogColorIndex];
+        backgroundGameObjects[gameData.backgroundIndex].SetActive(true);
+        RenderSettings.skybox=skyboxMaterials[gameData.skyboxIndex];
+        RenderSettings.fogColor=fogColors[gameData.fogColorIndex];
     }
     private void OnEnable() 
     {
@@ -58,15 +56,15 @@ public class LevelEnvironmentGenerator : MonoBehaviour
         }
         else
         {
-            backgroundIndex++;
-            backgroundIndex = backgroundIndex % backgroundGameObjects.Count;
+            gameData.backgroundIndex++;
+            gameData.backgroundIndex = gameData.backgroundIndex % backgroundGameObjects.Count;
 
             for (int i = 0; i < backgroundGameObjects.Count; i++)
             {
                 backgroundGameObjects[i].SetActive(false);
             }
 
-            backgroundGameObjects[backgroundIndex].SetActive(true);
+            backgroundGameObjects[gameData.backgroundIndex].SetActive(true);
 
             
 }
@@ -74,11 +72,11 @@ public class LevelEnvironmentGenerator : MonoBehaviour
 
     private void ChangeSkybox()
     {
-        skyboxIndex++;
-        fogColorIndex++;
-        skyboxIndex=skyboxIndex % skyboxMaterials.Count;
-        fogColorIndex=fogColorIndex % fogColors.Count;
-        RenderSettings.skybox=skyboxMaterials[skyboxIndex];
-        RenderSettings.fogColor=fogColors[fogColorIndex];
+        gameData.skyboxIndex++;
+        gameData.fogColorIndex++;
+        gameData.skyboxIndex=gameData.skyboxIndex % skyboxMaterials.Count;
+        gameData.fogColorIndex=gameData.fogColorIndex % fogColors.Count;
+        RenderSettings.skybox=skyboxMaterials[gameData.skyboxIndex];
+        RenderSettings.fogColor=fogColors[gameData.fogColorIndex];
     }
 }
