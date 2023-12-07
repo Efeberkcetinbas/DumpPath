@@ -5,13 +5,13 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public AudioClip GameLoop,BuffMusic;
-    public AudioClip GameOverSound,BridgeSound,CageSound,RollMoveSound,JumpMoveSound,DashMoveSound,SuccessSound,SirenSound,BombSound,JumpSound;
+    public AudioClip GameOverSound,BridgeSound,CageSound,RollMoveSound,JumpMoveSound,DashMoveSound,SuccessSound1,SuccessSound2,SirenSound,BombSound,JumpSound;
 
     AudioSource musicSource,effectSource;
 
     [SerializeField] private PlayerData playerData;
 
-    private bool hit;
+    private WaitForSeconds waitForSeconds;
 
     private void Start() 
     {
@@ -20,6 +20,7 @@ public class AudioManager : MonoBehaviour
         //musicSource.Play();
         effectSource = gameObject.AddComponent<AudioSource>();
         effectSource.volume=0.4f;
+        waitForSeconds=new WaitForSeconds(2);
     }
 
     private void OnEnable() 
@@ -96,6 +97,14 @@ public class AudioManager : MonoBehaviour
 
     private void OnSuccess()
     {
-        effectSource.PlayOneShot(SuccessSound);
+        effectSource.PlayOneShot(SuccessSound1);
+        StartCoroutine(PlaySecondSuccess());
+    }
+
+
+    private IEnumerator PlaySecondSuccess()
+    {
+        yield return waitForSeconds;
+        effectSource.PlayOneShot(SuccessSound2);
     }
 }

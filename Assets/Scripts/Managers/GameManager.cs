@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
         CheckOneCondition();
         EventManager.Broadcast(GameEvent.OnUIRequirementUpdate);
     }
+
     
     private void UpdateRequirement()
     {
@@ -96,7 +97,7 @@ public class GameManager : MonoBehaviour
         gameData.tempDown=gameData.ReqDown;
         gameData.tempRight=gameData.ReqRight;
         gameData.tempLeft=gameData.ReqLeft;
-        gameData.totalReq=gameData.tempUp+gameData.tempRight+gameData.tempLeft+gameData.tempDown;
+        //gameData.totalReq=gameData.tempUp+gameData.tempRight+gameData.tempLeft+gameData.tempDown;
         EventManager.Broadcast(GameEvent.OnUIRequirementUpdate);
         CheckZeroCondition();
     }
@@ -143,6 +144,12 @@ public class GameManager : MonoBehaviour
     private void UpdatePlayerPosition()
     {
         player.position=FindObjectOfType<LevelPlayerPosition>().position;
+        UpdateTotalDirection();
+    }
+
+    private void UpdateTotalDirection()
+    {
+        gameData.totalReq=FindObjectOfType<LevelPlayerPosition>().totalDirectionNumber;
     }
 
     private void OnPlayerMove()
@@ -209,6 +216,12 @@ public class GameManager : MonoBehaviour
     
     private void OnFalseMove()
     {
+        StartCoroutine(WaitFalseMove());
+    }
+
+    private IEnumerator WaitFalseMove()
+    {
+        yield return null;
         playerData.UpMove=0;
         playerData.DownMove=0;
         playerData.LeftMove=0;

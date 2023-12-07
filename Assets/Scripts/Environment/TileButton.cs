@@ -7,13 +7,15 @@ public class TileButton : ButtonControl
     [SerializeField] private int ID;
     [SerializeField] private int sizeX,sizeZ;
 
-    [SerializeField] private int increaseX,increaseZ;
+    [SerializeField] private float increaseX,increaseZ;
      
     [SerializeField] private GameObject tile;
 
     [SerializeField] private float y,duration;
 
     private WaitForSeconds waitForSeconds;
+
+    [SerializeField] private Transform parent;
 
     private void Start() 
     {
@@ -34,8 +36,8 @@ public class TileButton : ButtonControl
         {
             for (int j = 0; j < size_y; j++)
             {
-                Instantiate(tile,new Vector3(i+increaseX,y,j+increaseZ),Quaternion.identity);
-                //EventManager.Broadcast(GameEvent.OnBridgeOpen);
+                Instantiate(tile,new Vector3(i+increaseX,y,transform.position.z+j+increaseZ),Quaternion.identity,parent);
+                EventManager.Broadcast(GameEvent.OnBridgeOpen);
                 yield return waitForSeconds;
             }
         }

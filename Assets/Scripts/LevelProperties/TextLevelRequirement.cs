@@ -17,6 +17,6 @@ public class TextLevelRequirement : MonoBehaviour
     private void OnDisable() 
     {
         gameData.isTextLevel=false;
-        EventManager.Broadcast(GameEvent.OnDisableLetter);
+        //EventManager.Broadcast(GameEvent.OnDisableLetter);
     }
 }

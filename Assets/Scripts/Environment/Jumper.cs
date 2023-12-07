@@ -11,6 +11,7 @@ public class Jumper : Obstacleable
     [SerializeField] private float power,duration,jumperY,oldJumperY;
     [SerializeField] private int jumpAmount;
     [SerializeField] private ParticleSystem particle;
+    [SerializeField] private PlayerData playerData;
 
     private bool canJump=true;
 
@@ -36,7 +37,10 @@ public class Jumper : Obstacleable
         if(canJump)
         {
             particle.Play();
-            player.transform.DOJump(targetPoint,power,jumpAmount,duration).SetEase(easePlayer);
+            playerData.playerCanMove=false;
+            player.transform.DOJump(targetPoint,power,jumpAmount,duration).SetEase(easePlayer).OnComplete(()=>{
+                playerData.playerCanMove=true;
+            });
             canJump=false;
         }
         

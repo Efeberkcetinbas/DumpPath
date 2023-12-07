@@ -17,6 +17,7 @@ public enum GameEvent
 
     //Order
     OnDirectionUpdate,
+    OnGroundsSetGreen,
     OnUpdateReqDirection,
 
     //Environment

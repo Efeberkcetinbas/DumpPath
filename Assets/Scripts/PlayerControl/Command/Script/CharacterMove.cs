@@ -25,12 +25,16 @@ public class CharacterMove : MonoBehaviour
     private void OnEnable() 
     {
         EventManager.AddHandler(GameEvent.OnFalseMove,OnFalseMove);
+        EventManager.AddHandler(GameEvent.OnDirectionUpdate,OnDirectionUpdate);
+        EventManager.AddHandler(GameEvent.OnBridgeOpen,OnBridgeOpen);
         
     }
 
     private void OnDisable() 
     {
         EventManager.RemoveHandler(GameEvent.OnFalseMove,OnFalseMove);
+        EventManager.RemoveHandler(GameEvent.OnDirectionUpdate,OnDirectionUpdate);
+        EventManager.RemoveHandler(GameEvent.OnBridgeOpen,OnBridgeOpen);
 
     }
 
@@ -63,6 +67,18 @@ public class CharacterMove : MonoBehaviour
     private void OnFalseMove()
     {
         //Bug Fixed with Index=0;
+        index=0;
+        commandList.Clear();
+    }
+
+    private void OnDirectionUpdate()
+    {
+        index=0;
+        commandList.Clear();
+    }
+
+    private void OnBridgeOpen()
+    {
         index=0;
         commandList.Clear();
     }

@@ -5,4 +5,6 @@ using UnityEngine;
 public class LevelPlayerPosition : MonoBehaviour
 {
     public Vector3 position;
+
+    public int totalDirectionNumber;
 }

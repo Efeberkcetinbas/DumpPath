@@ -18,6 +18,7 @@ public class GroundTrigger : Obstacleable
     [SerializeField] private Color firstColor;
 
     [SerializeField] private bool canEnter;
+    [SerializeField] private bool canLetter;
 
     private void OnEnable() 
     {
@@ -93,6 +94,15 @@ public class GroundTrigger : Obstacleable
         meshRenderer.material.DOFade(1,1);
         meshRenderer.material.DOColor(firstColor,1);
         canEnter=true;
+    }
+
+    internal void SetGreen()
+    {
+        if(canEnter && canLetter)
+        {
+            meshRenderer.material.DOFade(1,0.2f);
+            meshRenderer.material.DOColor(Color.green,0.2f);
+        }
     }
     
 }
