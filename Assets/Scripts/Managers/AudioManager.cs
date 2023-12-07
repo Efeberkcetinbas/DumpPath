@@ -5,9 +5,11 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public AudioClip GameLoop,BuffMusic;
-    public AudioClip GameOverSound,BridgeSound,CageSound,MoveSound,SuccessSound,SirenSound,BombSound,JumpSound;
+    public AudioClip GameOverSound,BridgeSound,CageSound,RollMoveSound,JumpMoveSound,DashMoveSound,SuccessSound,SirenSound,BombSound,JumpSound;
 
     AudioSource musicSource,effectSource;
+
+    [SerializeField] private PlayerData playerData;
 
     private bool hit;
 
@@ -62,7 +64,19 @@ public class AudioManager : MonoBehaviour
 
     private void OnPlayerMove()
     {
-        effectSource.PlayOneShot(MoveSound);
+        switch(playerData.movementType)
+        {
+            case MovementType.Roll:
+                effectSource.PlayOneShot(RollMoveSound);
+                break;
+            case MovementType.Jump:
+                effectSource.PlayOneShot(JumpMoveSound);
+                break;
+            case MovementType.Dash:
+                effectSource.PlayOneShot(DashMoveSound);
+                break;
+        }
+        
     }
 
     private void OnBombActive()

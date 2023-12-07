@@ -26,7 +26,6 @@ public class InputManager : MonoBehaviour
     //Touch Y Axis
     [SerializeField] private float screenPercentageToExclude = 20f;
 
-    [SerializeField] private MovementType movementType;
     
 
     private void OnEnable()
@@ -46,14 +45,10 @@ public class InputManager : MonoBehaviour
         Debug.Log(Screen.height);
 
         //Denemelik
-        OnMovementTypeChange();
         
     }
 
-    private void OnMovementTypeChange()
-    {
-        movementType=playerData.movementType;
-    }
+    
 
     private void SendMoveCommand(Transform objectToMove, Vector3 direction, float distance)
     {
@@ -106,7 +101,7 @@ public class InputManager : MonoBehaviour
                                 //RotateYAxis(90);
                                 //Rotate
                                 //JumpXAxis(+1f,-360,0.5f);
-                                switch(movementType)
+                                switch(playerData.movementType)
                                 {
                                     case MovementType.Roll:
                                         StartCoroutine(Roll(Vector3.right));
@@ -139,7 +134,7 @@ public class InputManager : MonoBehaviour
                         {
                             if(gameData.ReqLeft>0)
                             {
-                                switch(movementType)
+                                switch(playerData.movementType)
                                 {
                                     case MovementType.Roll:
                                         StartCoroutine(Roll(Vector3.left));
@@ -178,7 +173,7 @@ public class InputManager : MonoBehaviour
                         {
                             if(gameData.ReqUp>0)
                             {
-                                switch(movementType)
+                                switch(playerData.movementType)
                                 {
                                     case MovementType.Roll:
                                         StartCoroutine(Roll(Vector3.forward));
@@ -213,7 +208,7 @@ public class InputManager : MonoBehaviour
                         {
                             if(gameData.ReqDown>0)
                             {
-                                switch(movementType)
+                                switch(playerData.movementType)
                                 {
                                     case MovementType.Roll:
                                         StartCoroutine(Roll(Vector3.back));

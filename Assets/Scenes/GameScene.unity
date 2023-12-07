@@ -2923,8 +2923,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: 5}
+  m_SizeDelta: {x: 85, y: 86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &234957034
 MonoBehaviour:
@@ -3125,7 +3125,7 @@ GameObject:
   - component: {fileID: 245435990}
   - component: {fileID: 245435989}
   m_Layer: 5
-  m_Name: SoundClose
+  m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3149,7 +3149,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 85, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &245435989
 MonoBehaviour:
@@ -3171,7 +3171,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 41bf8b79c5dc7d64aafcc3c68e923096, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 80646922ff41b3c44bde03a72915b372, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4370,7 +4370,6 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: 32896bd60588ce9489e9c956859f575c, type: 2}
   gameData: {fileID: 11400000, guid: 4ac1b175be4181544a12ccfe463175f7, type: 2}
   screenPercentageToExclude: 50
-  movementType: 0
 --- !u!1001 &386552826
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6927,11 +6926,14 @@ MonoBehaviour:
   GameOverSound: {fileID: 0}
   BridgeSound: {fileID: 0}
   CageSound: {fileID: 8300000, guid: 518dc11ca46ba814b89252a1ed642358, type: 3}
-  MoveSound: {fileID: 8300000, guid: b59b3d2c450435a40bfabc63ff8e04b9, type: 3}
+  RollMoveSound: {fileID: 8300000, guid: dc42fa49b35e82d4eac4ce8208ae30c0, type: 3}
+  JumpMoveSound: {fileID: 8300000, guid: e5de919b13aee064385ff0e4b1ceeadc, type: 3}
+  DashMoveSound: {fileID: 8300000, guid: 81b568ee0231073459e11859413f6dfb, type: 3}
   SuccessSound: {fileID: 8300000, guid: 3830029b89ea7a04992156c6adbc327c, type: 3}
   SirenSound: {fileID: 8300000, guid: b73ecfd8bd7bd4a42ac03c29b0238d5c, type: 3}
   BombSound: {fileID: 8300000, guid: 063a1630e398b82418500a684007adf8, type: 3}
   JumpSound: {fileID: 0}
+  playerData: {fileID: 11400000, guid: 32896bd60588ce9489e9c956859f575c, type: 2}
 --- !u!1 &580876335
 GameObject:
   m_ObjectHideFlags: 0
@@ -7985,6 +7987,7 @@ RectTransform:
   - {fileID: 703773279}
   - {fileID: 71511337}
   - {fileID: 1211592616}
+  - {fileID: 1514468442}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10838,7 +10841,6 @@ RectTransform:
   m_Children:
   - {fileID: 1690402581}
   - {fileID: 2046684038}
-  - {fileID: 1514468442}
   - {fileID: 1453852506}
   m_Father: {fileID: 370335316}
   m_RootOrder: 0
@@ -13809,22 +13811,20 @@ MonoBehaviour:
   StorePanel: {fileID: 1493714845}
   SuccessPanel: {fileID: 1758037540}
   FailPanel: {fileID: 1246375486}
+  ScoreImage: {fileID: 1514468442}
   sceneUI:
   - {fileID: 703773278}
   - {fileID: 1211592615}
   - {fileID: 71511336}
+  - {fileID: 1514468441}
   directionText: {fileID: 108446721}
   Fade: {fileID: 1604211217}
   StartX: 0
   StartY: -2500
-  DirectionX: 0
-  DirectionY: 500
   StoreX: 1500
   StoreY: 750
-  SuccessX: 0
-  SuccessY: 0
-  FailX: 0
-  FailY: 0
+  ScoreX: 250
+  ScoreOldX: -150
   duration: 0.5
   gameData: {fileID: 11400000, guid: 4ac1b175be4181544a12ccfe463175f7, type: 2}
   ease: 30
@@ -17627,7 +17627,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 906308605}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -18345,19 +18345,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1514468441}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1385761729}
   - {fileID: 394864881}
-  m_Father: {fileID: 906308605}
-  m_RootOrder: 2
+  m_Father: {fileID: 678281120}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -300}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -150, y: 200}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1514468443

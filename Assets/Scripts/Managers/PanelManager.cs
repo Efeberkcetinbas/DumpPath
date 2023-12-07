@@ -5,13 +5,13 @@ using UnityEngine.UI;
 using DG.Tweening;
 public class PanelManager : MonoBehaviour
 {
-    [SerializeField] private RectTransform StartPanel,DirectionPanel,StorePanel,SuccessPanel,FailPanel;
+    [SerializeField] private RectTransform StartPanel,DirectionPanel,StorePanel,SuccessPanel,FailPanel,ScoreImage;
 
     [SerializeField] private GameObject[] sceneUI;
     [SerializeField] private GameObject directionText;
     [SerializeField] private Image Fade;
 
-    [SerializeField] private float StartX,StartY,DirectionX,DirectionY,StoreX,StoreY,SuccessX,SuccessY,FailX,FailY,duration;
+    [SerializeField] private float StartX,StartY,StoreX,StoreY,ScoreX,ScoreOldX,duration;
 
     [SerializeField] private GameData gameData;
     [Header("Success List")]
@@ -21,6 +21,7 @@ public class PanelManager : MonoBehaviour
     //Waitforseconds
     private WaitForSeconds waitForSeconds1;
     private WaitForSeconds waitForSeconds2;
+    private WaitForSeconds waitForSecondsScore;
 
 
     private void OnEnable() 
@@ -29,6 +30,8 @@ public class PanelManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.AddHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
         EventManager.AddHandler(GameEvent.OnDisableLetter,OnDisableLetter);
+        EventManager.AddHandler(GameEvent.OnUndoBegin,OnUndoBegin);
+
     }
 
 
@@ -38,6 +41,7 @@ public class PanelManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.RemoveHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
         EventManager.RemoveHandler(GameEvent.OnDisableLetter,OnDisableLetter);
+        EventManager.RemoveHandler(GameEvent.OnUndoBegin,OnUndoBegin);
     }
 
     private void Start() 
@@ -47,6 +51,7 @@ public class PanelManager : MonoBehaviour
 
         waitForSeconds1=new WaitForSeconds(2);
         waitForSeconds2=new WaitForSeconds(.5f);
+        waitForSecondsScore=new WaitForSeconds(2);
     }
 
     private void OnSuccess()
@@ -66,18 +71,24 @@ public class PanelManager : MonoBehaviour
         //EventManager.Broadcast(GameEvent.OnButtonClicked);
         StartPanel.DOAnchorPos(new Vector2(StartX,StartY),duration).OnComplete(()=>{
             SceneUI(true);
+            StartCoroutine(ScoreMove());
             gameData.isGameEnd=false;
             //StartPanel.gameObject.SetActive(false);
         });
         DirectionPanel.gameObject.SetActive(true);
         DirectionPanel.DOAnchorPos(new Vector2(0,-500),duration);
-
+        
     
         if(gameData.isTextLevel)
             directionText.SetActive(true);
     }
 
     
+    private void OnUndoBegin()
+    {
+        ScoreImage.DOAnchorPosX(ScoreOldX,0.5f);
+        StartCoroutine(ScoreMove());
+    }
 
     private void OnRestartLevel()
     {
@@ -137,7 +148,12 @@ public class PanelManager : MonoBehaviour
         image.DOFade(0,2f);
         yield return waitForSeconds1;
         gameObject.SetActive(false);
+    }
 
+    private IEnumerator ScoreMove()
+    {
+        yield return waitForSecondsScore;
+        ScoreImage.DOAnchorPosX(ScoreX,0.5f);
     }
 
     private IEnumerator ItemsAnimation()
