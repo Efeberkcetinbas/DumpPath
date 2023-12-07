@@ -116,7 +116,7 @@ public class InputManager : MonoBehaviour
                                         break;
                                     case MovementType.Jump:
                                         RotateYAxis(90);
-                                        JumpXAxis(Vector3.right,-360,0.5f,+1);
+                                        JumpXAxis(Vector3.right,-360,0.5f,0);
                                         break;
                                 }
                                 
@@ -149,7 +149,7 @@ public class InputManager : MonoBehaviour
                                         break;
                                     case MovementType.Jump:
                                         RotateYAxis(-90);
-                                        JumpXAxis(Vector3.left,360,0.5f,-1);
+                                        JumpXAxis(Vector3.left,360,0.5f,0);
                                         break;
                                 }
                                 //JumpXAxis(-1f,360,0.5f);
@@ -188,7 +188,7 @@ public class InputManager : MonoBehaviour
                                         break;
                                     case MovementType.Jump:
                                         RotateYAxis(0);
-                                        JumpZAxis(Vector3.forward,360,0.5f,+1);
+                                        JumpZAxis(Vector3.forward,360,0.5f,0);
                                         break;
                                 }
                                 //JumpZAxis(+1f,360,0.5f);
@@ -223,7 +223,7 @@ public class InputManager : MonoBehaviour
                                         break;
                                     case MovementType.Jump:
                                         RotateYAxis(180);
-                                        JumpZAxis(Vector3.back,-360,0.5f,-1);
+                                        JumpZAxis(Vector3.back,-360,0.5f,0);
                                         break;
                                 }
                                 //JumpZAxis(-1f,-360,0.5f);
@@ -317,11 +317,11 @@ public class InputManager : MonoBehaviour
     {
         var currentPos=character.transform.position;
         //rotasyon istersen acarsin
-        //transform.DORotate(new Vector3(0,0,rot),1f, RotateMode.FastBeyond360);
-        //character.transform.DOScale(Vector3.one/1.5f,duration);
+        character.transform.DORotate(new Vector3(0,0,rot),1f, RotateMode.FastBeyond360);
+        character.transform.DOScale(Vector3.one/1.5f,duration);
         playerData.playerCanMove=false;
         character.transform.DOJump(new Vector3(currentPos.x+direction.x + amount,currentPos.y,currentPos.z),1,1,duration).OnComplete(()=>{
-            //character.transform.DOScale(Vector3.one,0.25f);
+            character.transform.DOScale(Vector3.one,0.25f);
             playerData.playerCanMove=true;
         });
     }
@@ -329,11 +329,11 @@ public class InputManager : MonoBehaviour
     private void JumpZAxis(Vector3 direction,float rot,float duration, float amount)
     {
         var currentPos=character.transform.position;
-        //transform.DORotate(new Vector3(rot,0,0),1f, RotateMode.FastBeyond360);
-        //character.transform.DOScale(Vector3.one/1.5f,duration);
+        character.transform.DORotate(new Vector3(rot,0,0),1f, RotateMode.FastBeyond360);
+        character.transform.DOScale(Vector3.one/1.5f,duration);
         playerData.playerCanMove=false;
         character.transform.DOJump(new Vector3(currentPos.x,currentPos.y,currentPos.z + direction.z + amount),1,1,duration).OnComplete(()=>{
-            //character.transform.DOScale(Vector3.one,0.25f);
+            character.transform.DOScale(Vector3.one,0.25f);
             playerData.playerCanMove=true;
         });
     }

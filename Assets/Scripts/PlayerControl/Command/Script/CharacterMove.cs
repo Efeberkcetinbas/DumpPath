@@ -62,8 +62,9 @@ public class CharacterMove : MonoBehaviour
 
     private void OnFalseMove()
     {
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!! ERRORRRRRRRRR !!!!!!!!!!!!!!!!!!!!!!
-        //commandList.Clear();
+        //Bug Fixed with Index=0;
+        index=0;
+        commandList.Clear();
     }
 
     public void RedoCommand()
@@ -77,6 +78,7 @@ public class CharacterMove : MonoBehaviour
             index++;
             commandList[index - 1].Execute();
         }
+        
         UpdateLine();
     }
 
