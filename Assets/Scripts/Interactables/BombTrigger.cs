@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BombTrigger : Obstacleable
 {
+    [SerializeField] private int id;
     public BombTrigger()
     {
         canStay=false;
@@ -11,7 +12,7 @@ public class BombTrigger : Obstacleable
 
     internal override void DoAction(TriggerControl player)
     {
-        EventManager.Broadcast(GameEvent.OnBombActive);
+        EventManager.BroadcastId(GameEvent.OnBombActive,id);
         Destroy(gameObject);
     }
 }

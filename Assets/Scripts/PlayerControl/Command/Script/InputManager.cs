@@ -26,6 +26,7 @@ public class InputManager : MonoBehaviour
     //Touch Y Axis
     [SerializeField] private float screenPercentageToExclude = 20f;
 
+    private WaitForSeconds waitForSeconds;
     
 
     private void OnEnable()
@@ -37,6 +38,14 @@ public class InputManager : MonoBehaviour
 
         //undo?.onClick.AddListener(() => character.UndoCommand());
         //redo?.onClick.AddListener(() => character.RedoCommand());
+
+        EventManager.AddHandler(GameEvent.OnFalseMove,OnFalseMove);
+    }
+
+    private void OnDisable() 
+    {
+        EventManager.RemoveHandler(GameEvent.OnFalseMove,OnFalseMove);
+        
     }
 
     private void Start() 
@@ -44,8 +53,8 @@ public class InputManager : MonoBehaviour
         dragDistance=Screen.height*15/100;
         Debug.Log(Screen.height);
 
-        //Denemelik
-        
+        waitForSeconds=new WaitForSeconds(1);
+
     }
 
     
@@ -280,7 +289,17 @@ public class InputManager : MonoBehaviour
     }
     #endregion
 
-    
+    private void OnFalseMove()
+    {
+        playerData.playerCanMove=false;
+        StartCoroutine(CanMove());
+    }
+
+    private IEnumerator CanMove()
+    {
+        yield return waitForSeconds;
+        playerData.playerCanMove=true;
+    }
 
     
 

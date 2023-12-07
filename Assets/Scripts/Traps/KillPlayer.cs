@@ -14,6 +14,7 @@ public class KillPlayer : Obstacleable
 
     internal override void DoAction(TriggerControl player)
     {
+        EventManager.Broadcast(GameEvent.OnFalseMove);
         Debug.Log("PLAYER IS DEAD");        
     }
 }

@@ -12,20 +12,25 @@ public class BomberMove : MonoBehaviour,ITrapMove
 
     private WaitForSeconds waitForSeconds;
 
+    [SerializeField] private int Id;
+    [SerializeField] private Ease ease;
+
+    [SerializeField] private float waitforsecond;
+
     private void Start() 
     {
-        waitForSeconds=new WaitForSeconds(3);
+        waitForSeconds=new WaitForSeconds(waitforsecond);
     }
 
     private void OnEnable() 
     {
-        EventManager.AddHandler(GameEvent.OnBombActive,OnBombActive);
+        EventManager.AddIdHandler(GameEvent.OnBombActive,OnBombActive);
         
     }
 
     private void OnDisable() 
     {
-        EventManager.RemoveHandler(GameEvent.OnBombActive,OnBombActive);
+        EventManager.RemoveIdHandler(GameEvent.OnBombActive,OnBombActive);
         
     }
 
@@ -36,10 +41,11 @@ public class BomberMove : MonoBehaviour,ITrapMove
 
     private IEnumerator Attack()
     {
+        yield return waitForSeconds;
         for (int i = 0; i < bombs.Count; i++)
         {
             bombs[i].gameObject.SetActive(true);
-            bombs[i].DOLocalJump(bombPositions[i].position,3,1,duration).OnComplete(()=>{
+            bombs[i].DOJump(bombPositions[i].position,3,1,duration).SetEase(ease).OnComplete(()=>{
                 bombs[i].gameObject.SetActive(false);
                 bombParticles[i].Play();
                 EventManager.Broadcast(GameEvent.OnBombExplode);
@@ -49,16 +55,18 @@ public class BomberMove : MonoBehaviour,ITrapMove
     }
 
     //Bomb Track Calistirinca Bombalari Atacak
-    private void OnBombActive()
+    private void OnBombActive(int id)
     {
-        for (int i = 0; i < bombPositions.Count; i++)
+        if(id==Id)
         {
-            //Carpilar Acilir. Boylelikle nereye dusecegini Goruruz
-            bombPositions[i].gameObject.SetActive(true);
+            for (int i = 0; i < bombPositions.Count; i++)
+            {
+                //Carpilar Acilir. Boylelikle nereye dusecegini Goruruz
+                bombPositions[i].gameObject.SetActive(true);
+            }
+            Move();
         }
-        
-
-        Move();
+       
         //Siren Sesi Gelir. Audio Managerda
     }
 

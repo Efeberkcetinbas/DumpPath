@@ -19,16 +19,20 @@ public class GroundTrigger : Obstacleable
 
     [SerializeField] private bool canEnter;
     [SerializeField] private bool canLetter;
+    [SerializeField] private bool isTargetForBomb;
+    [SerializeField] private int ID;
 
     private void OnEnable() 
     {
         EventManager.AddHandler(GameEvent.OnFalseMove,OnFalseMove);
+        EventManager.AddIdHandler(GameEvent.OnBombActive,OnBombActive);
         
     }
 
     private void OnDisable() 
     {
         EventManager.RemoveHandler(GameEvent.OnFalseMove,OnFalseMove);
+        EventManager.RemoveIdHandler(GameEvent.OnBombActive,OnBombActive);
         
     }
     
@@ -102,6 +106,16 @@ public class GroundTrigger : Obstacleable
         {
             meshRenderer.material.DOFade(1,0.2f);
             meshRenderer.material.DOColor(Color.green,0.2f);
+        }
+    }
+
+
+    private void OnBombActive(int id)
+    {
+        if(isTargetForBomb && id==ID)
+        {
+            meshRenderer.material.DOFade(1,0.2f);
+            meshRenderer.material.DOColor(Color.red,0.2f);
         }
     }
     
