@@ -1,14 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
-public class TileControl : MonoBehaviour
+public class TileControl : Obstacleable
 {
     private WaitForSeconds waitForSeconds;
     [SerializeField] private float fallTime;
 
     private Vector3 startPosition;
     [SerializeField] private float amount;
+
+    [SerializeField] private MeshRenderer meshRenderer;
+
+    public TileControl()
+    {
+        canStay=false;
+    }
     private void Start() 
     {
         waitForSeconds=new WaitForSeconds(fallTime);
@@ -27,5 +35,11 @@ public class TileControl : MonoBehaviour
         }
 
         this.transform.position=startPosition;
+    }
+
+    internal override void DoAction(TriggerControl player)
+    {
+        meshRenderer.material.DOFade(1,1);
+        meshRenderer.material.DOColor(Color.green,1);
     }
 }

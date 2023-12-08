@@ -30,6 +30,7 @@ public class UpgrationOfPath : Obstacleable
         EventManager.Broadcast(GameEvent.OnDirectionUpdate);
         mesh.SetActive(false);
         boxCollider.enabled=false;
+        Debug.Log("IT WORKS");
     }
 
 
