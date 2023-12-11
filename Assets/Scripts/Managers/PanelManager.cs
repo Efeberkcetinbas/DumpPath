@@ -10,10 +10,12 @@ public class PanelManager : MonoBehaviour
     [SerializeField] private GameObject[] sceneUI;
     [SerializeField] private GameObject directionText;
     [SerializeField] private Image Fade;
+    [SerializeField] private Image Light;
 
     [SerializeField] private float StartX,StartY,StoreX,StoreY,ScoreX,ScoreOldX,duration;
 
     [SerializeField] private GameData gameData;
+    [SerializeField] private PlayerData playerData;
     [Header("Success List")]
     [SerializeField] private Ease ease;
     [SerializeField] private List<Transform> successElements=new List<Transform>();
@@ -22,6 +24,8 @@ public class PanelManager : MonoBehaviour
     private WaitForSeconds waitForSeconds1;
     private WaitForSeconds waitForSeconds2;
     private WaitForSeconds waitForSecondsScore;
+
+    [SerializeField] private Player player;
 
 
     private void OnEnable() 
@@ -72,7 +76,21 @@ public class PanelManager : MonoBehaviour
         StartPanel.DOAnchorPos(new Vector2(StartX,StartY),duration).OnComplete(()=>{
             SceneUI(true);
             StartCoroutine(ScoreMove());
+            //player.transform.DOMoveY(0.5f,0.5f).OnComplete(()=>playerData.playerCanMove=true);
             gameData.isGameEnd=false;
+            //EventManager.Broadcast(GameEvent.OnStartGame);
+            if(gameData.isLightLevel)
+            {
+                Light.gameObject.SetActive(true);
+                Light.color=new Color(0,0,0,0);
+                Light.DOFade(1,gameData.lightTime); 
+            }
+
+            else
+            {
+                Light.gameObject.SetActive(false);
+            }
+
             //StartPanel.gameObject.SetActive(false);
         });
         DirectionPanel.gameObject.SetActive(true);
@@ -82,6 +100,8 @@ public class PanelManager : MonoBehaviour
         if(gameData.isTextLevel)
             directionText.SetActive(true);
     }
+
+    
 
     
     private void OnUndoBegin()
@@ -128,6 +148,7 @@ public class PanelManager : MonoBehaviour
 
     private void OnOpenSuccess()
     {
+        Light.gameObject.SetActive(false);
         //Here Goes Some Improvements
         if(gameData.isTextLevel)
             directionText.SetActive(false);

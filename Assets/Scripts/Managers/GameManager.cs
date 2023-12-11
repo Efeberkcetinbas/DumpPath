@@ -144,6 +144,7 @@ public class GameManager : MonoBehaviour
     private void UpdatePlayerPosition()
     {
         player.position=FindObjectOfType<LevelPlayerPosition>().position;
+        player.transform.DOMoveY(0.5f,0.2f);
         UpdateTotalDirection();
     }
 
@@ -251,6 +252,8 @@ public class GameManager : MonoBehaviour
     void ClearData()
     {
         gameData.isGameEnd=true;
+        gameData.isLightLevel=false;
+        gameData.isTextLevel=false;
         gameData.ProgressNumber=0;
         gameData.levelProgressNumber=0;
 
@@ -264,8 +267,9 @@ public class GameManager : MonoBehaviour
         playerData.DownMove=0;
         playerData.LeftMove=0;
         playerData.RightMove=0;
-
+        playerData.playerCanMove=true;
         failPanel.SetActive(false);
+        
     }
 
 

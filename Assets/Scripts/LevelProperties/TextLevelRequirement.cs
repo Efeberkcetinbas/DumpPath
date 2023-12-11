@@ -9,14 +9,16 @@ public class TextLevelRequirement : MonoBehaviour
 
     private void OnEnable() 
     {
+        StartCoroutine(SetTrue());
+    }
+
+    
+
+    private IEnumerator SetTrue()
+    {
+        yield return null;
         gameData.isTextLevel=true;
         gameData.LetterText=textLetter;
         EventManager.Broadcast(GameEvent.OnUpdateLetterDirectionText);
-    }
-
-    private void OnDisable() 
-    {
-        gameData.isTextLevel=false;
-        //EventManager.Broadcast(GameEvent.OnDisableLetter);
     }
 }

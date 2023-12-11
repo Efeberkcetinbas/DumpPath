@@ -39,8 +39,6 @@ public class GroundTrigger : Obstacleable
 
     internal override void DoAction(TriggerControl player)
     {
-        if(!gameData.isGameEnd)
-        {
             if(canEnter && !gameData.isUndo)
             {
                 exitParticle.Play();
@@ -69,7 +67,10 @@ public class GroundTrigger : Obstacleable
 
                 }
             }
-        }
+        /*if(!gameData.isGameEnd)
+        {
+            
+        }*/
 
 
     }

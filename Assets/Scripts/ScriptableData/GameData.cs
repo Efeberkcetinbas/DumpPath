@@ -16,10 +16,12 @@ public class GameData : ScriptableObject
     public int skyboxIndex;
     public int backgroundIndex;
     public int fogColorIndex;
+    public int lightTime=5;
 
     public bool isGameEnd=false;
     public bool isTextLevel=false;
     public bool isUndo=false;
+    public bool isLightLevel=false;
 
     //Directions
     public float ReqUp;
