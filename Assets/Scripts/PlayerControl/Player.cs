@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 
@@ -10,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private ParticleSystem downParticle;
     [SerializeField] private ParticleSystem leftParticle;
     [SerializeField] private ParticleSystem rightParticle;
+    [SerializeField] private ParticleSystem updateParticle;
 
     [SerializeField] private PlayerData playerData;
 
@@ -20,6 +22,7 @@ public class Player : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnPlayerLeft,OnPlayerLeft);
         EventManager.AddHandler(GameEvent.OnPlayerRight,OnPlayerRight);
         EventManager.AddHandler(GameEvent.OnCharacterChange,OnCharacterChange);
+        EventManager.AddHandler(GameEvent.OnDirectionUpdate,OnDirectionUpdate);
         
     }
 
@@ -30,7 +33,11 @@ public class Player : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnPlayerLeft,OnPlayerLeft);
         EventManager.RemoveHandler(GameEvent.OnPlayerRight,OnPlayerRight);
         EventManager.RemoveHandler(GameEvent.OnCharacterChange,OnCharacterChange);
+        EventManager.RemoveHandler(GameEvent.OnDirectionUpdate,OnDirectionUpdate);
     }
+
+   
+
 
 
     private void OnPlayerLeft()
@@ -53,6 +60,10 @@ public class Player : MonoBehaviour
         downParticle.Play();
     }
 
+    private void OnDirectionUpdate()
+    {
+        updateParticle.Play();
+    }
     private void OnCharacterChange()
     {
         Debug.Log("CHARACTER: " + playerData.selectedIndex);
