@@ -6,6 +6,7 @@ public class UpgrationOfPath : Obstacleable
 {
     [SerializeField] private GameObject mesh;
     [SerializeField] private BoxCollider boxCollider;
+    [SerializeField] private GameData gameData;
     public UpgrationOfPath()
     {
         canStay=false;
@@ -28,6 +29,7 @@ public class UpgrationOfPath : Obstacleable
     {
         EventManager.Broadcast(GameEvent.OnGroundsSetGreen);
         EventManager.Broadcast(GameEvent.OnDirectionUpdate);
+        gameData.isGameEnd=true;
         mesh.SetActive(false);
         boxCollider.enabled=false;
         Debug.Log("IT WORKS");
@@ -36,6 +38,7 @@ public class UpgrationOfPath : Obstacleable
 
     private void OnFalseMove()
     {
+        
         mesh.SetActive(true);
         boxCollider.enabled=true;
     }

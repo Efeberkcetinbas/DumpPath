@@ -33,6 +33,7 @@ public class UIManager : MonoBehaviour
 
 
     private WaitForSeconds waitForSeconds;
+    private WaitForSeconds waitForFill;
 
 
 
@@ -79,7 +80,8 @@ public class UIManager : MonoBehaviour
 
     private void Start() 
     {
-        waitForSeconds=new WaitForSeconds(1);
+        waitForSeconds=new WaitForSeconds(.5f);
+        waitForFill=new WaitForSeconds(.5f);
         OnNextLevel();
     }
     
@@ -169,6 +171,8 @@ public class UIManager : MonoBehaviour
         downProgressBar.DOFillAmount(0,0.1f);
         leftProgressBar.DOFillAmount(0,0.1f);
         rightProgressBar.DOFillAmount(0,0.1f);
+        yield return waitForFill;
+        gameData.isGameEnd=false;
     }
 
 

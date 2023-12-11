@@ -94,6 +94,7 @@ MonoBehaviour:
   increaseScorePrefab: {fileID: 6593105275545932699, guid: 95e4955e5aff18646bd9e61b57b738d3, type: 3}
   pointPos: {fileID: 1970237595}
   coin: {fileID: 3899181236654655656}
+  particleEffect: {fileID: 1995403933065894, guid: 4961a16ba01e09547be3e1c9d16d5ad0, type: 3}
   ease: 8
   gameData: {fileID: 11400000, guid: 4ac1b175be4181544a12ccfe463175f7, type: 2}
 --- !u!1 &3899181236654655656

@@ -8,7 +8,7 @@ public class Coin : Obstacleable
 {
     [SerializeField] private GameObject increaseScorePrefab;
     [SerializeField] private Transform pointPos;
-    [SerializeField] private GameObject coin;
+    [SerializeField] private GameObject coin, particleEffect;
 
     [SerializeField] private Ease ease;
     private BoxCollider boxCollider;
@@ -41,7 +41,9 @@ public class Coin : Obstacleable
     internal override void DoAction(TriggerControl player)
     {
         coin.transform.DOScale(Vector3.one*3,0.5f).SetEase(ease).OnComplete(()=>{
+            Instantiate(particleEffect,transform.position,Quaternion.identity);
             coin.transform.DOScale(Vector3.zero,0.5f).SetEase(ease).OnComplete(()=>{
+                
                 StartCoinMove();
                 boxCollider.enabled=false;
             });

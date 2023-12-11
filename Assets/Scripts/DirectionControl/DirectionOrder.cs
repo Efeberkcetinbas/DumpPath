@@ -70,5 +70,6 @@ public class DirectionOrder : MonoBehaviour
         }
 
         directions[0].gameObject.SetActive(true);
+        index=0;
     }
 }

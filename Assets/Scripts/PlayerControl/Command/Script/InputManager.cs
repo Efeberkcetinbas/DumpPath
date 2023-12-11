@@ -136,6 +136,7 @@ public class InputManager : MonoBehaviour
                             else
                             {
                                 EventManager.Broadcast(GameEvent.OnFalseMove);
+                                gameData.isGameEnd=true;
 
                             }
                         }
@@ -170,6 +171,7 @@ public class InputManager : MonoBehaviour
                             else
                             {
                                 EventManager.Broadcast(GameEvent.OnFalseMove);
+                                gameData.isGameEnd=true;
 
                             }
                             
@@ -209,7 +211,7 @@ public class InputManager : MonoBehaviour
                             else
                             {
                                 EventManager.Broadcast(GameEvent.OnFalseMove);
-
+                                gameData.isGameEnd=true;
                             }
                             
                         }
@@ -244,6 +246,7 @@ public class InputManager : MonoBehaviour
                             else
                             {
                                 EventManager.Broadcast(GameEvent.OnFalseMove);
+                                gameData.isGameEnd=true;
 
                             }
                             
