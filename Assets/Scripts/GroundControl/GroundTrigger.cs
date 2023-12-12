@@ -15,7 +15,7 @@ public class GroundTrigger : Obstacleable
     [SerializeField] private ParticleSystem exitParticle;
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private Transform groundGameObject;
-    [SerializeField] private Color firstColor;
+    private Color firstColor;
 
     [SerializeField] private bool canEnter;
     [SerializeField] private bool canLetter;
@@ -34,6 +34,11 @@ public class GroundTrigger : Obstacleable
         EventManager.RemoveHandler(GameEvent.OnFalseMove,OnFalseMove);
         EventManager.RemoveIdHandler(GameEvent.OnBombActive,OnBombActive);
         
+    }
+
+    private void Start() 
+    {
+        firstColor=meshRenderer.material.color;    
     }
     
 
@@ -67,10 +72,7 @@ public class GroundTrigger : Obstacleable
 
                 }
             }
-        /*if(!gameData.isGameEnd)
-        {
-            
-        }*/
+        
 
 
     }

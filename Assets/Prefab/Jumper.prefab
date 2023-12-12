@@ -9493,7 +9493,7 @@ MonoBehaviour:
   easePlayer: 9
   easeJumper: 8
   power: 3
-  duration: 0.5
+  duration: 1
   jumperY: 2
   oldJumperY: 0.5
   jumpAmount: 1
