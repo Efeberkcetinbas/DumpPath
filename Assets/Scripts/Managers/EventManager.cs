@@ -22,6 +22,7 @@ public enum GameEvent
 
     //Environment
     OnGround,
+    OnCollectCoin,
     OnOpenButton,
     OnCloseButton,
     OnBridgeOpen,

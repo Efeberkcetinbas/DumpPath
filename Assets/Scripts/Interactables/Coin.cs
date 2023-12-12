@@ -43,7 +43,8 @@ public class Coin : Obstacleable
         coin.transform.DOScale(Vector3.one*3,0.5f).SetEase(ease).OnComplete(()=>{
             Instantiate(particleEffect,transform.position,Quaternion.identity);
             coin.transform.DOScale(Vector3.zero,0.5f).SetEase(ease).OnComplete(()=>{
-                
+                EventManager.Broadcast(GameEvent.OnIncreaseScore);
+                EventManager.Broadcast(GameEvent.OnCollectCoin);
                 StartCoinMove();
                 boxCollider.enabled=false;
             });

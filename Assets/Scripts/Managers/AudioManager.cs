@@ -5,7 +5,8 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public AudioClip GameLoop,BuffMusic;
-    public AudioClip GameOverSound,BridgeSound,CageSound,RollMoveSound,JumpMoveSound,DashMoveSound,SuccessSound1,SuccessSound2,SirenSound,BombSound,JumpSound;
+    public AudioClip GameOverSound,BridgeSound,CageSound,RollMoveSound,JumpMoveSound,DashMoveSound,SuccessSound1,SuccessSound2,SirenSound,BombSound,JumpSound
+    ,CoinSound,NextLevelSound,UndoSound;
 
     AudioSource musicSource,effectSource;
 
@@ -17,10 +18,11 @@ public class AudioManager : MonoBehaviour
     {
         musicSource = GetComponent<AudioSource>();
         musicSource.clip = GameLoop;
-        //musicSource.Play();
+        musicSource.Play();
         effectSource = gameObject.AddComponent<AudioSource>();
-        effectSource.volume=0.4f;
+        effectSource.volume=1f;
         waitForSeconds=new WaitForSeconds(2);
+        OnNextLevel();
     }
 
     private void OnEnable() 
@@ -33,6 +35,10 @@ public class AudioManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnPlayerMove,OnPlayerMove);
         EventManager.AddHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.AddHandler(GameEvent.OnJump,OnJump);
+        EventManager.AddHandler(GameEvent.OnCollectCoin,OnCollectCoin);
+        EventManager.AddHandler(GameEvent.OnNextLevel,OnNextLevel);
+        EventManager.AddHandler(GameEvent.OnUndoBegin,OnUndoBegin);
+
     }
     private void OnDisable() 
     {
@@ -44,11 +50,15 @@ public class AudioManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnPlayerMove,OnPlayerMove);
         EventManager.RemoveHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.RemoveHandler(GameEvent.OnJump,OnJump);
+        EventManager.RemoveHandler(GameEvent.OnCollectCoin,OnCollectCoin);
+        EventManager.RemoveHandler(GameEvent.OnNextLevel,OnNextLevel);
+        EventManager.RemoveHandler(GameEvent.OnUndoBegin,OnUndoBegin);
+
     }
 
     
 
-    void OnGameOver()
+    private void OnGameOver()
     {
         effectSource.PlayOneShot(GameOverSound);
     }
@@ -99,6 +109,21 @@ public class AudioManager : MonoBehaviour
     {
         effectSource.PlayOneShot(SuccessSound1);
         StartCoroutine(PlaySecondSuccess());
+    }
+
+    private void OnCollectCoin()
+    {
+        effectSource.PlayOneShot(CoinSound);
+    }
+
+    private void OnNextLevel()
+    {
+        effectSource.PlayOneShot(NextLevelSound);
+    }
+
+    private void OnUndoBegin()
+    {
+        effectSource.PlayOneShot(UndoSound);
     }
 
 

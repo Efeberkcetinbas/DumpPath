@@ -27,6 +27,7 @@ public class CharacterMove : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnFalseMove,OnFalseMove);
         EventManager.AddHandler(GameEvent.OnDirectionUpdate,OnDirectionUpdate);
         EventManager.AddHandler(GameEvent.OnBridgeOpen,OnBridgeOpen);
+        EventManager.AddHandler(GameEvent.OnNextLevel,OnNextLevel);
         
     }
 
@@ -35,6 +36,7 @@ public class CharacterMove : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnFalseMove,OnFalseMove);
         EventManager.RemoveHandler(GameEvent.OnDirectionUpdate,OnDirectionUpdate);
         EventManager.RemoveHandler(GameEvent.OnBridgeOpen,OnBridgeOpen);
+        EventManager.RemoveHandler(GameEvent.OnNextLevel,OnNextLevel);
 
     }
 
@@ -78,6 +80,12 @@ public class CharacterMove : MonoBehaviour
     }
 
     private void OnBridgeOpen()
+    {
+        index=0;
+        commandList.Clear();
+    }
+
+    private void OnNextLevel()
     {
         index=0;
         commandList.Clear();
