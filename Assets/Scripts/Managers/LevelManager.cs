@@ -39,7 +39,8 @@ public class LevelManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("NumberOfLevel", levelIndex + 1);
         PlayerPrefs.SetInt("RealNumberLevel", PlayerPrefs.GetInt("RealNumberLevel", 0) + 1);
-        gameData.LevelNumberIndex++;
+        gameData.IndexOfLevel++;
+        gameData.testValue++;
         LoadLevel();
         EventManager.Broadcast(GameEvent.OnNextLevel);
     }

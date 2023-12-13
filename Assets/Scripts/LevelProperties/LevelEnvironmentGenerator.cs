@@ -39,7 +39,7 @@ public class LevelEnvironmentGenerator : MonoBehaviour
 
     private void OnNextLevel()
     {
-        if(gameData.LevelNumberIndex % 5 == 0)
+        if(gameData.IndexOfLevel % 5 == 0)
         {
             //Generate();
             ChangeSkybox();

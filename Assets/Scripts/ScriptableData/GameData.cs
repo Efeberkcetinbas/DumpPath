@@ -9,7 +9,7 @@ public class GameData : ScriptableObject
 
     public int score;
     public int increaseScore;
-    public int LevelNumberIndex;
+    public int IndexOfLevel;
     public int ProgressNumber;
     public int levelProgressNumber;
     public int undoPrice;
@@ -17,6 +17,7 @@ public class GameData : ScriptableObject
     public int backgroundIndex;
     public int fogColorIndex;
     public int lightTime=5;
+    public int testValue=0;
 
     public bool isGameEnd=false;
     public bool isTextLevel=false;
