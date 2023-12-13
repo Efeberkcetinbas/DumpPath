@@ -8,6 +8,8 @@ public class PlayerData : ScriptableObject
 {
     public bool playerCanMove=true;
     public bool isPathUpgrade=false;
+    public bool playerInGround;
+    public bool playerInSomething;
     
     public MovementType movementType;
     //Direction

@@ -5,13 +5,13 @@ using UnityEngine;
 public enum GameEvent
 {
     //Player
-    OnTargetHit,
     OnPlayerUp,
     OnPlayerDown,
     OnPlayerLeft,
     OnPlayerRight,
     OnPlayerMove,
     OnMovementTypeChange,
+    OnPlayerDead,
 
     //Special Powers
 
@@ -57,6 +57,7 @@ public enum GameEvent
     //Level Management
     OnSuccess,
     OnOpenSuccess,
+    OnOpenFail,
     OnNextLevel,
     OnFalseMove,
     OnRestartLevel,

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Linq;
 
 public enum MovementType
 {
@@ -17,7 +18,8 @@ public class InputManager : MonoBehaviour
     [SerializeField] private UICommandList uiCommandList;
     private Vector3 firstPosition;
     private Vector3 lastPosition;
-
+    public LayerMask detectionLayer; 
+    private Rigidbody rbCharacter;
     private float dragDistance;
 
     public PlayerData playerData;
@@ -40,19 +42,24 @@ public class InputManager : MonoBehaviour
         //redo?.onClick.AddListener(() => character.RedoCommand());
 
         EventManager.AddHandler(GameEvent.OnFalseMove,OnFalseMove);
+        EventManager.AddHandler(GameEvent.OnPlayerDead,OnPlayerDead);
+        EventManager.AddHandler(GameEvent.OnStartGame,OnStartGame);
+
     }
 
     private void OnDisable() 
     {
         EventManager.RemoveHandler(GameEvent.OnFalseMove,OnFalseMove);
-        
+        EventManager.RemoveHandler(GameEvent.OnPlayerDead,OnPlayerDead);
+        EventManager.RemoveHandler(GameEvent.OnStartGame,OnStartGame);
+
     }
 
     private void Start() 
     {
         dragDistance=Screen.height*15/100;
         Debug.Log(Screen.height);
-
+        rbCharacter=character.GetComponent<Rigidbody>();
         waitForSeconds=new WaitForSeconds(1);
 
     }
@@ -76,11 +83,57 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         CheckSwipeInput();
+        if(!gameData.isGameEnd)
+            CheckCollision();
     }
+
+    private void CheckCollision()
+    {
+        Collider[] colliders = Physics.OverlapBox(character.transform.position, character.transform.localScale / 2f, character.transform.rotation, detectionLayer);
+
+        if(colliders.Length!=0)
+        {
+            foreach (Collider collider in colliders)
+            {
+                if (collider.gameObject != gameObject)
+                {
+                    // Do something when collision is detected
+                    Debug.Log("Collision detected with: " + collider.gameObject.name);
+                    playerData.playerInGround=true;
+                    rbCharacter.useGravity=false;
+                }
+            }
+        }
+
+        else
+        {
+            if(!playerData.playerInSomething && !gameData.isGameEnd)
+            {
+                playerData.playerInGround=false;
+                rbCharacter.useGravity=true;
+                Debug.Log("FALLING");
+            }
+            
+        }
+    }
+
+    private void OnPlayerDead()
+    {   playerData.playerInSomething=true;
+        rbCharacter.isKinematic=true;
+        rbCharacter.useGravity=false;
+    }
+
+    private void OnStartGame()
+    {
+        rbCharacter.isKinematic=false;
+        rbCharacter.useGravity=false;
+    }
+
+    
 
     private void CheckSwipeInput()
     {
-        if(Input.touchCount>0 && playerData.playerCanMove && !playerData.isPathUpgrade && !gameData.isGameEnd)
+        if(Input.touchCount>0 && playerData.playerCanMove && !playerData.isPathUpgrade && !gameData.isGameEnd && gameData.isGameStart)
         {
             Touch touch=Input.GetTouch(0);
             if(touch.phase==TouchPhase.Began)

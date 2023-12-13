@@ -5,4 +5,7 @@ using UnityEngine;
 public class TriggerControl : MonoBehaviour
 {
     public bool isPlayer;
+
+    
+    
 }

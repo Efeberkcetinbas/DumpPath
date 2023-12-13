@@ -20,6 +20,7 @@ public class GameData : ScriptableObject
     public int testValue=0;
 
     public bool isGameEnd=false;
+    public bool isGameStart;
     public bool isTextLevel=false;
     public bool isUndo=false;
     public bool isLightLevel=false;

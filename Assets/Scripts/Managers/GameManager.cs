@@ -57,25 +57,27 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         EventManager.AddHandler(GameEvent.OnNextLevel,OnNextLevel);
-        EventManager.AddHandler(GameEvent.OnRestartLevel,OnRestartLevel);
         EventManager.AddHandler(GameEvent.OnPlayerMove,CheckZeroCondition);
         EventManager.AddHandler(GameEvent.OnPlayerMove,OnPlayerMove);
         EventManager.AddHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.AddHandler(GameEvent.OnUpdateReqDirection,OnUpdateReqDirection);
         EventManager.AddHandler(GameEvent.OnUndo,OnUndo);
         EventManager.AddHandler(GameEvent.OnFalseMove,OnFalseMove);
+        EventManager.AddHandler(GameEvent.OnPlayerDead,OnPlayerDead);
+
     }
 
     private void OnDisable()
     {
         EventManager.RemoveHandler(GameEvent.OnNextLevel,OnNextLevel);
-        EventManager.RemoveHandler(GameEvent.OnRestartLevel,OnRestartLevel);
         EventManager.RemoveHandler(GameEvent.OnPlayerMove,CheckZeroCondition);
         EventManager.RemoveHandler(GameEvent.OnPlayerMove,OnPlayerMove);
         EventManager.RemoveHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.RemoveHandler(GameEvent.OnUpdateReqDirection,OnUpdateReqDirection);
         EventManager.RemoveHandler(GameEvent.OnUndo,OnUndo);
         EventManager.RemoveHandler(GameEvent.OnFalseMove,OnFalseMove);
+        EventManager.RemoveHandler(GameEvent.OnPlayerDead,OnPlayerDead);
+
     }
 
     private void OnUndo()
@@ -159,8 +161,15 @@ public class GameManager : MonoBehaviour
         gameData.totalReq--;
         if(gameData.totalReq==0)
         {
+            gameData.isGameEnd=true;
+            playerData.playerCanMove=false;
             EventManager.Broadcast(GameEvent.OnPortalOpen);
         }
+    }
+
+    private void OnPlayerDead()
+    {
+        gameData.isGameEnd=true;
     }
 
     private void CheckOneCondition()
@@ -207,12 +216,7 @@ public class GameManager : MonoBehaviour
     
     
 
-    private void OnRestartLevel()
-    {
-        OnNextLevel();
-        failPanel.transform.localScale=Vector3.zero;
-        failPanel.SetActive(false);
-    }
+   
   
 
     

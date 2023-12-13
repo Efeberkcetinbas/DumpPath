@@ -4877,7 +4877,7 @@ GameObject:
   - component: {fileID: 6049074555126253280}
   - component: {fileID: 6049074555126253281}
   - component: {fileID: 6049074555126253084}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4926,12 +4926,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 501d4cc6875162c4890964ec95a55b2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundData: {fileID: 11400000, guid: d7d4729fe14cd584487f927fdc6c3504, type: 2}
   gameData: {fileID: 11400000, guid: 4ac1b175be4181544a12ccfe463175f7, type: 2}
+  playerData: {fileID: 11400000, guid: 32896bd60588ce9489e9c956859f575c, type: 2}
   exitParticle: {fileID: 840900416207329578}
   meshRenderer: {fileID: 8545863092517817445}
   groundGameObject: {fileID: 7409034814734120714}
-  firstColor: {r: 0, g: 0, b: 0, a: 1}
   canEnter: 1
   canLetter: 0
   isTargetForBomb: 0

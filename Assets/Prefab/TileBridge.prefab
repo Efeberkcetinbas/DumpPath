@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 8237066090172578288}
   - component: {fileID: 8265923597557949698}
   - component: {fileID: 8265923597557949697}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TileBridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}

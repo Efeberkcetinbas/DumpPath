@@ -36,6 +36,7 @@ public class Jumper : Obstacleable
     {
         if(canJump)
         {
+            playerData.playerInSomething=true;
             particle.Play();
             playerData.playerCanMove=false;
             player.transform.DOJump(targetPoint,power,jumpAmount,duration).SetEase(easePlayer).OnComplete(()=>{

@@ -11,9 +11,12 @@ public class LevelManager : MonoBehaviour
     public GameData gameData;
     public List<GameObject> levels;
 
+    private WaitForSeconds waitForSeconds;
+
     private void Awake() 
     {
         LoadLevel();
+        waitForSeconds=new WaitForSeconds(.5f);
     }
     
 
@@ -47,9 +50,18 @@ public class LevelManager : MonoBehaviour
     
     public void RestartLevel()
     {
-        LoadLevel();
+        //LoadLevel();
         Debug.Log("RESTART LEVEL");
         EventManager.Broadcast(GameEvent.OnRestartLevel);
+        EventManager.Broadcast(GameEvent.OnStartGame);
+        StartCoroutine(WaitforStart());
+        //EventManager.Broadcast(GameEvent.OnFalseMove);
+    }
+
+    private IEnumerator WaitforStart()
+    {
+        yield return waitForSeconds;
+        gameData.isGameStart=true;
     }
     
     

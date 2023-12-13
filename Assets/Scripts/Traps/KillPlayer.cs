@@ -15,8 +15,11 @@ public class KillPlayer : Obstacleable
     internal override void DoAction(TriggerControl player)
     {
         //BUG COZULENE KADAR
-        SceneManager.LoadScene(0);
+        //SceneManager.LoadScene(0);
         //EventManager.Broadcast(GameEvent.OnFalseMove);
+        EventManager.Broadcast(GameEvent.OnPlayerDead);
+        EventManager.Broadcast(GameEvent.OnOpenFail);
+        EventManager.Broadcast(GameEvent.OnFalseMove);
         Debug.Log("PLAYER IS DEAD");        
     }
 }

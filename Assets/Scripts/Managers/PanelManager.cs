@@ -19,6 +19,7 @@ public class PanelManager : MonoBehaviour
     [Header("Success List")]
     [SerializeField] private Ease ease;
     [SerializeField] private List<Transform> successElements=new List<Transform>();
+    [SerializeField] private List<Transform> failElements=new List<Transform>();
 
     //Waitforseconds
     private WaitForSeconds waitForSeconds1;
@@ -33,8 +34,10 @@ public class PanelManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnNextLevel,OnNextLevel);
         EventManager.AddHandler(GameEvent.OnSuccess,OnSuccess);
         EventManager.AddHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
+        EventManager.AddHandler(GameEvent.OnOpenFail,OnOpenFail);
         EventManager.AddHandler(GameEvent.OnDisableLetter,OnDisableLetter);
         EventManager.AddHandler(GameEvent.OnUndoBegin,OnUndoBegin);
+        EventManager.AddHandler(GameEvent.OnRestartLevel,OnRestartLevel);
 
     }
 
@@ -43,9 +46,11 @@ public class PanelManager : MonoBehaviour
     {
         EventManager.RemoveHandler(GameEvent.OnNextLevel,OnNextLevel);
         EventManager.RemoveHandler(GameEvent.OnSuccess,OnSuccess);
+        EventManager.RemoveHandler(GameEvent.OnOpenFail,OnOpenFail);
         EventManager.RemoveHandler(GameEvent.OnOpenSuccess,OnOpenSuccess);
         EventManager.RemoveHandler(GameEvent.OnDisableLetter,OnDisableLetter);
         EventManager.RemoveHandler(GameEvent.OnUndoBegin,OnUndoBegin);
+        EventManager.RemoveHandler(GameEvent.OnRestartLevel,OnRestartLevel);
     }
 
     private void Start() 
@@ -78,6 +83,8 @@ public class PanelManager : MonoBehaviour
             StartCoroutine(ScoreMove());
             //player.transform.DOMoveY(0.5f,0.5f).OnComplete(()=>playerData.playerCanMove=true);
             gameData.isGameEnd=false;
+            gameData.isGameStart=true;
+            
             //EventManager.Broadcast(GameEvent.OnStartGame);
             if(gameData.isLightLevel)
             {
@@ -112,7 +119,40 @@ public class PanelManager : MonoBehaviour
 
     private void OnRestartLevel()
     {
-        OnNextLevel();
+        FailPanel.DOAnchorPos(new Vector2(2500,0),0.1f).OnComplete(()=>{
+            for (int i = 0; i < failElements.Count; i++)
+            {
+                failElements[i].transform.localScale=Vector3.zero;
+                
+            }
+            FailPanel.gameObject.SetActive(false);
+         });
+        SceneUI(true);
+        if(gameData.isLightLevel)
+        {
+            Light.gameObject.SetActive(true);
+            DOTween.Kill(Light);
+            Light.color=new Color(0,0,0,0);
+            Light.DOFade(1,gameData.lightTime); 
+        }
+
+        else
+        {
+            Light.gameObject.SetActive(false);
+        }
+
+        if(gameData.isTextLevel)
+            directionText.SetActive(true);
+        
+        /*StartPanel.gameObject.SetActive(true);
+        StartPanel.transform.localScale=Vector3.one;
+        StartPanel.DOAnchorPos(Vector2.zero,0.1f).OnComplete(()=>EventManager.Broadcast(GameEvent.OnIncreaseScore));
+
+        StartCoroutine(Blink(Fade.gameObject,Fade));
+        for (int i = 0; i < sceneUI.Length; i++)
+        {
+            sceneUI[i].SetActive(false);
+        }*/
     }
 
     private void OnNextLevel()
@@ -138,6 +178,8 @@ public class PanelManager : MonoBehaviour
 
     }
 
+    
+
     private void SceneUI(bool val)
     {
         for (int i = 0; i < sceneUI.Length; i++)
@@ -156,7 +198,22 @@ public class PanelManager : MonoBehaviour
         SceneUI(false);
         SuccessPanel.gameObject.SetActive(true);
         SuccessPanel.DOAnchorPos(Vector2.zero,0.2f).SetEase(Ease.InOutCubic).OnComplete(()=>{
-            StartCoroutine(ItemsAnimation());
+            StartCoroutine(ItemsAnimation(successElements));
+        });
+    }
+
+    private void OnOpenFail()
+    {
+        Light.gameObject.SetActive(false);
+        gameData.isGameStart=false;
+        //Here Goes Some Improvements
+        if(gameData.isTextLevel)
+            directionText.SetActive(false);
+        
+        SceneUI(false);
+        FailPanel.gameObject.SetActive(true);
+        FailPanel.DOAnchorPos(Vector2.zero,0.2f).SetEase(Ease.InOutCubic).OnComplete(()=>{
+            StartCoroutine(ItemsAnimation(failElements));
         });
     }
   
@@ -177,16 +234,16 @@ public class PanelManager : MonoBehaviour
         ScoreImage.DOAnchorPosX(ScoreX,0.5f);
     }
 
-    private IEnumerator ItemsAnimation()
+    private IEnumerator ItemsAnimation(List<Transform> list)
     {
-        for (int i = 0; i < successElements.Count; i++)
+        for (int i = 0; i < list.Count; i++)
         {
-            successElements[i].transform.localScale=Vector3.zero;
+            list[i].transform.localScale=Vector3.zero;
         }
 
-        for (int i = 0; i < successElements.Count; i++)
+        for (int i = 0; i < list.Count; i++)
         {
-            successElements[i].transform.DOScale(1f,1f).SetEase(ease);
+            list[i].transform.DOScale(1f,1f).SetEase(ease);
             yield return waitForSeconds2;
         }
     }
