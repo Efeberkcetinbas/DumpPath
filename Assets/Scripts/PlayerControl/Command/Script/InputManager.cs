@@ -80,7 +80,7 @@ public class InputManager : MonoBehaviour
 
     private void CheckSwipeInput()
     {
-        if(Input.touchCount>0 && playerData.playerCanMove && !gameData.isGameEnd)
+        if(Input.touchCount>0 && playerData.playerCanMove && !playerData.isPathUpgrade && !gameData.isGameEnd)
         {
             Touch touch=Input.GetTouch(0);
             if(touch.phase==TouchPhase.Began)

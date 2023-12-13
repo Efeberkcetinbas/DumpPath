@@ -7,6 +7,7 @@ public class DirectionOrder : MonoBehaviour
     [SerializeField] private List<LevelRequirement> directions=new List<LevelRequirement>();
     [SerializeField] private List<GroundTrigger> grounds=new List<GroundTrigger>();
 
+
     private int index;
 
     private WaitForSeconds waitForSeconds;
@@ -61,6 +62,8 @@ public class DirectionOrder : MonoBehaviour
             grounds[i].SetGreen();
         }
     }
+
+    
 
     private void OnFalseMove()
     {

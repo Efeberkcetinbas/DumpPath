@@ -7,6 +7,8 @@ public class UpgrationOfPath : Obstacleable
     [SerializeField] private GameObject mesh;
     [SerializeField] private BoxCollider boxCollider;
     [SerializeField] private GameData gameData;
+    [SerializeField] private PlayerData playerData;
+    
     public UpgrationOfPath()
     {
         canStay=false;
@@ -26,7 +28,8 @@ public class UpgrationOfPath : Obstacleable
     }
 
     internal override void DoAction(TriggerControl player)
-    {
+    {   
+        playerData.isPathUpgrade=true;
         EventManager.Broadcast(GameEvent.OnGroundsSetGreen);
         EventManager.Broadcast(GameEvent.OnDirectionUpdate);
         gameData.isGameEnd=true;

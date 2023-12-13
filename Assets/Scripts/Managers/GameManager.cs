@@ -121,6 +121,7 @@ public class GameManager : MonoBehaviour
         playerData.DownMove=0;
         playerData.LeftMove=0;
         playerData.RightMove=0;
+        playerData.isPathUpgrade=false;
     }
 
 
@@ -269,6 +270,8 @@ public class GameManager : MonoBehaviour
         playerData.RightMove=0;
         playerData.playerCanMove=true;
         failPanel.SetActive(false);
+        playerData.isPathUpgrade=false;
+
         
     }
 

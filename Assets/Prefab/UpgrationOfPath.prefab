@@ -176,6 +176,7 @@ MonoBehaviour:
   mesh: {fileID: 2559504055153766808}
   boxCollider: {fileID: 8070006374396149517}
   gameData: {fileID: 11400000, guid: 4ac1b175be4181544a12ccfe463175f7, type: 2}
+  playerData: {fileID: 11400000, guid: 32896bd60588ce9489e9c956859f575c, type: 2}
 --- !u!23 &1643684650126329061
 MeshRenderer:
   m_ObjectHideFlags: 0
