@@ -287,7 +287,6 @@ public class InputManager : MonoBehaviour
             character.transform.RotateAround(rotationCenter,rotationAxis,rotationAngle);
             remainingAngle-=rotationAngle;
             playerData.playerCanMove=true;
-            Debug.Log("ROLL IS OVER");
             yield return null;
         }
     }
