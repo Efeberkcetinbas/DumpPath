@@ -89,11 +89,13 @@ public class UIManager : MonoBehaviour
     {
         score.SetText(gameData.score.ToString());
         score.transform.DOScale(new Vector3(1.5f,1.5f,1.5f),0.2f).OnComplete(()=>score.transform.DOScale(new Vector3(1,1f,1f),0.2f));
+        gameData.SaveData();
     }
 
     private void OnNextLevel()
     {
-        levelText.SetText("LEVEL " + (gameData.testValue+1).ToString());
+        
+        levelText.SetText("LEVEL " + (gameData.IndexOfLevel+1).ToString());
         upProgressBar.fillAmount=0;
         downProgressBar.fillAmount=0;
         leftProgressBar.fillAmount=0;

@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
 
     private void Awake() 
     {
+        gameData.LoadData();
         LoadLevel();
         waitForSeconds=new WaitForSeconds(.5f);
     }
@@ -46,6 +47,7 @@ public class LevelManager : MonoBehaviour
         gameData.testValue++;
         LoadLevel();
         EventManager.Broadcast(GameEvent.OnNextLevel);
+        gameData.SaveData();
     }
     
     public void RestartLevel()
@@ -63,6 +65,10 @@ public class LevelManager : MonoBehaviour
         yield return waitForSeconds;
         gameData.isGameStart=true;
     }
-    
+
+    private void OnApplicationQuit() 
+    {
+        gameData.SaveData();
+    }    
     
 }

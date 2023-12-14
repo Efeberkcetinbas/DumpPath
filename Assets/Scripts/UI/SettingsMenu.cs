@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class SettingsMenu : MonoBehaviour
 {
-    [Header ("space between menu items")]
+   [Header ("space between menu items")]
    [SerializeField] Vector2 spacing ;
 
    [Space]

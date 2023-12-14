@@ -80,6 +80,7 @@ public class PanelManager : MonoBehaviour
         //EventManager.Broadcast(GameEvent.OnButtonClicked);
         StartPanel.DOAnchorPos(new Vector2(StartX,StartY),duration).OnComplete(()=>{
             SceneUI(true);
+            ScoreImage.DOAnchorPosX(ScoreOldX,0.5f);
             StartCoroutine(ScoreMove());
             //player.transform.DOMoveY(0.5f,0.5f).OnComplete(()=>playerData.playerCanMove=true);
             gameData.isGameEnd=false;

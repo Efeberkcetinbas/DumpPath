@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 
 [CreateAssetMenu(fileName = "GameData", menuName = "Data/GameData", order = 0)]
@@ -40,4 +41,22 @@ public class GameData : ScriptableObject
 
     //Text
     public string LetterText;
+
+    public void SaveData()
+    {
+        string filePath = Application.persistentDataPath + "/gameData.json";
+        string jsonData = JsonUtility.ToJson(this);
+        File.WriteAllText(filePath, jsonData);
+    }
+
+    public void LoadData()
+    {
+        string filePath = Application.persistentDataPath + "/gameData.json";
+
+        if (File.Exists(filePath))
+        {
+            string jsonData = File.ReadAllText(filePath);
+            JsonUtility.FromJsonOverwrite(jsonData, this);
+        }
+    }
 }
