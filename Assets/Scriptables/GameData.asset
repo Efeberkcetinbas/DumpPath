@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e14db6eb11dc14d4a9aadc380891c5fd, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  score: 12
-  increaseScore: 1
+  score: 0
+  increaseScore: 3
   IndexOfLevel: 0
   ProgressNumber: 0
   levelProgressNumber: 0
@@ -21,19 +21,20 @@ MonoBehaviour:
   skyboxIndex: 1
   backgroundIndex: 0
   fogColorIndex: 0
-  lightTime: 20
-  testValue: 4
+  lightTime: 25
+  testValue: 0
   isGameEnd: 0
+  isGameStart: 1
   isTextLevel: 0
   isUndo: 0
   isLightLevel: 0
   ReqUp: 2
-  ReqDown: 5
-  ReqLeft: 3
-  ReqRight: 1
-  tempUp: 4
-  tempDown: 5
+  ReqDown: 0
+  ReqLeft: 1
+  ReqRight: 2
+  tempUp: 2
+  tempDown: 0
   tempRight: 2
-  tempLeft: 3
-  totalReq: 11
-  LetterText: PATH
+  tempLeft: 1
+  totalReq: 5
+  LetterText: H

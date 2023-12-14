@@ -8,13 +8,13 @@ public class ButtonTrigger : Obstacleable
 {
     public int id;
 
-
-
     [SerializeField] private bool isUp=false;
     [SerializeField] private ParticleSystem particle;
     [SerializeField] private Transform button;
 
     [SerializeField] private float newX,oldX,duration;
+
+    private bool isOpen=false;
 
 
     public ButtonTrigger()
@@ -25,9 +25,14 @@ public class ButtonTrigger : Obstacleable
 
     internal override void DoAction(TriggerControl player)
     {
-        EventManager.BroadcastId(GameEvent.OnOpenButton,id);
-        button.DOLocalRotate(new Vector3(newX,-90,0),duration);
-        particle.Play();
+        if(!isOpen)
+        {
+            EventManager.BroadcastId(GameEvent.OnOpenButton,id);
+            button.DOLocalRotate(new Vector3(newX,-90,0),duration);
+            particle.Play();
+            isOpen=true;
+        }
+        
     }
 
     internal override void StopAction(TriggerControl player)

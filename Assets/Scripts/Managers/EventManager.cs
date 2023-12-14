@@ -40,9 +40,10 @@ public enum GameEvent
     OnUndoEnd,
     OnUndo,
 
+
+
     //Settings Management
     OnCameraChange,
-
 
 
     //Panel Management
@@ -65,8 +66,8 @@ public enum GameEvent
     //Game Management
     OnIncreaseScore,
     OnDecreaseScore,
+    OnCheckUndo,
     OnUIUpdate,
-    OnGameOver
 }
 public class EventManager
 {

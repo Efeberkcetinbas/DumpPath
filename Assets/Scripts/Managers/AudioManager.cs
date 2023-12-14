@@ -20,14 +20,14 @@ public class AudioManager : MonoBehaviour
         musicSource.clip = GameLoop;
         musicSource.Play();
         effectSource = gameObject.AddComponent<AudioSource>();
-        effectSource.volume=1f;
+        effectSource.volume=.75f;
         waitForSeconds=new WaitForSeconds(2);
         OnNextLevel();
     }
 
     private void OnEnable() 
     {
-        EventManager.AddHandler(GameEvent.OnGameOver,OnGameOver);
+        EventManager.AddHandler(GameEvent.OnPlayerDead,OnPlayerDead);
         EventManager.AddHandler(GameEvent.OnBridgeOpen,OnBridgeOpen);
         EventManager.AddHandler(GameEvent.OnBombActive,OnBombActive);
         EventManager.AddHandler(GameEvent.OnBombExplode,OnBombExplode);
@@ -42,7 +42,7 @@ public class AudioManager : MonoBehaviour
     }
     private void OnDisable() 
     {
-        EventManager.RemoveHandler(GameEvent.OnGameOver,OnGameOver);
+        EventManager.RemoveHandler(GameEvent.OnPlayerDead,OnPlayerDead);
         EventManager.RemoveHandler(GameEvent.OnBridgeOpen,OnBridgeOpen);
         EventManager.RemoveHandler(GameEvent.OnBombActive,OnBombActive);
         EventManager.RemoveHandler(GameEvent.OnBombExplode,OnBombExplode);
@@ -58,7 +58,7 @@ public class AudioManager : MonoBehaviour
 
     
 
-    private void OnGameOver()
+    private void OnPlayerDead()
     {
         effectSource.PlayOneShot(GameOverSound);
     }

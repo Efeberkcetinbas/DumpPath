@@ -41,5 +41,6 @@ public class ScoreManager : MonoBehaviour
     private void UpdateUI()
     {
         EventManager.Broadcast(GameEvent.OnUIUpdate);
+        EventManager.Broadcast(GameEvent.OnCheckUndo);
     }
 }

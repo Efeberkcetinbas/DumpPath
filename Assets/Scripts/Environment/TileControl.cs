@@ -39,6 +39,7 @@ public class TileControl : Obstacleable
 
     internal override void DoAction(TriggerControl player)
     {
+        Debug.Log("IS PLAYER HERE");
         meshRenderer.material.DOFade(1,1);
         meshRenderer.material.DOColor(Color.green,1);
     }

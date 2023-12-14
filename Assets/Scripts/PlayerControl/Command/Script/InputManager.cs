@@ -29,21 +29,19 @@ public class InputManager : MonoBehaviour
     [SerializeField] private float screenPercentageToExclude = 20f;
 
     private WaitForSeconds waitForSeconds;
+
+    //Image
+    [SerializeField] private Image UndoButton;
     
 
     private void OnEnable()
     {
-        /*up?.onClick.AddListener(() => SendMoveCommand(character.transform, Vector3.forward, 1f));
-        down?.onClick.AddListener(() => SendMoveCommand(character.transform, Vector3.back, 1f));
-        left?.onClick.AddListener(() => SendMoveCommand(character.transform, Vector3.left, 1f));
-        right?.onClick.AddListener(() => SendMoveCommand(character.transform, Vector3.right, 1f));*/
-
-        //undo?.onClick.AddListener(() => character.UndoCommand());
-        //redo?.onClick.AddListener(() => character.RedoCommand());
+        
 
         EventManager.AddHandler(GameEvent.OnFalseMove,OnFalseMove);
         EventManager.AddHandler(GameEvent.OnPlayerDead,OnPlayerDead);
         EventManager.AddHandler(GameEvent.OnStartGame,OnStartGame);
+        EventManager.AddHandler(GameEvent.OnCheckUndo,OnCheckUndo);
 
     }
 
@@ -52,6 +50,7 @@ public class InputManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnFalseMove,OnFalseMove);
         EventManager.RemoveHandler(GameEvent.OnPlayerDead,OnPlayerDead);
         EventManager.RemoveHandler(GameEvent.OnStartGame,OnStartGame);
+        EventManager.RemoveHandler(GameEvent.OnCheckUndo,OnCheckUndo);
 
     }
 
@@ -75,10 +74,33 @@ public class InputManager : MonoBehaviour
 
     public void UndoMove()
     {
-        character.UndoCommand();
-        //gameData.score-=gameData.undoPrice;
-        EventManager.Broadcast(GameEvent.OnDecreaseScore);
+        if(gameData.score>=gameData.undoPrice)
+        {
+            character.UndoCommand();
+            EventManager.Broadcast(GameEvent.OnDecreaseScore);
+        }
+        else
+            return;
+        
     }
+
+    private void OnCheckUndo()
+    {
+        if(gameData.score>=gameData.undoPrice)
+        {
+            UndoButton.color=new Color(1,1,1,0);
+            UndoButton.DOFade(1,0.1f); 
+        }   
+
+        else
+        {
+            UndoButton.color=new Color(1,1,1,0);
+            UndoButton.DOFade(0.5f,0.1f); 
+        }
+            
+    }
+
+   
 
     private void Update()
     {
@@ -98,7 +120,6 @@ public class InputManager : MonoBehaviour
                 if (collider.gameObject != gameObject)
                 {
                     // Do something when collision is detected
-                    Debug.Log("Collision detected with: " + collider.gameObject.name);
                     playerData.playerInGround=true;
                     rbCharacter.useGravity=false;
                 }
@@ -111,7 +132,6 @@ public class InputManager : MonoBehaviour
             {
                 playerData.playerInGround=false;
                 rbCharacter.useGravity=true;
-                Debug.Log("FALLING");
             }
             
         }
@@ -153,7 +173,6 @@ public class InputManager : MonoBehaviour
                 Vector2 swipeDirection=lastPosition-firstPosition;
                 if(firstPosition.y < (Screen.height * (1 - screenPercentageToExclude / 100)))
                 {
-                    Debug.Log("SWIPE");
                     if(Mathf.Abs(lastPosition.x-firstPosition.x)>Mathf.Abs(lastPosition.y-firstPosition.y))
                     {
                         if(lastPosition.x>firstPosition.x)

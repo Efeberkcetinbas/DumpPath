@@ -93,7 +93,7 @@ public class UIManager : MonoBehaviour
 
     private void OnNextLevel()
     {
-        levelText.SetText("LEVEL " + (gameData.IndexOfLevel+1).ToString());
+        levelText.SetText("LEVEL " + (gameData.testValue+1).ToString());
         upProgressBar.fillAmount=0;
         downProgressBar.fillAmount=0;
         leftProgressBar.fillAmount=0;
