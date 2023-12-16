@@ -21,6 +21,7 @@ public class ShopCharacters : MonoBehaviour
 
     public ShopCharacterData shopCharacterData;
     public GameData gameData;
+    public LevelData levelData;
     private void Start() 
     {
         button=GetComponent<Button>();
@@ -72,7 +73,7 @@ public class ShopCharacters : MonoBehaviour
 
         }
 
-        if(gameData.score>=price || shopCharacterData.isPurchased)
+        if(levelData.score>=price || shopCharacterData.isPurchased)
         {
             button.interactable=true;
             canBuy=true;
@@ -80,7 +81,7 @@ public class ShopCharacters : MonoBehaviour
 
         if(!shopCharacterData.isPurchased)
         {
-            if(gameData.score<price)
+            if(levelData.score<price)
             {
                 button.interactable=false;
                 canBuy=false;

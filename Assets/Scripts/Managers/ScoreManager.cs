@@ -6,6 +6,7 @@ using DG.Tweening;
 public class ScoreManager : MonoBehaviour
 {
     [SerializeField] private GameData gameData;
+    [SerializeField] private LevelData levelData;
     private void OnEnable()
     {
         EventManager.AddHandler(GameEvent.OnIncreaseScore, OnIncreaseScore);
@@ -20,22 +21,22 @@ public class ScoreManager : MonoBehaviour
     private void OnIncreaseScore()
     {
         //gameData.score += 50;
-        DOTween.To(GetScore,ChangeScore,gameData.score+gameData.increaseScore,.25f).OnUpdate(UpdateUI);
+        DOTween.To(GetScore,ChangeScore,levelData.score+gameData.increaseScore,.25f).OnUpdate(UpdateUI);
     }
 
     private void OnDecreaseScore()
     {
-        DOTween.To(GetScore,ChangeScore,gameData.score-gameData.undoPrice,.25f).OnUpdate(UpdateUI);
+        DOTween.To(GetScore,ChangeScore,levelData.score-gameData.undoPrice,.25f).OnUpdate(UpdateUI);
     }
 
     private int GetScore()
     {
-        return gameData.score;
+        return levelData.score;
     }
 
     private void ChangeScore(int value)
     {
-        gameData.score=value;
+        levelData.score=value;
     }
 
     private void UpdateUI()

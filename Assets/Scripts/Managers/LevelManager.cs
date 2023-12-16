@@ -9,16 +9,21 @@ public class LevelManager : MonoBehaviour
     public int levelIndex;
     
     public GameData gameData;
+    public LevelData levelData;
     public List<GameObject> levels;
 
     private WaitForSeconds waitForSeconds;
 
     private void Awake() 
     {
-        gameData.LoadData();
+        //gameData.LoadData();
+        //levelData.DeleteJsonData();
+        levelData.LoadData();
         LoadLevel();
         waitForSeconds=new WaitForSeconds(.5f);
     }
+
+    
     
 
     
@@ -43,11 +48,10 @@ public class LevelManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("NumberOfLevel", levelIndex + 1);
         PlayerPrefs.SetInt("RealNumberLevel", PlayerPrefs.GetInt("RealNumberLevel", 0) + 1);
-        gameData.IndexOfLevel++;
-        gameData.testValue++;
+        levelData.IndexOfLevel++;
         LoadLevel();
         EventManager.Broadcast(GameEvent.OnNextLevel);
-        gameData.SaveData();
+        levelData.SaveData();
     }
     
     public void RestartLevel()
@@ -68,7 +72,7 @@ public class LevelManager : MonoBehaviour
 
     private void OnApplicationQuit() 
     {
-        gameData.SaveData();
+        levelData.SaveData();
     }    
     
 }

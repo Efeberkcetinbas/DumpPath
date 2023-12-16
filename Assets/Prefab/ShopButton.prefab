@@ -374,6 +374,7 @@ MonoBehaviour:
   priceText: {fileID: 296671757403776848}
   shopCharacterData: {fileID: 11400000, guid: fe13d260d5d4d6940aeafd31055cbf48, type: 2}
   gameData: {fileID: 11400000, guid: 4ac1b175be4181544a12ccfe463175f7, type: 2}
+  levelData: {fileID: 11400000, guid: b45b7a30207bb3849875a4466e4a8d6c, type: 2}
 --- !u!1 &3589508254122572800
 GameObject:
   m_ObjectHideFlags: 0

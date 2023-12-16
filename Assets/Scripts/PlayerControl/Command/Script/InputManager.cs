@@ -24,6 +24,7 @@ public class InputManager : MonoBehaviour
 
     public PlayerData playerData;
     public GameData gameData;
+    public LevelData levelData;
 
     //Touch Y Axis
     [SerializeField] private float screenPercentageToExclude = 20f;
@@ -74,7 +75,7 @@ public class InputManager : MonoBehaviour
 
     public void UndoMove()
     {
-        if(gameData.score>=gameData.undoPrice)
+        if(levelData.score>=gameData.undoPrice)
         {
             character.UndoCommand();
             EventManager.Broadcast(GameEvent.OnDecreaseScore);
@@ -86,7 +87,7 @@ public class InputManager : MonoBehaviour
 
     private void OnCheckUndo()
     {
-        if(gameData.score>=gameData.undoPrice)
+        if(levelData.score>=gameData.undoPrice)
         {
             UndoButton.color=new Color(1,1,1,0);
             UndoButton.DOFade(1,0.1f); 

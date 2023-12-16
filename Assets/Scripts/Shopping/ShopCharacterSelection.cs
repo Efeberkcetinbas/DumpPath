@@ -9,6 +9,7 @@ public class ShopCharacterSelection : MonoBehaviour
     
     public GameData gameData;
     public PlayerData playerData;
+    public LevelData levelData;
 
     private void Start() 
     {
@@ -24,7 +25,7 @@ public class ShopCharacterSelection : MonoBehaviour
             shopCharacters[selectedIndex].lockImage.SetActive(false);
             if(!shopCharacters[selectedIndex].isPurchased)
             {
-                gameData.score-=shopCharacters[selectedIndex].price;
+                levelData.score-=shopCharacters[selectedIndex].price;
                 shopCharacters[selectedIndex].shopCharacterData.isPurchased=true;
                 EventManager.Broadcast(GameEvent.OnShopCharacterSelected);
                 EventManager.Broadcast(GameEvent.OnUIUpdate);

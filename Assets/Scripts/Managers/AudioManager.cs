@@ -61,6 +61,7 @@ public class AudioManager : MonoBehaviour
     private void OnPlayerDead()
     {
         effectSource.PlayOneShot(GameOverSound);
+        Debug.Log("HOWWWWWWWW");
     }
 
     private void OnBridgeOpen()

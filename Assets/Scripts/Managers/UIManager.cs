@@ -42,6 +42,7 @@ public class UIManager : MonoBehaviour
     [Header("Data's")]
     public GameData gameData;
     public PlayerData playerData;
+    public LevelData levelData;
 
 
 
@@ -87,15 +88,15 @@ public class UIManager : MonoBehaviour
     
     private void OnUIUpdate()
     {
-        score.SetText(gameData.score.ToString());
+        score.SetText(levelData.score.ToString());
         score.transform.DOScale(new Vector3(1.5f,1.5f,1.5f),0.2f).OnComplete(()=>score.transform.DOScale(new Vector3(1,1f,1f),0.2f));
-        gameData.SaveData();
+        levelData.SaveData();
     }
 
     private void OnNextLevel()
     {
         
-        levelText.SetText("LEVEL " + (gameData.IndexOfLevel+1).ToString());
+        levelText.SetText("LEVEL " + (levelData.IndexOfLevel+1).ToString());
         upProgressBar.fillAmount=0;
         downProgressBar.fillAmount=0;
         leftProgressBar.fillAmount=0;
@@ -118,12 +119,12 @@ public class UIManager : MonoBehaviour
 
     private void OnOpenSuccess()
     {
-        successScore.SetText("+ " +  (gameData.score+gameData.increaseScore).ToString());
+        successScore.SetText("+ " +  (levelData.score+gameData.increaseScore).ToString());
     }
 
     private void OnShopBallSelected()
     {
-        shoppingScore.SetText(gameData.score.ToString());
+        shoppingScore.SetText(levelData.score.ToString());
     }
 
 

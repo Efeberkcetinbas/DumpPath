@@ -6,7 +6,7 @@ using UnityEngine;
 public class LevelEnvironmentGenerator : MonoBehaviour
 {
     [SerializeField] private GameData gameData;
-
+    [SerializeField] private LevelData levelData;
     //Dotween ile guzel bir background olussun
     //[SerializeField] private List<GameObject> backgroundGameObjects=new List<GameObject>();
     [SerializeField] private List<Material> skyboxMaterials=new List<Material>();
@@ -22,7 +22,7 @@ public class LevelEnvironmentGenerator : MonoBehaviour
     private void Check()
     {
         //backgroundGameObjects[gameData.backgroundIndex].SetActive(true);
-        RenderSettings.skybox=skyboxMaterials[gameData.skyboxIndex];
+        RenderSettings.skybox=skyboxMaterials[levelData.skyboxIndex];
         //RenderSettings.fogColor=fogColors[gameData.fogColorIndex];
     }
     private void OnEnable() 
@@ -39,7 +39,7 @@ public class LevelEnvironmentGenerator : MonoBehaviour
 
     private void OnNextLevel()
     {
-        if(gameData.IndexOfLevel % 2 == 0)
+        if(levelData.IndexOfLevel % 2 == 0)
         {
             //Generate();
             ChangeSkybox();
@@ -72,11 +72,13 @@ public class LevelEnvironmentGenerator : MonoBehaviour
 
     private void ChangeSkybox()
     {
-        gameData.skyboxIndex++;
+        levelData.skyboxIndex++;
+
         //gameData.fogColorIndex++;
-        gameData.skyboxIndex=gameData.skyboxIndex % skyboxMaterials.Count;
+        levelData.skyboxIndex=levelData.skyboxIndex % skyboxMaterials.Count;
         //gameData.fogColorIndex=gameData.fogColorIndex % fogColors.Count;
-        RenderSettings.skybox=skyboxMaterials[gameData.skyboxIndex];
+        RenderSettings.skybox=skyboxMaterials[levelData.skyboxIndex];
         //RenderSettings.fogColor=fogColors[gameData.fogColorIndex];
+
     }
 }

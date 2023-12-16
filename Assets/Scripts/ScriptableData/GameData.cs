@@ -8,19 +8,15 @@ using System.IO;
 public class GameData : ScriptableObject 
 {
 
-    public int score;
     public int increaseScore;
-    public int IndexOfLevel;
     public int ProgressNumber;
     public int levelProgressNumber;
     public int undoPrice;
-    public int skyboxIndex;
     public int backgroundIndex;
     public int fogColorIndex;
     public int lightTime=5;
-    public int testValue=0;
 
-    public bool isGameEnd=false;
+    public bool isGameEnd=true;
     public bool isGameStart;
     public bool isTextLevel=false;
     public bool isUndo=false;
@@ -42,7 +38,7 @@ public class GameData : ScriptableObject
     //Text
     public string LetterText;
 
-    public void SaveData()
+    /*public void SaveData()
     {
         string filePath = Application.persistentDataPath + "/gameData.json";
         string jsonData = JsonUtility.ToJson(this);
@@ -58,5 +54,5 @@ public class GameData : ScriptableObject
             string jsonData = File.ReadAllText(filePath);
             JsonUtility.FromJsonOverwrite(jsonData, this);
         }
-    }
+    }*/
 }
