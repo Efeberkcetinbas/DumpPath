@@ -6,7 +6,7 @@ public class CharacterMove : MonoBehaviour
 {
     [SerializeField]
     private List<Move> commandList = new List<Move>();
-    private int index;
+    internal int index;
 
     #region path drawing
     //path drawing

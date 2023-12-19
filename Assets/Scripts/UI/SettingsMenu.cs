@@ -92,15 +92,16 @@ public class SettingsMenu : MonoBehaviour
       switch (index) {
          case 0: 
 				//first button
-            Debug.Log ("Music") ;
+            Debug.Log ("Level Ad") ;
             break ;
          case 1: 
 				//second button
-            Debug.Log ("Sounds") ;
+            Debug.Log ("Info") ;
             break ;
          case 2: 
 				//third button
-            Debug.Log ("Vibration") ;
+            Debug.Log ("Audio") ;
+            EventManager.Broadcast(GameEvent.OnAudioOnOff);
             break ;
          case 3: 
 				//third button

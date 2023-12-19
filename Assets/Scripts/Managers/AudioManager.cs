@@ -12,7 +12,11 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private PlayerData playerData;
 
+    [SerializeField] private GameObject soundOn,soundOff;
+
     private WaitForSeconds waitForSeconds;
+
+    private bool isSoundOn=true;
 
     private void Start() 
     {
@@ -38,6 +42,7 @@ public class AudioManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnCollectCoin,OnCollectCoin);
         EventManager.AddHandler(GameEvent.OnNextLevel,OnNextLevel);
         EventManager.AddHandler(GameEvent.OnUndoBegin,OnUndoBegin);
+        EventManager.AddHandler(GameEvent.OnAudioOnOff,OnAudioOnOff);
 
     }
     private void OnDisable() 
@@ -53,6 +58,7 @@ public class AudioManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnCollectCoin,OnCollectCoin);
         EventManager.RemoveHandler(GameEvent.OnNextLevel,OnNextLevel);
         EventManager.RemoveHandler(GameEvent.OnUndoBegin,OnUndoBegin);
+        EventManager.RemoveHandler(GameEvent.OnAudioOnOff,OnAudioOnOff);
 
     }
 
@@ -127,6 +133,23 @@ public class AudioManager : MonoBehaviour
         effectSource.PlayOneShot(UndoSound);
     }
 
+    private void OnAudioOnOff()
+    {
+        isSoundOn=!isSoundOn;
+
+        if(isSoundOn)
+            SoundOnOff(false,true,soundOn,soundOff,effectSource);
+        else
+            SoundOnOff(true,false,soundOn,soundOff,effectSource);
+    }
+
+    private void SoundOnOff(bool val1,bool val2,GameObject gameObject1,GameObject gameObject2,AudioSource audioSource)
+    {
+        gameObject1.SetActive(val1);
+        gameObject2.SetActive(val2);
+        audioSource.mute=val1;
+        
+    }
 
     private IEnumerator PlaySecondSuccess()
     {

@@ -44,6 +44,7 @@ public enum GameEvent
 
     //Settings Management
     OnCameraChange,
+    OnAudioOnOff,
 
 
     //Panel Management

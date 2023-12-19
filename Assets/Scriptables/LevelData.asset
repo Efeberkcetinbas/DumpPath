@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: LevelData
   m_EditorClassIdentifier: 
   IndexOfLevel: 0
-  score: 0
+  score: 15
   skyboxIndex: 0

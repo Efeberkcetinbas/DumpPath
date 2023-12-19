@@ -75,7 +75,7 @@ public class InputManager : MonoBehaviour
 
     public void UndoMove()
     {
-        if(levelData.score>=gameData.undoPrice)
+        if(levelData.score>=gameData.undoPrice && character.index>0)
         {
             character.UndoCommand();
             EventManager.Broadcast(GameEvent.OnDecreaseScore);
@@ -359,9 +359,12 @@ public class InputManager : MonoBehaviour
             float rotationAngle=Mathf.Min(Time.deltaTime*300,remainingAngle);
             character.transform.RotateAround(rotationCenter,rotationAxis,rotationAngle);
             remainingAngle-=rotationAngle;
-            playerData.playerCanMove=true;
+            //playerData.playerCanMove=true;
             yield return null;
         }
+        
+        yield return null;
+        playerData.playerCanMove=true;
     }
     #endregion
 
