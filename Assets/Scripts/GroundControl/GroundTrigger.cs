@@ -28,6 +28,7 @@ public class GroundTrigger : Obstacleable
         EventManager.AddHandler(GameEvent.OnFalseMove,OnFalseMove);
         EventManager.AddIdHandler(GameEvent.OnBombActive,OnBombActive);
         EventManager.AddHandler(GameEvent.OnStartGame,OnStartGame);
+        EventManager.AddHandler(GameEvent.OnNextLevel,OnNextLevel);
         
     }
 
@@ -36,6 +37,7 @@ public class GroundTrigger : Obstacleable
         EventManager.RemoveHandler(GameEvent.OnFalseMove,OnFalseMove);
         EventManager.RemoveIdHandler(GameEvent.OnBombActive,OnBombActive);
         EventManager.RemoveHandler(GameEvent.OnStartGame,OnStartGame);
+        EventManager.RemoveHandler(GameEvent.OnNextLevel,OnNextLevel);
 
     }
 
@@ -136,6 +138,11 @@ public class GroundTrigger : Obstacleable
             meshRenderer.material.DOFade(1,0.2f);
             meshRenderer.material.DOColor(Color.red,0.2f);
         }
+    }
+
+    private void OnNextLevel()
+    {
+        OnFalseMove();
     }
     
 }

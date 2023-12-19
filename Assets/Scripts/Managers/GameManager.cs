@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnUndo,OnUndo);
         EventManager.AddHandler(GameEvent.OnFalseMove,OnFalseMove);
         EventManager.AddHandler(GameEvent.OnPlayerDead,OnPlayerDead);
+        EventManager.AddHandler(GameEvent.OnRestartLevel,OnRestartLevel);
 
     }
 
@@ -77,6 +78,7 @@ public class GameManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnUndo,OnUndo);
         EventManager.RemoveHandler(GameEvent.OnFalseMove,OnFalseMove);
         EventManager.RemoveHandler(GameEvent.OnPlayerDead,OnPlayerDead);
+        EventManager.RemoveHandler(GameEvent.OnRestartLevel,OnRestartLevel);
 
     }
 
@@ -251,7 +253,13 @@ public class GameManager : MonoBehaviour
         UpdatePlayerPosition();
     }
 
-    
+    //Sometimes Player Position Restart False, So it checks one more time
+    private void OnRestartLevel()
+    {
+        //Startda da kullaniyorum. Starter Pack Methoduna Al
+        UpdateRequirement();
+        UpdatePlayerPosition();
+    }
     
     
     void ClearData()
