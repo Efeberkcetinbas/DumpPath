@@ -16,8 +16,6 @@ public class LevelManager : MonoBehaviour
 
     private void Awake() 
     {
-        //gameData.LoadData();
-        //levelData.DeleteJsonData();
         levelData.LoadData();
         LoadLevel();
         waitForSeconds=new WaitForSeconds(.5f);

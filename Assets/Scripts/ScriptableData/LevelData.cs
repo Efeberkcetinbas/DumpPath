@@ -12,29 +12,37 @@ public class LevelData : ScriptableObject
     
     public int skyboxIndex;
 
-    private string filePath;
+    //private string filePath;
 
     
 
     public void SaveData()
     {
-        filePath = Application.persistentDataPath + "/levelData.json";
+        PlayerPrefs.SetInt("IndexOfLevel",IndexOfLevel);
+        PlayerPrefs.SetInt("Score",score);
+        PlayerPrefs.SetInt("SkyboxIndex",skyboxIndex);
+
+        /*filePath = Application.persistentDataPath + "/levelData.json";
         string jsonData = JsonUtility.ToJson(this);
-        File.WriteAllText(filePath, jsonData);
+        File.WriteAllText(filePath, jsonData);*/
     }
 
     public void LoadData()
     {
-        filePath = Application.persistentDataPath + "/levelData.json";
+        /*filePath = Application.persistentDataPath + "/levelData.json";
 
         if (File.Exists(filePath))
         {
             string jsonData = File.ReadAllText(filePath);
             JsonUtility.FromJsonOverwrite(jsonData, this);
-        }
+        }*/
+
+        IndexOfLevel=PlayerPrefs.GetInt("IndexOfLevel");
+        score=PlayerPrefs.GetInt("Score");
+        skyboxIndex=PlayerPrefs.GetInt("SkyboxIndex");
     }
 
-    public void DeleteJsonData()
+    /*public void DeleteJsonData()
     {
         // Check if the file exists before attempting to delete it
         if (File.Exists(filePath))
@@ -47,5 +55,5 @@ public class LevelData : ScriptableObject
         {
             Debug.Log("No JSON data file found to delete.");
         }
-    }
+    }*/
 }

@@ -38,6 +38,7 @@ public class PanelManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnDisableLetter,OnDisableLetter);
         EventManager.AddHandler(GameEvent.OnUndoBegin,OnUndoBegin);
         EventManager.AddHandler(GameEvent.OnRestartLevel,OnRestartLevel);
+        EventManager.AddHandler(GameEvent.OnFalseMove,OnFalseMove);
 
     }
 
@@ -51,6 +52,7 @@ public class PanelManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnDisableLetter,OnDisableLetter);
         EventManager.RemoveHandler(GameEvent.OnUndoBegin,OnUndoBegin);
         EventManager.RemoveHandler(GameEvent.OnRestartLevel,OnRestartLevel);
+        EventManager.RemoveHandler(GameEvent.OnFalseMove,OnFalseMove);
     }
 
     private void Start() 
@@ -132,7 +134,7 @@ public class PanelManager : MonoBehaviour
         if(gameData.isLightLevel)
         {
             Light.gameObject.SetActive(true);
-            DOTween.Kill(Light);
+            //DOTween.Kill(Light);
             Light.color=new Color(0,0,0,0);
             Light.DOFade(1,gameData.lightTime); 
         }
@@ -158,14 +160,18 @@ public class PanelManager : MonoBehaviour
 
     private void OnNextLevel()
     {
-         SuccessPanel.DOAnchorPos(new Vector2(2500,0),0.1f).OnComplete(()=>{
+        if(gameData.isLightLevel)
+        {
+            DOTween.Kill(Light);
+        }
+        SuccessPanel.DOAnchorPos(new Vector2(2500,0),0.1f).OnComplete(()=>{
             for (int i = 0; i < successElements.Count; i++)
             {
                 successElements[i].transform.localScale=Vector3.zero;
                 
             }
             SuccessPanel.gameObject.SetActive(false);
-         });
+        });
         
         StartPanel.gameObject.SetActive(true);
         StartPanel.transform.localScale=Vector3.one;
@@ -177,6 +183,17 @@ public class PanelManager : MonoBehaviour
             sceneUI[i].SetActive(false);
         }
 
+    }
+
+    private void OnFalseMove()
+    {
+        if(gameData.isLightLevel && !gameData.isGameEnd)
+        {
+            Light.gameObject.SetActive(true);
+            DOTween.Kill(Light);
+            Light.color=new Color(0,0,0,0);
+            Light.DOFade(1,gameData.lightTime); 
+        }
     }
 
     
@@ -210,6 +227,11 @@ public class PanelManager : MonoBehaviour
         //Here Goes Some Improvements
         if(gameData.isTextLevel)
             directionText.SetActive(false);
+
+        if(gameData.isLightLevel)
+        {
+            DOTween.Kill(Light);
+        }
         
         SceneUI(false);
         FailPanel.gameObject.SetActive(true);
