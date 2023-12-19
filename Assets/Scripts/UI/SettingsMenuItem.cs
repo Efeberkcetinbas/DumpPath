@@ -37,7 +37,8 @@ public class SettingsMenuItem : MonoBehaviour
 
    void OnDestroy () {
       //remove click listener to avoid memory leaks
-      button.onClick.RemoveListener (OnItemClick) ;
+      if(button!=null)
+         button.onClick.RemoveListener (OnItemClick) ;
    }
     
 }

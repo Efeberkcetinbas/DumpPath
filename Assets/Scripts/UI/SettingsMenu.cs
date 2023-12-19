@@ -113,7 +113,9 @@ public class SettingsMenu : MonoBehaviour
 
    void OnDestroy () {
       //remove click listener to avoid memory leaks
-      mainButton.onClick.RemoveListener (ToggleMenu) ;
+      if(mainButton!=null)
+         mainButton.onClick.RemoveListener (ToggleMenu) ;
+      
    }
    
 }
