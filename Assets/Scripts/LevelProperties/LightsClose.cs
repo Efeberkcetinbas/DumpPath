@@ -6,7 +6,7 @@ public class LightsClose : MonoBehaviour
 {
     [SerializeField] private GameData gameData;
     [SerializeField] private int _lightTime;
-    private void Start() 
+    private void OnEnable() 
     {
         StartCoroutine(SetTrue());
     }
@@ -17,6 +17,8 @@ public class LightsClose : MonoBehaviour
         gameData.isLightLevel=true;
         gameData.lightTime=_lightTime;
     }
+
+    
 
 
 }

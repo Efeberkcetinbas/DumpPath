@@ -142,7 +142,7 @@ public class GroundTrigger : Obstacleable
 
     private void OnNextLevel()
     {
-        OnFalseMove();
+        //OnFalseMove();
     }
     
 }

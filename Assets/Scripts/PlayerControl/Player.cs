@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     [SerializeField] private ParticleSystem rightParticle;
     [SerializeField] private ParticleSystem updateParticle;
 
+    [SerializeField] private ParticleSystem deadParticle;
+
     [SerializeField] private PlayerData playerData;
 
     private void OnEnable() 
@@ -23,6 +25,7 @@ public class Player : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnPlayerRight,OnPlayerRight);
         EventManager.AddHandler(GameEvent.OnCharacterChange,OnCharacterChange);
         EventManager.AddHandler(GameEvent.OnDirectionUpdate,OnDirectionUpdate);
+        EventManager.AddHandler(GameEvent.OnPlayerDead,OnPlayerDead);
         
     }
 
@@ -34,6 +37,8 @@ public class Player : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnPlayerRight,OnPlayerRight);
         EventManager.RemoveHandler(GameEvent.OnCharacterChange,OnCharacterChange);
         EventManager.RemoveHandler(GameEvent.OnDirectionUpdate,OnDirectionUpdate);
+        EventManager.RemoveHandler(GameEvent.OnPlayerDead,OnPlayerDead);
+
     }
 
    
@@ -67,6 +72,11 @@ public class Player : MonoBehaviour
     private void OnCharacterChange()
     {
         Debug.Log("CHARACTER: " + playerData.selectedIndex);
+    }
+
+    private void OnPlayerDead()
+    {
+        deadParticle.Play();
     }
 
     

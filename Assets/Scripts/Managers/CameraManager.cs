@@ -89,6 +89,7 @@ public class CameraManager : MonoBehaviour
         {
             cm2.gameObject.SetActive(true);
             cm2.m_Follow=FindObjectOfType<PortalControl>().transform;
+            cm2.m_LookAt=FindObjectOfType<PortalControl>().transform;
         } 
         else
         {
