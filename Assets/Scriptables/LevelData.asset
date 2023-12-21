@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96999add62dd0644c9ac916e3df4a3d5, type: 3}
   m_Name: LevelData
   m_EditorClassIdentifier: 
-  IndexOfLevel: 11
-  score: 93
-  skyboxIndex: 1
+  IndexOfLevel: 0
+  score: 0
+  skyboxIndex: 0
