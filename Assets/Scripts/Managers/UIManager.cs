@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI leftText;
     [SerializeField] private TextMeshProUGUI rightText;
     [SerializeField] private TextMeshProUGUI directionLetterText;
+    [SerializeField] private TextMeshProUGUI totalText;
 
     [Header("Image's")]
     [SerializeField] private Image upProgressBar;
@@ -61,6 +62,9 @@ public class UIManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnShopCharacterSelected,OnShopBallSelected);
         EventManager.AddHandler(GameEvent.OnShopOpen,OnShopBallSelected);
         EventManager.AddHandler(GameEvent.OnFalseMove,OnFalseMove);
+        EventManager.AddHandler(GameEvent.OnUpdateTotalNumber,OnUpdateTotalNumber);
+        EventManager.AddHandler(GameEvent.OnUndo,OnUpdateTotalNumber);
+
     }
     private void OnDisable()
     {
@@ -77,6 +81,9 @@ public class UIManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnShopCharacterSelected,OnShopBallSelected);
         EventManager.RemoveHandler(GameEvent.OnShopOpen,OnShopBallSelected);
         EventManager.RemoveHandler(GameEvent.OnFalseMove,OnFalseMove);
+        EventManager.RemoveHandler(GameEvent.OnUpdateTotalNumber,OnUpdateTotalNumber);
+        EventManager.RemoveHandler(GameEvent.OnUndo,OnUpdateTotalNumber);
+
     }
 
     private void Start() 
@@ -91,6 +98,11 @@ public class UIManager : MonoBehaviour
         score.SetText(levelData.score.ToString());
         score.transform.DOScale(new Vector3(1.5f,1.5f,1.5f),0.2f).OnComplete(()=>score.transform.DOScale(new Vector3(1,1f,1f),0.2f));
         levelData.SaveData();
+    }
+
+    private void OnUpdateTotalNumber()
+    {
+        totalText.SetText(gameData.totalReq.ToString());
     }
 
     private void OnNextLevel()

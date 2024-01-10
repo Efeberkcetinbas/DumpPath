@@ -19,6 +19,7 @@ public enum GameEvent
     OnDirectionUpdate,
     OnGroundsSetGreen,
     OnUpdateReqDirection,
+    OnUpdateTotalNumber,
 
     //Environment
     OnGround,

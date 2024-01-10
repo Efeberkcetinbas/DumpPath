@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 public class PanelManager : MonoBehaviour
 {
-    [SerializeField] private RectTransform StartPanel,DirectionPanel,StorePanel,SuccessPanel,FailPanel,ScoreImage;
+    [SerializeField] private RectTransform StartPanel,DirectionPanel,MovePanel,StorePanel,SuccessPanel,FailPanel,ScoreImage;
 
     [SerializeField] private GameObject[] sceneUI;
     [SerializeField] private GameObject directionText;
@@ -19,14 +19,15 @@ public class PanelManager : MonoBehaviour
     [Header("Success List")]
     [SerializeField] private Ease ease;
     [SerializeField] private List<Transform> successElements=new List<Transform>();
+    [SerializeField] private List<Image> stars=new List<Image>();
     [SerializeField] private List<Transform> failElements=new List<Transform>();
 
     //Waitforseconds
     private WaitForSeconds waitForSeconds1;
     private WaitForSeconds waitForSeconds2;
     private WaitForSeconds waitForSecondsScore;
+    private WaitForSeconds waitForFill;
 
-    [SerializeField] private Player player;
 
 
     private void OnEnable() 
@@ -63,11 +64,13 @@ public class PanelManager : MonoBehaviour
         waitForSeconds1=new WaitForSeconds(2);
         waitForSeconds2=new WaitForSeconds(.5f);
         waitForSecondsScore=new WaitForSeconds(2);
+        waitForFill=new WaitForSeconds(1);
     }
 
     private void OnSuccess()
     {
         DirectionPanel.DOAnchorPos(new Vector2(0,500),duration);
+        MovePanel.DOAnchorPos(new Vector2(115,500),duration);
     }
 
     private void OnDisableLetter()
@@ -105,7 +108,8 @@ public class PanelManager : MonoBehaviour
         });
         DirectionPanel.gameObject.SetActive(true);
         DirectionPanel.DOAnchorPos(new Vector2(0,-500),duration);
-        
+        MovePanel.gameObject.SetActive(true);
+        MovePanel.DOAnchorPos(new Vector2(115,-500),duration);
     
         if(gameData.isTextLevel)
             directionText.SetActive(true);
@@ -217,6 +221,7 @@ public class PanelManager : MonoBehaviour
         SuccessPanel.gameObject.SetActive(true);
         SuccessPanel.DOAnchorPos(Vector2.zero,0.2f).SetEase(Ease.InOutCubic).OnComplete(()=>{
             StartCoroutine(ItemsAnimation(successElements));
+            StartCoroutine(ItemsFillAnimation(stars));
         });
     }
 
@@ -271,6 +276,19 @@ public class PanelManager : MonoBehaviour
         }
     }
 
+    private IEnumerator ItemsFillAnimation(List<Image> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            list[i].fillAmount=0;
+        }
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            yield return waitForFill;
+            list[i].DOFillAmount(1,.5f);
+        }
+    }
   
 
     public void OpenStorePanel()

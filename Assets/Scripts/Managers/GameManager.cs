@@ -156,11 +156,13 @@ public class GameManager : MonoBehaviour
     private void UpdateTotalDirection()
     {
         gameData.totalReq=FindObjectOfType<LevelPlayerPosition>().totalDirectionNumber;
+        EventManager.Broadcast(GameEvent.OnUpdateTotalNumber);
     }
 
     private void OnPlayerMove()
     {
         gameData.totalReq--;
+        EventManager.Broadcast(GameEvent.OnUpdateTotalNumber);
         if(gameData.totalReq==0)
         {
             gameData.isGameEnd=true;
