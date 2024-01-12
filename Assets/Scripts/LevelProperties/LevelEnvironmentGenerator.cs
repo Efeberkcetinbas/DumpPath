@@ -13,7 +13,8 @@ public class LevelEnvironmentGenerator : MonoBehaviour
     //[SerializeField] private List<Color> fogColors=new List<Color>();
 
     
-
+    
+    
     private void Start() 
     {
         Check();

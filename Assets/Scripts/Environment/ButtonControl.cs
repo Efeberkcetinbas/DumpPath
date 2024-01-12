@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class ButtonControl : MonoBehaviour
 {
+    
     private void OnEnable() 
     {
         EventManager.AddIdHandler(GameEvent.OnOpenButton,OnOpenButton);
