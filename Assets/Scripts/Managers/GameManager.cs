@@ -30,11 +30,18 @@ public class GameManager : MonoBehaviour
 
     [Header("Open/Close")]
     [SerializeField] private GameObject[] open_close;
+
+    [Header("Guide")]
+    public List<MeshRenderer> selectedPath=new List<MeshRenderer>();
+    [SerializeField] private Material selectedMaterial;
+    private GuideCube guideCube;
     
     //Boss Ball
+    
 
     private WaitForSeconds waitForSeconds;
     private WaitForSeconds waitDirectionForSeconds;
+    private WaitForSeconds waitForList;
 
 
     private void Awake() 
@@ -45,6 +52,7 @@ public class GameManager : MonoBehaviour
 
     private void Start() 
     {
+        waitForList=new WaitForSeconds(.5f);
         waitForSeconds=new WaitForSeconds(1);
         waitDirectionForSeconds=new WaitForSeconds(2);
         UpdatePositionOfDirections();
@@ -129,6 +137,24 @@ public class GameManager : MonoBehaviour
     }
 
 
+    //Reklamdan sonra calisacak
+
+    public void StartGuidetation()
+    {
+        guideCube=FindObjectOfType<GuideCube>();
+        selectedPath.Clear();
+        selectedPath=guideCube.chosenPath;
+        StartCoroutine(StartGuide());
+    }
+
+    private IEnumerator StartGuide()
+    {
+        for (int i = 0; i < selectedPath.Count; i++)
+        {
+            yield return waitForList;
+            selectedPath[i].material=selectedMaterial;
+        }
+    }
 
     private void UpdatePositionOfDirections()
     {
