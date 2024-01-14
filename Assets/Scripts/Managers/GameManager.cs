@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -143,7 +144,7 @@ public class GameManager : MonoBehaviour
     {
         guideCube=FindObjectOfType<GuideCube>();
         selectedPath.Clear();
-        selectedPath=guideCube.chosenPath;
+        selectedPath=guideCube.chosenPath.ToList();
         StartCoroutine(StartGuide());
     }
 
@@ -152,6 +153,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < selectedPath.Count; i++)
         {
             yield return waitForList;
+            //selectedPath[i].material.color=Color.green;
             selectedPath[i].material=selectedMaterial;
         }
     }
@@ -287,6 +289,7 @@ public class GameManager : MonoBehaviour
         //Startda da kullaniyorum. Starter Pack Methoduna Al
         UpdateRequirement();
         UpdatePlayerPosition();
+        StopCoroutine(StartGuide());
     }
     
     
